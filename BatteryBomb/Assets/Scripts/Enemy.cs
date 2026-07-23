@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime, Space.World);
+        transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
     }
 
     public void TakeDamage(int amount)
