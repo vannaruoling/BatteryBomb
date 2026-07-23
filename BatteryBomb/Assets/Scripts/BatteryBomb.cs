@@ -9,10 +9,12 @@ public class BatteryBomb : MonoBehaviour
     public float attachRadius = 1f;
     public GameObject explosionEffect;
     public int explosionDamage = 3;
+    public bool IsAttached => attachedTurret != null;
 
     private bool isDragging = false;
     private Camera mainCamera;
     private Turret attachedTurret = null;
+
 
 
 
@@ -116,6 +118,7 @@ public class BatteryBomb : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f, LayerMask.GetMask("Default"));
         // TODO: make bombs destory other bombs
+        // TODO: Check the AOE radius of this
         foreach (Collider2D hit in hits)
         {
             if (hit.CompareTag("Enemy"))
