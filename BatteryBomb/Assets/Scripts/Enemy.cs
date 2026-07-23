@@ -4,6 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public int maxHealth = 3;
     public float speed = 2f;
+    public bool movementEnabled = true;
     private int currentHealth;
 
     // Used to avoid null reference from race condition
@@ -14,7 +15,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
+        if (movementEnabled)
+        {
+            transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
+        }
+
     }
 
     public void TakeDamage(int amount)

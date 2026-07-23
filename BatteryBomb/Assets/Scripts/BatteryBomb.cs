@@ -8,15 +8,13 @@ public class BatteryBomb : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
     public GameObject explosionEffect;
+    public float explosionRadius = 2f;
     public int explosionDamage = 3;
     public bool IsAttached => attachedTurret != null;
 
     private bool isDragging = false;
     private Camera mainCamera;
     private Turret attachedTurret = null;
-
-
-
 
     void Awake()
     {
@@ -94,7 +92,7 @@ public class BatteryBomb : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             Turret turret = hit.GetComponent<Turret>();
-            if (turret != null)
+            if (turret != null && !turret.isDead && !turret.isPowered)
             {
                 Debug.Log("Found turret to attach to: " + hit.gameObject.name);
                 attachedTurret = turret;
@@ -113,14 +111,17 @@ public class BatteryBomb : MonoBehaviour
     {
         Debug.Log("Battery BOOOOOMMMBBB");
 
-        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Vector3 explosionPosition = attachedTurret.transform.position;
+
+        GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
         Destroy(explosion, 1f);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f, LayerMask.GetMask("Default"));
+        Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
+
         // TODO: make bombs destory other bombs
-        // TODO: Check the AOE radius of this
         foreach (Collider2D hit in hits)
         {
+
             if (hit.CompareTag("Enemy"))
             {
                 Enemy enemy = hit.GetComponent<Enemy>();
@@ -134,11 +135,4 @@ public class BatteryBomb : MonoBehaviour
         attachedTurret.Die();
         Destroy(gameObject);
     }
-    // // Start is called once before the first execution of Update after the MonoBehaviour is created
-    // void Start()
-    // {
-
-    // }
-
-
 }

@@ -249,9 +249,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400214075778019259}
+  - component: {fileID: 2209175193266959309}
   - component: {fileID: 8238001050576479344}
   - component: {fileID: 6995285576818420037}
-  - component: {fileID: 2209175193266959309}
   m_Layer: 0
   m_Name: BatteryBomb
   m_TagString: Untagged
@@ -268,13 +268,31 @@ Transform:
   m_GameObject: {fileID: 7143475250246746141}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.96, y: -2.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3004783103374938484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2209175193266959309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7143475250246746141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c057463cf8ec4de1b4e0823de719562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryBomb
+  countdownTime: 3
+  countdownText: {fileID: 3825264526564879463}
+  attachRadius: 1
+  explosionEffect: {fileID: 7251829191372735118, guid: 7d97d1d0325aa46f0927c281c2c3ffc0, type: 3}
+  explosionRadius: 2
+  explosionDamage: 3
 --- !u!212 &8238001050576479344
 SpriteRenderer:
   serializedVersion: 3
@@ -371,20 +389,3 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.15
---- !u!114 &2209175193266959309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7143475250246746141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c057463cf8ec4de1b4e0823de719562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BatteryBomb
-  countdownTime: 3
-  countdownText: {fileID: 3825264526564879463}
-  attachRadius: 1
-  explosionEffect: {fileID: 7251829191372735118, guid: 7d97d1d0325aa46f0927c281c2c3ffc0, type: 3}
-  explosionDamage: 3

@@ -6,8 +6,8 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
     public GameObject projectilePrefab;
 
-    private bool isPowered = false;
-    private bool isDead = false;
+    public bool isPowered = false;
+    public bool isDead = false;
     private float fireCooldown = 0f;
     private Transform target;
 
