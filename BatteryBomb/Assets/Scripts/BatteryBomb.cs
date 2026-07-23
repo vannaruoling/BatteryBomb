@@ -7,10 +7,13 @@ public class BatteryBomb : MonoBehaviour
     public float countdownTime = 10f;
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
+    public GameObject explosionEffect;
+    public int explosionDamage = 3;
 
     private bool isDragging = false;
     private Camera mainCamera;
     private Turret attachedTurret = null;
+
 
 
     void Awake()
@@ -106,9 +109,26 @@ public class BatteryBomb : MonoBehaviour
 
     void Detonate()
     {
-        // TODO: detonate properlhy
         Debug.Log("Battery BOOOOOMMMBBB");
-        attachedTurret.SetPowered(false);
+
+        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(explosion, 1f);
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f, LayerMask.GetMask("Default"));
+        // TODO: make bombs destory other bombs
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(explosionDamage);
+                }
+            }
+        }
+
+        attachedTurret.Die();
         Destroy(gameObject);
     }
     // // Start is called once before the first execution of Update after the MonoBehaviour is created

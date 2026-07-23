@@ -7,6 +7,7 @@ public class Turret : MonoBehaviour
     public GameObject projectilePrefab;
 
     private bool isPowered = false;
+    private bool isDead = false;
     private float fireCooldown = 0f;
     private Transform target;
 
@@ -18,7 +19,7 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        if (!isPowered)
+        if (!isPowered || isDead)
         {
             return;
         }
@@ -38,9 +39,26 @@ public class Turret : MonoBehaviour
 
     public void SetPowered(bool powered)
     {
+        if (isDead) return;
         isPowered = powered;
         GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
     }
+
+
+    public void Die()
+    {
+        isDead = true;
+        SetPowered(false);
+        GetComponent<SpriteRenderer>().color = Color.black;
+    }
+
+    // TODO:
+    public void Revive()
+    {
+        isDead = false;
+        SetPowered(false);
+    }
+
 
     void FindTarget()
     {
@@ -70,6 +88,3 @@ public class Turret : MonoBehaviour
         projectile.SetDirection(dir);
     }
 }
-
-
-
