@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "BatteryBomb.slnx"
+    "dotnet.defaultSolution": "Unity 2D Starter.slnx"
 }
