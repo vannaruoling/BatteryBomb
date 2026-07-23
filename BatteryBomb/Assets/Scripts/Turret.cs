@@ -6,16 +6,23 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
     public GameObject projectilePrefab;
 
+    private bool isPowered = false;
     private float fireCooldown = 0f;
     private Transform target;
 
     void Start()
     {
+        SetPowered(false);
         // Initialization
     }
 
     void Update()
     {
+        if (!isPowered)
+        {
+            return;
+        }
+
         FindTarget();
 
         if (target != null)
@@ -27,6 +34,12 @@ public class Turret : MonoBehaviour
                 fireCooldown = 1f / fireRate;
             }
         }
+    }
+
+    public void SetPowered(bool powered)
+    {
+        isPowered = powered;
+        GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
     }
 
     void FindTarget()

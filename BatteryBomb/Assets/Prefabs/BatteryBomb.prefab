@@ -385,3 +385,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BatteryBomb
   countdownTime: 10
   countdownText: {fileID: 0}
+  attachRadius: 1
