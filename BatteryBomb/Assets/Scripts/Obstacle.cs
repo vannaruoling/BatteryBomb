@@ -8,6 +8,8 @@ public class Obstacle : MonoBehaviour
     public float maxSpinSpeed = 10f;
     public float minSpeed = 100f;
     public float maxSpeed = 300f;
+
+    public GameObject bounceEffectPrefab;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,6 +28,14 @@ public class Obstacle : MonoBehaviour
         rb.AddForce(Vector2.right * randomSpeed);
         rb.AddForce(randomDirection * randomSpeed);
         rb.AddTorque(randomTorque);
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 contactPoint = collision.GetContact(0).point;
+        GameObject bounceEffect = Instantiate(bounceEffectPrefab, contactPoint, Quaternion.identity);
+
+        // Destroy the effect after 1 second
+        Destroy(bounceEffect, 1f);
     }
 
     // Update is called once per frame
