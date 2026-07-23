@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int maxHealth = 3;
+    public float speed = 2f;
     private int currentHealth;
 
     // Used to avoid null reference from race condition
@@ -11,6 +12,10 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    void Update()
+    {
+        transform.Translate(Vector2.left * speed * Time.deltaTime, Space.World);
+    }
 
     public void TakeDamage(int amount)
     {

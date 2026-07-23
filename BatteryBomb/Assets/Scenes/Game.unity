@@ -930,6 +930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7251817260993807889, guid: bc9f7208f1ca14e89a81bf0ad4097502, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 7874510347638130693, guid: bc9f7208f1ca14e89a81bf0ad4097502, type: 3}
       propertyPath: m_Name
       value: Turret
@@ -992,7 +996,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3495798339191497319, guid: 728573522d2404526a112ab98f218c35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.04
+      value: 5.59
       objectReference: {fileID: 0}
     - target: {fileID: 3495798339191497319, guid: 728573522d2404526a112ab98f218c35, type: 3}
       propertyPath: m_LocalPosition.y
