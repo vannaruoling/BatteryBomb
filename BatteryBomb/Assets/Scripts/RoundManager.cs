@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class RoundManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class RoundManager : MonoBehaviour
     public int currentRound = 2;
     public int enemiesPerRound = 5;
     public float spawnInterval = 1.5f;
+    public float roundEndDelay = 0.4f;
 
     private int enemiesAlive = 0;
     private bool roundActive = false;
@@ -90,6 +92,14 @@ public class RoundManager : MonoBehaviour
             Debug.Log("All rounds cleared");
             return;
         }
+
+        // Lets player see last enemy death, feels less abrupt.
+        StartCoroutine(EndRoundDelayed());
+    }
+
+    IEnumerator EndRoundDelayed()
+    {
+        yield return new WaitForSecondsRealtime(roundEndDelay);
 
         Time.timeScale = 0f;
         roundCardPanel.SetActive(true);
