@@ -41,12 +41,13 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        Time.timeScale = 1f;
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
         GameManager.Instance.inputEnabled = true;
+
+        RoundManager.Instance.StartRound();
     }
 
     public void ShowGameOver()

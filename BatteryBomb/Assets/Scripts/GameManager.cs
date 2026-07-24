@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void HealPlayer(int amount)
+    {
+        playerHealth = Mathf.Min(playerHealth + amount, 10);
+    }
+
     // // Update is called once per frame
     // void Update()
     // {

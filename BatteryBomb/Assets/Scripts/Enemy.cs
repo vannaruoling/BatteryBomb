@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        RoundManager.Instance.ReportEnemyDeath();
         Debug.Log("Enemy died");
         Destroy(gameObject);
     }
