@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public bool inputEnabled = false;
 
     public int playerHealth = 10;
+
+    private bool isGameOver = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -19,15 +22,19 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void DamagePlayer(int amount)
     {
+        if (isGameOver) return;
+
         playerHealth -= amount;
         Debug.Log("Player hurt: " + amount + ", curr health: " + playerHealth);
 
+        DamageFlashDisplay.Instance.ShowDamage(playerHealth);
+
         if (playerHealth <= 0)
         {
-            Debug.Log("YOU ARE DEAD");
+            isGameOver = true;
+            Debug.Log("YOU DIED");
             UIManager.Instance.ShowGameOver();
         }
     }

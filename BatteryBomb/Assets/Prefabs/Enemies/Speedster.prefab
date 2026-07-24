@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 1
-  speed: 7
+  speed: 5
   movementEnabled: 1
 --- !u!212 &2866960587233379162
 SpriteRenderer:

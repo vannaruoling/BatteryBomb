@@ -25,8 +25,29 @@ public class RoundManager : MonoBehaviour
         roundCardPanel.SetActive(false);
         Time.timeScale = 1f;
 
+        ResetGameBoard();
+
+        DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
+
+
         enemiesAlive = enemiesPerRound;
         enemySpawner.SpawnWave(enemiesPerRound, spawnInterval);
+    }
+
+    void ResetGameBoard()
+    {
+        BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
+        foreach (BatteryBomb b in bombs)
+        {
+            Destroy(b.gameObject);
+        }
+
+        // revive after bombs are gone to prevent race conditon where they blow up after revival
+        Turret[] turrets = FindObjectsByType<Turret>(FindObjectsSortMode.None);
+        foreach (Turret t in turrets)
+        {
+            t.Revive();
+        }
     }
 
     // Call this from Enemy.Die()
@@ -43,8 +64,6 @@ public class RoundManager : MonoBehaviour
 
     void EndRound()
     {
-        // TODO: reconsider this mechanic
-        ReviveAllTurrets();
         currentRound--;
 
         if (currentRound <= 0)
@@ -54,8 +73,6 @@ public class RoundManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Round end, pulling up round card panel");
-        // StartRound();
         Time.timeScale = 0f;
         roundCardPanel.SetActive(true);
     }
