@@ -27,6 +27,8 @@ public class BatteryBomb : MonoBehaviour
     {
         UpdateCountdownDisplay();
 
+        if (!GameManager.Instance.inputEnabled) return;
+
         if (isDragging)
         {
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -63,6 +65,8 @@ public class BatteryBomb : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (!GameManager.Instance.inputEnabled) return;
+
         if (attachedTurret != null)
         {
             Detach();
@@ -73,6 +77,7 @@ public class BatteryBomb : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (!GameManager.Instance.inputEnabled) return;
         isDragging = false;
 
         Attach();

@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c057463cf8ec4de1b4e0823de719562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatteryBomb
-  countdownTime: 3
+  countdownTime: 5
   countdownText: {fileID: 3825264526564879463}
   attachRadius: 1
   explosionEffect: {fileID: 7251829191372735118, guid: 7d97d1d0325aa46f0927c281c2c3ffc0, type: 3}

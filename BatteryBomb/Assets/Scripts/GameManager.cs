@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance;
+    public bool inputEnabled = false;
 
     public int playerHealth = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

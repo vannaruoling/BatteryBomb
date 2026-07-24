@@ -25,12 +25,18 @@ public class UIManager : MonoBehaviour
         ShowTitle();
     }
 
+    void Start()
+    {
+        GameManager.Instance.inputEnabled = false;
+    }
+
     public void ShowTitle()
     {
         Time.timeScale = 0f;
         titlePanel.SetActive(true);
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+
     }
 
     public void StartGame()
@@ -39,6 +45,8 @@ public class UIManager : MonoBehaviour
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
+
+        GameManager.Instance.inputEnabled = true;
     }
 
     public void ShowGameOver()
@@ -47,6 +55,8 @@ public class UIManager : MonoBehaviour
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(true);
+
+        GameManager.Instance.inputEnabled = false;
     }
 
     public void RestartGame()
