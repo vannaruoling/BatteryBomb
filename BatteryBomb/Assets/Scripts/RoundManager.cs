@@ -6,6 +6,7 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance;
 
     public EnemySpawner enemySpawner;
+    public BombSpawner bombSpawner;
     public GameObject roundCardPanel;
 
     //TODO: change to like 100
@@ -13,6 +14,7 @@ public class RoundManager : MonoBehaviour
     public int enemiesPerRound = 5;
     public float spawnInterval = 1.5f;
     public float roundEndDelay = 0.4f;
+
 
     private int enemiesAlive = 0;
     private bool roundActive = false;
@@ -30,6 +32,7 @@ public class RoundManager : MonoBehaviour
 
         ResetGameBoard();
         GameManager.Instance.inputEnabled = true;
+        bombSpawner.SpawnBombNow();
 
         // Display HP
         // TODO: Dont need this to fade in at the start of every round

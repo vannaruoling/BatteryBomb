@@ -1524,10 +1524,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   enemySpawner: {fileID: 1270056543}
+  bombSpawner: {fileID: 1875415598}
   roundCardPanel: {fileID: 1092427115}
   currentRound: 3
   enemiesPerRound: 5
   spawnInterval: 1.5
+  roundEndDelay: 0.4
 --- !u!4 &1360769657
 Transform:
   m_ObjectHideFlags: 0
@@ -2632,6 +2634,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831312738}
   m_CullTransparentMesh: 1
+--- !u!114 &1875415598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1791062796044498214, guid: 7e4dee1d9fdd447cca14c72e14af53d3, type: 3}
+  m_PrefabInstance: {fileID: 6223739231528577393}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c16f9183b6e4672aa1c2ed252fca82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BombSpawner
 --- !u!1001 &1947634917
 PrefabInstance:
   m_ObjectHideFlags: 0

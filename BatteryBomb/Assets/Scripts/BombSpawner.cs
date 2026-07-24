@@ -27,12 +27,17 @@ public class BombSpawner : MonoBehaviour
         {
             spawnTimer = spawnInterval;
 
-            if (activeBombs.Count < maxUnattachedBombs)
-            {
-                SpawnBomb();
-            }
+            SpawnBombNow();
         }
 
+    }
+
+    public void SpawnBombNow()
+    {
+        if (CountUnattachedBombs() < maxUnattachedBombs)
+        {
+            SpawnBomb();
+        }
     }
 
 
