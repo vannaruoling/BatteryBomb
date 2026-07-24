@@ -40,6 +40,7 @@ public class RoundManager : MonoBehaviour
 
     void ResetGameBoard()
     {
+        Debug.Log("Resetting game board");
         BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
         foreach (BatteryBomb b in bombs)
         {
@@ -47,6 +48,7 @@ public class RoundManager : MonoBehaviour
         }
 
         // Destroy all enemies to prevent them from persisting
+        Debug.Log("Destroying all enemies");
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         foreach (Enemy e in enemies)
         {

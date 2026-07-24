@@ -6,11 +6,15 @@ public class Enemy : MonoBehaviour
     public float speed = 2f;
     public bool movementEnabled = true;
     private int currentHealth;
+    private SpriteRenderer spriteRenderer;
 
     // Used to avoid null reference from race condition
     void Awake()
     {
         currentHealth = maxHealth;
+
+        // Add here to stow it away frontloaded
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -26,6 +30,8 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= amount;
         Debug.Log("Enemy hurt: " + amount + ", curr health: " + currentHealth);
+
+        Juice.Instance.FlashSprite(spriteRenderer, Color.white, 0.05f);
 
         if (currentHealth <= 0)
         {
