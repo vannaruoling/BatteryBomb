@@ -1,5 +1,5 @@
-using UnityEngine;
 
+using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int maxHealth = 3;
@@ -41,10 +41,19 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        RoundManager.Instance.ReportEnemyDeath();
+        RoundManager.Instance.ReportEnemyDeath(); 
         Debug.Log("Enemy died");
-        Destroy(gameObject);
+
+        Color deathColor = new Color(1f, 0f, 0f, 0f); // red, translucent
+        Juice.Instance.FadeSpriteToColor(spriteRenderer, deathColor, 0.1f, () => Destroy(gameObject));
     }
+
+    // void Die()
+    // {
+    //     RoundManager.Instance.ReportEnemyDeath();
+    //     Debug.Log("Enemy died");
+    //     Destroy(gameObject);
+    // }
 
     // // Update is called once per frame
     // void Update()

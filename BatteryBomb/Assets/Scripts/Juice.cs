@@ -98,4 +98,28 @@ public class Juice : MonoBehaviour
         activeShakes.Remove(t);
         shakeOriginals.Remove(t);
     }
+
+
+    public void FadeSpriteToColor(SpriteRenderer sr, Color targetColor, float duration, System.Action onComplete = null)
+    {
+        if (sr == null) return;
+        StartCoroutine(FadeRoutine(sr, targetColor, duration, onComplete));
+    }
+
+    IEnumerator FadeRoutine(SpriteRenderer sr, Color targetColor, float duration, System.Action onComplete)
+    {
+        Color start = sr.color;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            if (sr == null) yield break;
+            sr.color = Color.Lerp(start, targetColor, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        onComplete?.Invoke();
+    }
+
 }
