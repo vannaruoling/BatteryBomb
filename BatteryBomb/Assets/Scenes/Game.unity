@@ -1481,7 +1481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   enemySpawner: {fileID: 1270056543}
   roundCardPanel: {fileID: 1092427115}
-  currentRound: 5
+  currentRound: 3
   enemiesPerRound: 5
   spawnInterval: 1.5
 --- !u!4 &1360769657
