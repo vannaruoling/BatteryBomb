@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log("YOU ARE DEAD");
-            // TODO: Die
+            UIManager.Instance.ShowGameOver();
         }
     }
 

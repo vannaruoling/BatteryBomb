@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Added New Input System namespace
 
 public class CursorManager : MonoBehaviour
 {
@@ -17,17 +16,12 @@ public class CursorManager : MonoBehaviour
 
     void Update()
     {
-        // Make sure a mouse device is present
-        if (Mouse.current == null) return;
-
-        // Check if left button was pressed down this frame
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Input.GetMouseButtonDown(0))
         {
             SetCustomCursor(clickCursor);
         }
 
-        // Check if left button was released this frame
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Input.GetMouseButtonUp(0))
         {
             SetCustomCursor(defaultCursor);
         }
