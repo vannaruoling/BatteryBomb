@@ -33,8 +33,10 @@ public class RoundManager : MonoBehaviour
     public void ReportEnemyDeath()
     {
         enemiesAlive--;
+        Debug.Log("Enemy died, remaining: " + enemiesAlive);
         if (enemiesAlive <= 0)
         {
+            Debug.Log("Calling end round");
             EndRound();
         }
     }
@@ -52,7 +54,7 @@ public class RoundManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Round end, start new roudn " + currentRound);
+        Debug.Log("Round end, pulling up round card panel");
         // StartRound();
         Time.timeScale = 0f;
         roundCardPanel.SetActive(true);

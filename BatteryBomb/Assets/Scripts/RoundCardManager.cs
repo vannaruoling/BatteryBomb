@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class RoundCardManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Hard coded buff for now; add better ones later
+    public int healAmount = 2;
+
+    public void OnCardSelected()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        GameManager.Instance.HealPlayer(healAmount);
+        RoundManager.Instance.StartRound();
     }
 }
