@@ -2,7 +2,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyTypes;
+    [System.Serializable]
+    public class WeightedEnemy
+    {
+        public GameObject prefab;
+        public float baseWeight = 1f;
+        public float weightPerWave = 0f;
+    }
+
+    public WeightedEnemy[] weightedEnemies;
     public float spawnInterval = 2f;
     public Vector2 spawnPoint = new Vector2(-8f, 0f);
 
@@ -11,11 +19,11 @@ public class EnemySpawner : MonoBehaviour
     public int bossSpawnAfter = 4; // num enemies
 
 
-
     private float spawnTimer;
     private int enemiesToSpawn = 0;
     private int enemiesSpawnedCurrentWave = 0;
     private bool spawning = false;
+    private int currentWave = 0;
 
     void Update()
     {
@@ -36,14 +44,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void SpawnWave(int count, float interval)
+    public void SpawnWave(int count, float interval, int waveNumber)
     {
         enemiesToSpawn = count;
-        // TODO: slightly randomize the interval 
         spawnInterval = interval;
         spawnTimer = 0f;
         spawning = true;
         enemiesSpawnedCurrentWave = 0;
+        currentWave = waveNumber;
     }
 
     void SpawnEnemy()
@@ -56,13 +64,30 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            enemyToSpawn = enemyTypes[Random.Range(0, enemyTypes.Length)];
+            enemyToSpawn = PickWeightedEnemy();
         }
 
         Instantiate(enemyToSpawn, spawnPoint, Quaternion.identity);
         enemiesSpawnedCurrentWave++;
+    }
 
-        // GameObject enemyToSpawn = enemyTypes[Random.Range(0, enemyTypes.Length)];
-        // Instantiate(enemyToSpawn, spawnPoint, Quaternion.identity);
+    GameObject PickWeightedEnemy()
+    {
+        float totalWeight = 0f;
+        foreach (var e in weightedEnemies)
+        {
+            totalWeight += Mathf.Max(0f, e.baseWeight + (e.weightPerWave * currentWave));
+        }
+
+        float roll = Random.Range(0f, totalWeight);
+        float cumulative = 0f;
+
+        foreach (var e in weightedEnemies)
+        {
+            cumulative += Mathf.Max(0f, e.baseWeight + (e.weightPerWave * currentWave));
+            if (roll <= cumulative) return e.prefab;
+        }
+
+        return weightedEnemies[weightedEnemies.Length - 1].prefab;
     }
 }

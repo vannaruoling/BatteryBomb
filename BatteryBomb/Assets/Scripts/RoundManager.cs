@@ -17,6 +17,7 @@ public class RoundManager : MonoBehaviour
 
 
     private int enemiesAlive = 0;
+    private int wavesPlayed = 0;
     private bool roundActive = false;
 
     void Awake()
@@ -34,13 +35,13 @@ public class RoundManager : MonoBehaviour
         GameManager.Instance.inputEnabled = true;
         bombSpawner.SpawnBombNow();
 
-        // Display HP
-        // TODO: Dont need this to fade in at the start of every round
+        // Displays HP
         DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
 
         enemiesAlive = enemiesPerRound;
         roundActive = true;
-        enemySpawner.SpawnWave(enemiesPerRound, spawnInterval);
+        wavesPlayed++;
+        enemySpawner.SpawnWave(enemiesPerRound, spawnInterval, wavesPlayed);
     }
 
     void ResetGameBoard()
