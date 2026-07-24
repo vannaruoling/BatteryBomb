@@ -53,6 +53,7 @@ MonoBehaviour:
   isDead: 0
   range: 5
   rangeIndicatorPrefab: {fileID: 7918671086076103592, guid: a6725db4880da419f8d048b7b82a65c7, type: 3}
+  outlineMaterial: {fileID: 2100000, guid: a91904895b1c14b3db1024ad8b8e4779, type: 2}
   projectileCount: 6
 --- !u!212 &2417933868437757187
 SpriteRenderer:

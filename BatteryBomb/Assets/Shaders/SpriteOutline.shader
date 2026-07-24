@@ -2,57 +2,62 @@ Shader "Custom/SpriteOutline"
 {
     Properties
     {
-        [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)
-        [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
+        _MainTex ("Sprite Texture", 2D) = "white" {}
+        _OutlineColor ("Outline Color", Color) = (1,1,1,1)
+        _OutlineThickness ("Outline Thickness", Range(0, 8)) = 1
     }
-
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
-
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" "IgnoreProjector"="True" }
+        Blend SrcAlpha OneMinusSrcAlpha
+        Cull Off
+        ZWrite Off
         Pass
         {
-            HLSLPROGRAM
-
+            CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #include "UnityCG.cginc"
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            sampler2D _MainTex;
+            float4 _MainTex_TexelSize;
+            fixed4 _OutlineColor;
+            float _OutlineThickness;
 
-            struct Attributes
+            struct appdata { float4 vertex : POSITION; float2 uv : TEXCOORD0; };
+            struct v2f { float2 uv : TEXCOORD0; float4 vertex : SV_POSITION; };
+
+            v2f vert(appdata v)
             {
-                float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            struct Varyings
-            {
-                float4 positionHCS : SV_POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            TEXTURE2D(_BaseMap);
-            SAMPLER(sampler_BaseMap);
-
-            CBUFFER_START(UnityPerMaterial)
-                half4 _BaseColor;
-                float4 _BaseMap_ST;
-            CBUFFER_END
-
-            Varyings vert(Attributes IN)
-            {
-                Varyings OUT;
-                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-                return OUT;
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.uv;
+                return o;
             }
 
-            half4 frag(Varyings IN) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
-                half4 color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
-                return color;
+                fixed4 c = tex2D(_MainTex, i.uv);
+
+                // inside the sprite: draw nothing, keeps the interior see-through
+                if (c.a > 0.1) return fixed4(0, 0, 0, 0);
+
+                float2 t = _MainTex_TexelSize.xy * _OutlineThickness;
+
+                float a = 0;
+                a = max(a, tex2D(_MainTex, i.uv + float2( t.x, 0)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2(-t.x, 0)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2(0,  t.y)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2(0, -t.y)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2( t.x,  t.y)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2(-t.x,  t.y)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2( t.x, -t.y)).a);
+                a = max(a, tex2D(_MainTex, i.uv + float2(-t.x, -t.y)).a);
+
+                if (a > 0.1) return _OutlineColor;
+                return fixed4(0, 0, 0, 0);
             }
-            ENDHLSL
+            ENDCG
         }
     }
 }

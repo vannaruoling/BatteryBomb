@@ -9,15 +9,19 @@ public abstract class TurretBase : MonoBehaviour
     public bool isDead = false;
     public float range = 5f;
     public GameObject rangeIndicatorPrefab;
-    private GameObject rangeIndicatorInstance;
+    public Material outlineMaterial;
     private SpriteRenderer outlineRenderer;
+    private SpriteRenderer spriteRenderer;
+    private GameObject rangeIndicatorInstance;
     private Animator animator;
+
 
 
     protected float fireCooldown = 0f;
 
     protected virtual void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         SetPowered(false);
 
@@ -29,13 +33,17 @@ public abstract class TurretBase : MonoBehaviour
             rangeIndicatorInstance.SetActive(false);
         }
 
-        float outlineScale = 1.3f;
-        outlineRenderer = OutlineUtility.CreateOutline(transform, GetComponent<SpriteRenderer>(), outlineScale);
-
+        outlineRenderer = OutlineUtility.CreateOutline(transform, spriteRenderer, outlineMaterial);
     }
 
     protected virtual void Update()
     {
+        // keep outline matched to the current animation frame
+        if (outlineRenderer != null && outlineRenderer.enabled)
+        {
+            outlineRenderer.sprite = spriteRenderer.sprite;
+        }
+
         if (!isPowered || isDead) return;
 
         fireCooldown -= Time.deltaTime;
@@ -53,6 +61,7 @@ public abstract class TurretBase : MonoBehaviour
         if (outlineRenderer != null)
         {
             outlineRenderer.gameObject.SetActive(show);
+            if (show) outlineRenderer.sprite = spriteRenderer.sprite;
         }
     }
 

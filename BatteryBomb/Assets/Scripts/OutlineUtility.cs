@@ -5,17 +5,18 @@ using UnityEngine;
 
 public static class OutlineUtility
 {
-    public static SpriteRenderer CreateOutline(Transform parent, SpriteRenderer sourceRenderer, float scale = 1.1f)
+    public static SpriteRenderer CreateOutline(Transform parent, SpriteRenderer sourceRenderer, Material outlineMaterial)
     {
         GameObject outlineObj = new GameObject("Outline");
         outlineObj.transform.SetParent(parent);
         outlineObj.transform.localPosition = Vector3.zero;
-        outlineObj.transform.localScale = Vector3.one * scale;
+        outlineObj.transform.localScale = Vector3.one;
 
         SpriteRenderer outlineRenderer = outlineObj.AddComponent<SpriteRenderer>();
         outlineRenderer.sprite = sourceRenderer.sprite;
-        outlineRenderer.color = Color.white;
-        outlineRenderer.sortingOrder = 5;
+        outlineRenderer.material = outlineMaterial;
+        outlineRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
+        outlineRenderer.sortingOrder = 100;
 
         outlineObj.SetActive(false);
         return outlineRenderer;
