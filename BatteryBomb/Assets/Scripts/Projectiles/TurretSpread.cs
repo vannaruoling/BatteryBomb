@@ -17,6 +17,7 @@ public class TurretSpread : TurretBase
             GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Projectile projectile = projectileObj.GetComponent<Projectile>();
             projectile.SetDirection(dir);
+            projectile.maxLifetime = range / projectile.speed; // new: bullets die at range distance
         }
         return true;
     }
