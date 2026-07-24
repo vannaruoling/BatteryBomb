@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 3;
     public float speed = 2f;
     public bool movementEnabled = true;
+    private Animator animator;
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
 
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour
 
         // Add here to stow it away frontloaded
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -41,8 +43,13 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        RoundManager.Instance.ReportEnemyDeath(); 
-        Debug.Log("Enemy died");
+        RoundManager.Instance.ReportEnemyDeath();
+        movementEnabled = false;
+
+        if (animator != null)
+        {
+            animator.Play("dead");
+        }
 
         Color deathColor = new Color(1f, 0f, 0f, 0f); // red, translucent
         Juice.Instance.FadeSpriteToColor(spriteRenderer, deathColor, 0.1f, () => Destroy(gameObject));

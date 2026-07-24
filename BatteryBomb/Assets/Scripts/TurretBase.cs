@@ -11,11 +11,14 @@ public abstract class TurretBase : MonoBehaviour
     public GameObject rangeIndicatorPrefab;
     private GameObject rangeIndicatorInstance;
     private SpriteRenderer outlineRenderer;
+    private Animator animator;
+
 
     protected float fireCooldown = 0f;
 
     protected virtual void Start()
     {
+        animator = GetComponent<Animator>();
         SetPowered(false);
 
         if (rangeIndicatorPrefab != null)
@@ -61,14 +64,19 @@ public abstract class TurretBase : MonoBehaviour
     {
         if (isDead) return;
         isPowered = powered;
-        GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
+        if (animator != null)
+        {
+            animator.Play(powered ? "shooting" : "stationary");
+        }
     }
 
     public void Die()
     {
         isDead = true;
-        SetPowered(false);
-        GetComponent<SpriteRenderer>().color = Color.black;
+        if (animator != null)
+        {
+            animator.Play("dead");
+        }
     }
 
     public void Revive()

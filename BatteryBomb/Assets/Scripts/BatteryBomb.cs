@@ -13,6 +13,7 @@ public class BatteryBomb : MonoBehaviour
     public bool IsAttached => attachedTurret != null;
 
     private TurretBase highlightedTurret = null;
+    private SpriteRenderer spriteRenderer;
     private bool isDragging = false;
     private Camera mainCamera;
     private TurretBase attachedTurret = null;
@@ -20,6 +21,9 @@ public class BatteryBomb : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sortingOrder = 20;
+
         // TODO: imrpvoe the code for upgrades so its not hardcoded like this
         countdownTime += UpgradeState.Instance.bombTimerBonus;
         explosionRadius += UpgradeState.Instance.explosionRadiusBonus;
@@ -95,12 +99,16 @@ public class BatteryBomb : MonoBehaviour
         }
 
         isDragging = true;
+        spriteRenderer.sortingOrder = 5;
+
     }
 
     void OnMouseUp()
     {
         if (!GameManager.Instance.inputEnabled) return;
         isDragging = false;
+        spriteRenderer.sortingOrder = 20;
+
 
         if (highlightedTurret != null)
         {
