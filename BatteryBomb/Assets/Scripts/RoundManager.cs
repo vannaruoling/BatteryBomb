@@ -79,14 +79,6 @@ public class RoundManager : MonoBehaviour
 
         Time.timeScale = 0f;
         roundCardPanel.SetActive(true);
-    }
-
-    void ReviveAllTurrets()
-    {
-        Turret[] turrets = FindObjectsOfType<Turret>();
-        foreach (Turret t in turrets)
-        {
-            t.Revive();
-        }
+        RoundCardManager.Instance.PresentRandomCards();
     }
 }

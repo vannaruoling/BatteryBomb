@@ -19,6 +19,9 @@ public class BatteryBomb : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
+        // TODO: imrpvoe the code for upgrades so its not hardcoded like this
+        countdownTime += UpgradeState.Instance.bombTimerBonus;
+        explosionRadius += UpgradeState.Instance.explosionRadiusBonus;
         SetPowering();
     }
 
