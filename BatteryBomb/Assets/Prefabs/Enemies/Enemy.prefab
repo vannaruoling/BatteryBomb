@@ -50,6 +50,7 @@ MonoBehaviour:
   maxHealth: 2
   speed: 1
   movementEnabled: 1
+  flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:
   serializedVersion: 3
@@ -100,7 +101,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3138486848293625725, guid: bb1b6b1957c8b7443815b3aa4cb43edf, type: 3}
-  m_Color: {r: 0.7169812, g: 0.28746888, b: 0.28746888, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
