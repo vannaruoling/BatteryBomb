@@ -15,7 +15,7 @@ public static class OutlineUtility
         SpriteRenderer outlineRenderer = outlineObj.AddComponent<SpriteRenderer>();
         outlineRenderer.sprite = sourceRenderer.sprite;
         outlineRenderer.color = Color.white;
-        outlineRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
+        outlineRenderer.sortingOrder = 5;
 
         outlineObj.SetActive(false);
         return outlineRenderer;
