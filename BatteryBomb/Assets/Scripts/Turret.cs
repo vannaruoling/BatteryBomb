@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Turret : TurretBase
 {
-    public float range = 5f;
-
     private Transform target;
 
     protected override bool TryFire()

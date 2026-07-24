@@ -7,12 +7,23 @@ public abstract class TurretBase : MonoBehaviour
 
     public bool isPowered = false;
     public bool isDead = false;
+    public float range = 5f;
+    public GameObject rangeIndicatorPrefab;
+    private GameObject rangeIndicatorInstance;
 
     protected float fireCooldown = 0f;
 
     protected virtual void Start()
     {
         SetPowered(false);
+
+        if (rangeIndicatorPrefab != null)
+        {
+            rangeIndicatorInstance = Instantiate(rangeIndicatorPrefab, transform);
+            rangeIndicatorInstance.transform.localPosition = Vector3.zero;
+            UpdateRangeIndicatorScale();
+            rangeIndicatorInstance.SetActive(false);
+        }
     }
 
     protected virtual void Update()
@@ -51,5 +62,31 @@ public abstract class TurretBase : MonoBehaviour
     {
         isDead = false;
         SetPowered(false);
+    }
+
+    // TODO: when player clicks a turret, display its range
+    void UpdateRangeIndicatorScale()
+    {
+        if (rangeIndicatorInstance == null) return;
+
+        SpriteRenderer sr = rangeIndicatorInstance.GetComponent<SpriteRenderer>();
+        if (sr == null || sr.sprite == null) return;
+
+        float nativeDiameter = sr.sprite.bounds.size.x;
+        float desiredDiameter = range * 2f;
+
+        // ignore parent scale
+        float scaleFactor = desiredDiameter / nativeDiameter / transform.localScale.x;
+
+        rangeIndicatorInstance.transform.localScale = Vector3.one * scaleFactor;
+    }
+
+    public void SetRangeIndicatorVisible(bool show)
+    {
+        if (rangeIndicatorInstance != null)
+        {
+            if (show) UpdateRangeIndicatorScale();
+            rangeIndicatorInstance.SetActive(show);
+        }
     }
 }

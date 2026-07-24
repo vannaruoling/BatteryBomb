@@ -12,6 +12,7 @@ public class BatteryBomb : MonoBehaviour
     public int explosionDamage = 3;
     public bool IsAttached => attachedTurret != null;
 
+    private TurretBase highlightedTurret = null;
     private bool isDragging = false;
     private Camera mainCamera;
     private TurretBase attachedTurret = null;
@@ -32,11 +33,21 @@ public class BatteryBomb : MonoBehaviour
 
         if (!GameManager.Instance.inputEnabled) return;
 
-        if (isDragging && GameManager.Instance.inputEnabled)
+        if (isDragging)
         {
+            // Track mouse position
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
             transform.position = mouseWorldPos;
+
+            // Get highlighted turret range
+            TurretBase target = FindAttachableTurret();
+            if (target != highlightedTurret)
+            {
+                if (highlightedTurret != null) highlightedTurret.SetRangeIndicatorVisible(false);
+                if (target != null) target.SetRangeIndicatorVisible(true);
+                highlightedTurret = target;
+            }
         }
 
         if (attachedTurret != null)
@@ -82,6 +93,12 @@ public class BatteryBomb : MonoBehaviour
     {
         if (!GameManager.Instance.inputEnabled) return;
         isDragging = false;
+
+        if (highlightedTurret != null)
+        {
+            highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret = null;
+        }
 
         Attach();
     }
@@ -140,5 +157,22 @@ public class BatteryBomb : MonoBehaviour
 
         attachedTurret.Die();
         Destroy(gameObject);
+    }
+
+    TurretBase FindAttachableTurret()
+    {
+        // FInd turret on defualt layer
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attachRadius, LayerMask.GetMask("Default"));
+
+        foreach (Collider2D hit in hits)
+        {
+            TurretBase turret = hit.GetComponent<TurretBase>();
+            if (turret != null && !turret.isDead && !turret.isPowered)
+            {
+                return turret;
+            }
+        }
+
+        return null;
     }
 }
