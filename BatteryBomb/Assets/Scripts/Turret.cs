@@ -1,60 +1,21 @@
 using UnityEngine;
 
-public class Turret : MonoBehaviour, ITurret
+public class Turret : TurretBase
 {
     public float range = 5f;
-    public float fireRate = 1f;
-    public GameObject projectilePrefab;
 
-    public bool isPowered = false;
-    public bool isDead = false;
-
-    public bool IsPowered => isPowered;
-    public bool IsDead => isDead;
-
-    private float fireCooldown = 0f;
     private Transform target;
 
-    void Start()
+    protected override bool TryFire()
     {
-        SetPowered(false);
-    }
-
-    void Update()
-    {
-        if (!isPowered || isDead) return;
-
         FindTarget();
+        if (target == null) return false;
 
-        if (target != null)
-        {
-            fireCooldown -= Time.deltaTime;
-            if (fireCooldown <= 0f)
-            {
-                Shoot();
-                fireCooldown = 1f / fireRate;
-            }
-        }
-    }
-
-    public void SetPowered(bool powered)
-    {
-        if (isDead) return;
-        isPowered = powered;
-        GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
-    }
-
-    public void Die()
-    {
-        isDead = true;
-        SetPowered(false);
-        GetComponent<SpriteRenderer>().color = Color.black;
-    }
-
-    public void Revive()
-    {
-        isDead = false;
-        SetPowered(false);
+        GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        Vector2 dir = (target.position - transform.position);
+        projectile.SetDirection(dir);
+        return true;
     }
 
     void FindTarget()
@@ -74,13 +35,5 @@ public class Turret : MonoBehaviour, ITurret
         }
 
         target = closestEnemy;
-    }
-
-    void Shoot()
-    {
-        GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectile = projectileObj.GetComponent<Projectile>();
-        Vector2 dir = (target.position - transform.position);
-        projectile.SetDirection(dir);
     }
 }

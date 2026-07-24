@@ -44,12 +44,11 @@ public class RoundManager : MonoBehaviour
             Destroy(b.gameObject);
         }
 
-        Turret[] basicTurrets = FindObjectsByType<Turret>(FindObjectsSortMode.None);
-        foreach (Turret t in basicTurrets) t.Revive();
-
-        // TODO: FindObjects cant search by interface
-        TurretSpread[] spreadTurrets = FindObjectsByType<TurretSpread>(FindObjectsSortMode.None);
-        foreach (TurretSpread t in spreadTurrets) t.Revive();
+        TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
+        foreach (TurretBase t in turrets)
+        {
+            t.Revive();
+        }
     }
 
     // Call this from Enemy.Die()

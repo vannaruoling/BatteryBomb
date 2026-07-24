@@ -78,11 +78,13 @@ public class RoundCardManager : MonoBehaviour
     void OnCardTurretFireRate()
     {
         UpgradeState.Instance.turretFireRateMultiplier *= 1.25f;
-        Turret[] turrets = FindObjectsByType<Turret>(FindObjectsSortMode.None);
-        foreach (Turret t in turrets)
+
+        TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
+        foreach (TurretBase t in turrets)
         {
             t.fireRate *= 1.25f;
         }
+
         RoundManager.Instance.StartRound();
     }
 
