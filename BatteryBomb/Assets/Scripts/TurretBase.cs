@@ -10,6 +10,7 @@ public abstract class TurretBase : MonoBehaviour
     public float range = 5f;
     public GameObject rangeIndicatorPrefab;
     private GameObject rangeIndicatorInstance;
+    private SpriteRenderer outlineRenderer;
 
     protected float fireCooldown = 0f;
 
@@ -24,6 +25,10 @@ public abstract class TurretBase : MonoBehaviour
             UpdateRangeIndicatorScale();
             rangeIndicatorInstance.SetActive(false);
         }
+
+        float outlineScale = 1.3f;
+        outlineRenderer = OutlineUtility.CreateOutline(transform, GetComponent<SpriteRenderer>(), outlineScale);
+
     }
 
     protected virtual void Update()
@@ -37,6 +42,14 @@ public abstract class TurretBase : MonoBehaviour
             {
                 fireCooldown = 1f / fireRate;
             }
+        }
+    }
+
+    public void SetOutlineVisible(bool show)
+    {
+        if (outlineRenderer != null)
+        {
+            outlineRenderer.gameObject.SetActive(show);
         }
     }
 

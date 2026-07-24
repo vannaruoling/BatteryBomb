@@ -1527,7 +1527,7 @@ MonoBehaviour:
   enemySpawner: {fileID: 1270056543}
   bombSpawner: {fileID: 1875415598}
   roundCardPanel: {fileID: 1092427115}
-  currentRound: 3
+  currentRound: 5
   enemiesPerRound: 5
   spawnInterval: 1.5
   roundEndDelay: 0.4

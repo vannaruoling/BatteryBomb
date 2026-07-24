@@ -44,8 +44,16 @@ public class BatteryBomb : MonoBehaviour
             TurretBase target = FindAttachableTurret();
             if (target != highlightedTurret)
             {
-                if (highlightedTurret != null) highlightedTurret.SetRangeIndicatorVisible(false);
-                if (target != null) target.SetRangeIndicatorVisible(true);
+                if (highlightedTurret != null)
+                {
+                    highlightedTurret.SetRangeIndicatorVisible(false);
+                    highlightedTurret.SetOutlineVisible(false);
+                }
+                if (target != null)
+                {
+                    target.SetRangeIndicatorVisible(true);
+                    target.SetOutlineVisible(true);
+                }
                 highlightedTurret = target;
             }
         }
@@ -97,6 +105,8 @@ public class BatteryBomb : MonoBehaviour
         if (highlightedTurret != null)
         {
             highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret.SetOutlineVisible(false);
+
             highlightedTurret = null;
         }
 
