@@ -44,12 +44,12 @@ public class RoundManager : MonoBehaviour
             Destroy(b.gameObject);
         }
 
-        // revive after bombs are gone to prevent race conditon where they blow up after revival
-        Turret[] turrets = FindObjectsByType<Turret>(FindObjectsSortMode.None);
-        foreach (Turret t in turrets)
-        {
-            t.Revive();
-        }
+        Turret[] basicTurrets = FindObjectsByType<Turret>(FindObjectsSortMode.None);
+        foreach (Turret t in basicTurrets) t.Revive();
+
+        // TODO: FindObjects cant search by interface
+        TurretSpread[] spreadTurrets = FindObjectsByType<TurretSpread>(FindObjectsSortMode.None);
+        foreach (TurretSpread t in spreadTurrets) t.Revive();
     }
 
     // Call this from Enemy.Die()

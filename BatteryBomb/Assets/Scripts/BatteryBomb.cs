@@ -14,7 +14,10 @@ public class BatteryBomb : MonoBehaviour
 
     private bool isDragging = false;
     private Camera mainCamera;
-    private Turret attachedTurret = null;
+    private ITurret attachedTurret = null;
+    // interfaces don't expose .transform, so store it separately
+    private Transform attachedTurretTransform = null;
+
 
     void Awake()
     {
@@ -90,6 +93,7 @@ public class BatteryBomb : MonoBehaviour
     {
         attachedTurret.SetPowered(false);
         attachedTurret = null;
+        attachedTurretTransform = null;
         SetPowering();
     }
 
@@ -99,37 +103,36 @@ public class BatteryBomb : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            Turret turret = hit.GetComponent<Turret>();
-            if (turret != null && !turret.isDead && !turret.isPowered)
+            ITurret turret = hit.GetComponent<ITurret>();
+            if (turret != null && !turret.IsDead && !turret.IsPowered)
             {
                 Debug.Log("Found turret to attach to: " + hit.gameObject.name);
                 attachedTurret = turret;
-                transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+                attachedTurretTransform = hit.transform;
+                transform.position = attachedTurretTransform.position + new Vector3(0f, 0.5f, 0f);
                 attachedTurret.SetPowered(true);
                 SetPowering();
-                return; // stop after attaching to the first valid turret found
+                return;
             }
         }
 
         Debug.Log("No turret found to attach to");
-
     }
+
 
     void Detonate()
     {
         Debug.Log("Battery BOOOOOMMMBBB");
 
-        Vector3 explosionPosition = attachedTurret.transform.position;
+        Vector3 explosionPosition = attachedTurretTransform.position;
 
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
         Destroy(explosion, 1f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
 
-        // TODO: make bombs destory other bombs
         foreach (Collider2D hit in hits)
         {
-
             if (hit.CompareTag("Enemy"))
             {
                 Enemy enemy = hit.GetComponent<Enemy>();

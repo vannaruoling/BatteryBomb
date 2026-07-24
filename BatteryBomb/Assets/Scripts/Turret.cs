@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Turret : MonoBehaviour, ITurret
 {
     public float range = 5f;
     public float fireRate = 1f;
@@ -8,21 +8,21 @@ public class Turret : MonoBehaviour
 
     public bool isPowered = false;
     public bool isDead = false;
+
+    public bool IsPowered => isPowered;
+    public bool IsDead => isDead;
+
     private float fireCooldown = 0f;
     private Transform target;
 
     void Start()
     {
         SetPowered(false);
-        // Initialization
     }
 
     void Update()
     {
-        if (!isPowered || isDead)
-        {
-            return;
-        }
+        if (!isPowered || isDead) return;
 
         FindTarget();
 
@@ -44,7 +44,6 @@ public class Turret : MonoBehaviour
         GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
     }
 
-
     public void Die()
     {
         isDead = true;
@@ -52,13 +51,11 @@ public class Turret : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.black;
     }
 
-    // TODO:
     public void Revive()
     {
         isDead = false;
         SetPowered(false);
     }
-
 
     void FindTarget()
     {
@@ -66,7 +63,6 @@ public class Turret : MonoBehaviour
         float closestDistance = Mathf.Infinity;
         Transform closestEnemy = null;
 
-        // Find closest enemy in radius
         foreach (GameObject enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
