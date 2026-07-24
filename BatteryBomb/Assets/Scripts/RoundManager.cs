@@ -26,6 +26,8 @@ public class RoundManager : MonoBehaviour
         Time.timeScale = 1f;
 
         ResetGameBoard();
+        GameManager.Instance.inputEnabled = true;
+
 
         DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
 
@@ -64,6 +66,8 @@ public class RoundManager : MonoBehaviour
 
     void EndRound()
     {
+        GameManager.Instance.inputEnabled = false;
+
         currentRound--;
 
         if (currentRound <= 0)

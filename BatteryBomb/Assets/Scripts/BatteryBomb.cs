@@ -29,7 +29,7 @@ public class BatteryBomb : MonoBehaviour
 
         if (!GameManager.Instance.inputEnabled) return;
 
-        if (isDragging)
+        if (isDragging && GameManager.Instance.inputEnabled)
         {
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
