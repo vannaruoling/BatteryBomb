@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyTypes;
     public float spawnInterval = 2f;
     public Vector2 spawnPoint = new Vector2(-8f, 0f);
 
@@ -41,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        GameObject enemyToSpawn = enemyTypes[Random.Range(0, enemyTypes.Length)];
+        Instantiate(enemyToSpawn, spawnPoint, Quaternion.identity);
     }
 }

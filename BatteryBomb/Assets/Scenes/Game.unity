@@ -1410,7 +1410,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c3a9d2505a547a9a7689a505ba98b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 5395611819641696461, guid: 728573522d2404526a112ab98f218c35, type: 3}
+  enemyTypes:
+  - {fileID: 5395611819641696461, guid: 8a1e6de8263c7417ba7008c27c27287c, type: 3}
+  - {fileID: 5395611819641696461, guid: 580f4b6e827c8452a9032fdf2b62dc53, type: 3}
+  - {fileID: 5395611819641696461, guid: 5cd776998db004190a63a1834c407430, type: 3}
   spawnInterval: 2
   spawnPoint: {x: -8, y: 0}
 --- !u!4 &1270056544
