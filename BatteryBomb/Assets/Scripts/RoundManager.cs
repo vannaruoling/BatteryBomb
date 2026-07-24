@@ -73,6 +73,8 @@ public class RoundManager : MonoBehaviour
         // PRevents bug where deaths were reported between rounds
         if (!roundActive) return;
 
+        GameManager.Instance.AddKill();
+
         enemiesAlive--;
         Debug.Log("Enemy died, remaining: " + enemiesAlive);
         if (enemiesAlive <= 0)

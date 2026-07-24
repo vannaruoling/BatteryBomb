@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public bool inputEnabled = false;
 
     public int playerHealth = 10;
+    // Score
+    public int killCount = 0;
 
     private bool isGameOver = false;
 
@@ -39,6 +41,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void AddKill()
+    {
+        killCount++;
+    }
     public void HealPlayer(int amount)
     {
         playerHealth = Mathf.Min(playerHealth + amount, 10);
