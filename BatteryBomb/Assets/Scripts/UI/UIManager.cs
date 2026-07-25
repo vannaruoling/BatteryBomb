@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     public GameObject gameplayPanel;
     public GameObject gameOverPanel;
 
+    public GameObject winPanel;
+
+
     // Singleton
     void Awake()
     {
@@ -65,5 +68,16 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowWin()
+    {
+        Time.timeScale = 0f;
+        titlePanel.SetActive(false);
+        gameplayPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(true);
+
+        GameManager.Instance.inputEnabled = false;
     }
 }

@@ -107,8 +107,7 @@ public class RoundManager : MonoBehaviour
 
         if (currentRound <= 0)
         {
-            // TODO: win state, right now game just dies
-            Debug.Log("All rounds cleared");
+            UIManager.Instance.ShowWin();
             return;
         }
 
