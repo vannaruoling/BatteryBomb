@@ -5,6 +5,9 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 3;
     public float speed = 2f;
     public bool movementEnabled = true;
+    public Transform[] waypoints;
+
+    private int waypointIndex = 0;
     private Animator animator;
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
@@ -43,19 +46,63 @@ public class Enemy : MonoBehaviour
     {
         if (movementEnabled)
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
+            if (waypoints != null && waypointIndex < waypoints.Length)
+            {
+                Transform target = waypoints[waypointIndex];
+                if (target == null)
+                {
+                    waypointIndex++;
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(
+                        transform.position, target.position, speed * Time.deltaTime);
+
+                    if (Vector3.Distance(transform.position, target.position) < 0.05f)
+                        waypointIndex++;
+                }
+            }
+            else
+            {
+                // If no path exists, just move right i guess...
+                // TODO: test
+                transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
+            }
         }
+
         if (flashOverlay != null)
         {
             flashOverlay.sprite = spriteRenderer.sprite;
+            Debug.Log("Copying sprite: " + spriteRenderer.sprite);
         }
+
     }
+
+    // void Update()
+    // {
+    //     if (movementEnabled)
+    //     {
+    //         transform.Translate(Vector2.right * speed * Time.deltaTime, Space.World);
+    //     }
+    //     if (flashOverlay != null)
+    //     {
+    //         flashOverlay.sprite = spriteRenderer.sprite;
+    //     }
+    // }
 
     System.Collections.IEnumerator FlashRoutine()
     {
         flashOverlay.enabled = true;
         yield return new WaitForSeconds(0.05f);
         if (flashOverlay != null) flashOverlay.enabled = false;
+    }
+
+
+
+    public void SetPath(Transform[] path)
+    {
+        waypoints = path;
+        waypointIndex = 0;
     }
 
     public void TakeDamage(int amount)
