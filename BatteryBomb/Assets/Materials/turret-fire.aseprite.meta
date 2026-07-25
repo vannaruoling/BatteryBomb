@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6d24557014309924bb88ecb8eec44086
+guid: 5d88275beba866146ae7461f20389b6a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -36,7 +36,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 32
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -101,7 +101,7 @@ ScriptedImporter:
     addShadowCasters: 0
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
-  platformSettingsDirtyTick: 639204066693814235
+  platformSettingsDirtyTick: 0
   singleSpriteImportData:
   - name: 
     originalName: 
@@ -137,7 +137,7 @@ ScriptedImporter:
       y: 177
       width: 26
       height: 27
-    spriteID: 025566654a864a14a87a6aba5a7edb49
+    spriteID: 2a720bdc0cb4beb46adf950e93e69db4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -158,7 +158,7 @@ ScriptedImporter:
       y: 39
       width: 28
       height: 26
-    spriteID: b580c97ab65de9e4fb880b74f9204bb3
+    spriteID: 7d05f59150903134d9e482ec1cd088d3
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -179,7 +179,7 @@ ScriptedImporter:
       y: 73
       width: 28
       height: 26
-    spriteID: 81679d03630a4e242b73a2846f3a5101
+    spriteID: 1f28f700f81bf6d4a9157178b3d92f25
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -200,7 +200,7 @@ ScriptedImporter:
       y: 220
       width: 28
       height: 27
-    spriteID: 58c692a453c3a3743959570997edd2da
+    spriteID: 627bf54b7f36d714191a1dbfb7d60cfc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -221,7 +221,7 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 27
-    spriteID: 0c1c40e78f26c704e84b1c3ee55b81f6
+    spriteID: 11a4a1698b332d940a698d3336d5bff9
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -242,7 +242,7 @@ ScriptedImporter:
       y: 107
       width: 28
       height: 26
-    spriteID: 2eede493927b98447a40ec8b7d837143
+    spriteID: 20e34edd5630db442a5655632bba181c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -263,7 +263,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 12fd58eb199f804479c669ec182c2f8b
+    spriteID: 98c09431e552e7c4abc6dd13994e4d5f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -284,7 +284,7 @@ ScriptedImporter:
       y: 42
       width: 30
       height: 28
-    spriteID: 2824e79d8e574b84f87fc00819110f8a
+    spriteID: cce6ad0560d9e5042998bdbe4b2cbd95
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -305,7 +305,7 @@ ScriptedImporter:
       y: 114
       width: 28
       height: 28
-    spriteID: 2718a67c82d62094d95c48e2b8a03169
+    spriteID: 66d72b0b8a8aeae4b999e53479a9eca2
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -326,7 +326,7 @@ ScriptedImporter:
       y: 141
       width: 26
       height: 28
-    spriteID: 46cc7947c8e69d2448d3943a79e9e9a1
+    spriteID: ffeded8cbb4ba1e44b3c612a495c4634
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -347,7 +347,7 @@ ScriptedImporter:
       y: 150
       width: 28
       height: 28
-    spriteID: f42a186e0e21b4a448923ab834a0189f
+    spriteID: 256d64db93867074aaea8742d698b8ed
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -368,7 +368,7 @@ ScriptedImporter:
       y: 78
       width: 30
       height: 28
-    spriteID: 99894e82ed1dfc147a535eb285dcefe3
+    spriteID: 6b79a9510c9bf634f8d753664a4bc654
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -389,7 +389,7 @@ ScriptedImporter:
       y: 186
       width: 30
       height: 26
-    spriteID: d21c01683904bf841843adccd7dc2a20
+    spriteID: 7fe803aa2c26183459c0a4679c0971dc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -403,12 +403,12 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3566476212
+      value0: 4130639249
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: turret
+    name: turret-fire
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -421,7 +421,7 @@ ScriptedImporter:
         y: 5
         width: 26
         height: 27
-      spriteId: 025566654a864a14a87a6aba5a7edb49
+      spriteId: 2a720bdc0cb4beb46adf950e93e69db4
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -430,7 +430,7 @@ ScriptedImporter:
         y: 5
         width: 28
         height: 26
-      spriteId: b580c97ab65de9e4fb880b74f9204bb3
+      spriteId: 7d05f59150903134d9e482ec1cd088d3
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -439,7 +439,7 @@ ScriptedImporter:
         y: 5
         width: 28
         height: 26
-      spriteId: 81679d03630a4e242b73a2846f3a5101
+      spriteId: 1f28f700f81bf6d4a9157178b3d92f25
     - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
@@ -448,7 +448,7 @@ ScriptedImporter:
         y: 5
         width: 28
         height: 27
-      spriteId: 58c692a453c3a3743959570997edd2da
+      spriteId: 627bf54b7f36d714191a1dbfb7d60cfc
     - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
@@ -457,7 +457,7 @@ ScriptedImporter:
         y: 5
         width: 28
         height: 27
-      spriteId: 0c1c40e78f26c704e84b1c3ee55b81f6
+      spriteId: 11a4a1698b332d940a698d3336d5bff9
     - name: Frame_5
       frameIndex: 5
       additiveSortOrder: 0
@@ -466,7 +466,7 @@ ScriptedImporter:
         y: 5
         width: 28
         height: 26
-      spriteId: 2eede493927b98447a40ec8b7d837143
+      spriteId: 20e34edd5630db442a5655632bba181c
     - name: Frame_6
       frameIndex: 6
       additiveSortOrder: 0
@@ -475,7 +475,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 12fd58eb199f804479c669ec182c2f8b
+      spriteId: 98c09431e552e7c4abc6dd13994e4d5f
     - name: Frame_7
       frameIndex: 7
       additiveSortOrder: 0
@@ -484,7 +484,7 @@ ScriptedImporter:
         y: 2
         width: 30
         height: 28
-      spriteId: 2824e79d8e574b84f87fc00819110f8a
+      spriteId: cce6ad0560d9e5042998bdbe4b2cbd95
     - name: Frame_8
       frameIndex: 8
       additiveSortOrder: 0
@@ -493,7 +493,7 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
-      spriteId: 2718a67c82d62094d95c48e2b8a03169
+      spriteId: 66d72b0b8a8aeae4b999e53479a9eca2
     - name: Frame_9
       frameIndex: 9
       additiveSortOrder: 0
@@ -502,7 +502,7 @@ ScriptedImporter:
         y: 4
         width: 26
         height: 28
-      spriteId: 46cc7947c8e69d2448d3943a79e9e9a1
+      spriteId: ffeded8cbb4ba1e44b3c612a495c4634
     - name: Frame_10
       frameIndex: 10
       additiveSortOrder: 0
@@ -511,7 +511,7 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
-      spriteId: f42a186e0e21b4a448923ab834a0189f
+      spriteId: 256d64db93867074aaea8742d698b8ed
     - name: Frame_11
       frameIndex: 11
       additiveSortOrder: 0
@@ -520,7 +520,7 @@ ScriptedImporter:
         y: 2
         width: 30
         height: 28
-      spriteId: 99894e82ed1dfc147a535eb285dcefe3
+      spriteId: 6b79a9510c9bf634f8d753664a4bc654
     - name: Frame_12
       frameIndex: 12
       additiveSortOrder: 0
@@ -529,49 +529,13 @@ ScriptedImporter:
         y: 4
         width: 30
         height: 26
-      spriteId: d21c01683904bf841843adccd7dc2a20
+      spriteId: 7fe803aa2c26183459c0a4679c0971dc
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
     parentIndex: -1
   tileSets: []
-  platformSettings:
-  - name: DefaultTexturePlatform
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: WebGL
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   previousTextureSize: {x: 128, y: 256}
