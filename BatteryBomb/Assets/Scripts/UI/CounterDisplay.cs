@@ -117,45 +117,110 @@ public class CounterDisplay : MonoBehaviour
     {
         float enterSign = to < from ? 1f : -1f;
 
-        int start = from;
-        if (Mathf.Abs(to - from) < minRollDistance)
+
+        // If its just one number change, dont do the whole spinning animation
+        bool isSingleStep = Mathf.Abs(to - from) <= 1;
+
+        if (!isSingleStep)
         {
-            start = to + (to < from ? minRollDistance : -minRollDistance);
-        }
-
-        float t = 0f;
-        float tick = 0f;
-        int lastShown = int.MinValue;
-
-        while (t < rollDuration)
-        {
-            float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-            t += dt;
-            tick += dt;
-
-            float p = Mathf.Clamp01(t / rollDuration);
-            float eased = 1f - Mathf.Pow(1f - p, 3f);
-            int shown = Mathf.RoundToInt(Mathf.Lerp(start, to, eased));
-
-            if (shown != lastShown)
+            // Guarantee a visible spin even when the value only moved by more than 1.
+            int start = from;
+            if (Mathf.Abs(to - from) < minRollDistance)
             {
-                lastShown = shown;
-                label.text = prefix + shown;
-                tick = 0f;
+                start = to + (to < from ? minRollDistance : -minRollDistance);
             }
 
-            float tp = tickSettle <= 0f ? 1f : Mathf.Clamp01(tick / tickSettle);
-            label.transform.localPosition = homePos + Vector3.up * (enterOffset * enterSign * (1f - tp));
-            label.alpha = Mathf.Lerp(enterAlpha, 1f, tp);
+            float t = 0f;
+            float tick = 0f;
+            int lastShown = int.MinValue;
 
-            yield return null;
-            if (label == null) yield break;
+            while (t < rollDuration)
+            {
+                float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                t += dt;
+                tick += dt;
+
+                float p = Mathf.Clamp01(t / rollDuration);
+                float eased = 1f - Mathf.Pow(1f - p, 3f);
+                int shown = Mathf.RoundToInt(Mathf.Lerp(start, to, eased));
+
+                if (shown != lastShown)
+                {
+                    lastShown = shown;
+                    label.text = prefix + shown;
+                    tick = 0f;
+                }
+
+                float tp = tickSettle <= 0f ? 1f : Mathf.Clamp01(tick / tickSettle);
+                label.transform.localPosition = homePos + Vector3.up * (enterOffset * enterSign * (1f - tp));
+                label.alpha = Mathf.Lerp(enterAlpha, 1f, tp);
+
+                yield return null;
+                if (label == null) yield break;
+            }
         }
+        else
+        {
+
+            label.text = prefix + to;
+
+            float t = 0f;
+            while (t < tickSettle)
+            {
+                float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                t += dt;
+                float tp = Mathf.Clamp01(t / tickSettle);
+
+                label.transform.localPosition = homePos + Vector3.up * (enterOffset * enterSign * (1f - tp));
+                label.alpha = Mathf.Lerp(enterAlpha, 1f, tp);
+
+                yield return null;
+                if (label == null) yield break;
+            }
+        }
+
+        // int start = from;
+        // if (Mathf.Abs(to - from) < minRollDistance)
+        // {
+        //     start = to + (to < from ? minRollDistance : -minRollDistance);
+        // }
+
+        // float t = 0f;
+        // float tick = 0f;
+        // int lastShown = int.MinValue;
+
+        // while (t < rollDuration)
+        // {
+        //     float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+        //     t += dt;
+        //     tick += dt;
+
+        //     float p = Mathf.Clamp01(t / rollDuration);
+        //     float eased = 1f - Mathf.Pow(1f - p, 3f);
+        //     int shown = Mathf.RoundToInt(Mathf.Lerp(start, to, eased));
+
+        //     if (shown != lastShown)
+        //     {
+        //         lastShown = shown;
+        //         label.text = prefix + shown;
+        //         tick = 0f;
+        //     }
+
+        //     float tp = tickSettle <= 0f ? 1f : Mathf.Clamp01(tick / tickSettle);
+        //     label.transform.localPosition = homePos + Vector3.up * (enterOffset * enterSign * (1f - tp));
+        //     label.alpha = Mathf.Lerp(enterAlpha, 1f, tp);
+
+        //     yield return null;
+        //     if (label == null) yield break;
+        // }
 
         label.text = prefix + to;
         label.transform.localPosition = homePos;
         label.alpha = 1f;
 
+
+        // Snap into place at end
+        // TODO: fic that weird lateral movement
         float pt = 0f;
         while (pt < landPunchDuration)
         {
