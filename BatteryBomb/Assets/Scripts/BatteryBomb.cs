@@ -86,7 +86,7 @@ public class BatteryBomb : MonoBehaviour
     public void SetPowering()
     {
         bool isPowered = attachedTurret != null;
-        GetComponent<SpriteRenderer>().color = isPowered ? Color.red : Color.yellow;
+        GetComponent<SpriteRenderer>().color = isPowered ? Color.Lerp(Color.white, Color.red, 0.3f) : Color.yellow;
     }
 
     void OnMouseDown()
