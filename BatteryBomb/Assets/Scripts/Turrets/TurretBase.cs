@@ -8,6 +8,8 @@ public abstract class TurretBase : MonoBehaviour
     public bool isPowered = false;
     public bool isDead = false;
     public float range = 5f;
+
+    public BatteryBomb attachedBomb;
     public GameObject rangeIndicatorPrefab;
     public Material outlineMaterial;
     private SpriteRenderer outlineRenderer;

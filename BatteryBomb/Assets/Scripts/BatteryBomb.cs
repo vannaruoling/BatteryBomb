@@ -161,10 +161,9 @@ public class BatteryBomb : MonoBehaviour
         SetBombOutlineVisible(false);
     }
 
-
-
-    void Detach()
+    public void Detach()
     {
+        if (attachedTurret.attachedBomb == this) attachedTurret.attachedBomb = null;
         attachedTurret.SetPowered(false);
         attachedTurret = null;
         SetPowering();
@@ -177,12 +176,17 @@ public class BatteryBomb : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             TurretBase turret = hit.GetComponent<TurretBase>();
-            if (turret != null && !turret.isDead && !turret.isPowered)
+            if (turret != null && !turret.isDead)
             {
-                Debug.Log("Found turret to attach to: " + hit.gameObject.name);
+                if (turret.attachedBomb != null && turret.attachedBomb != this)
+                {
+                    turret.attachedBomb.Detach();
+                }
+
                 attachedTurret = turret;
                 transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
                 attachedTurret.SetPowered(true);
+                attachedTurret.attachedBomb = this;
                 SetPowering();
                 return;
             }
@@ -221,13 +225,12 @@ public class BatteryBomb : MonoBehaviour
 
     TurretBase FindAttachableTurret()
     {
-        // FInd turret on defualt layer
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attachRadius, LayerMask.GetMask("Default"));
 
         foreach (Collider2D hit in hits)
         {
             TurretBase turret = hit.GetComponent<TurretBase>();
-            if (turret != null && !turret.isDead && !turret.isPowered)
+            if (turret != null && !turret.isDead)
             {
                 return turret;
             }
