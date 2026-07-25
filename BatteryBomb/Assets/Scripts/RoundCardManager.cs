@@ -36,6 +36,7 @@ public class RoundCardManager : MonoBehaviour
             new CardOption("Bomb Timer +3s", OnCardBombTimer),
             new CardOption("Turret Fire Rate +25%", OnCardTurretFireRate),
             new CardOption("Explosion Radius +0.5", OnCardExplosionRadius),
+            new CardOption("Bomb Ammo +1", OnCardMaxBombCount),
         };
     }
     public void PresentRandomCards()
@@ -91,6 +92,12 @@ public class RoundCardManager : MonoBehaviour
     void OnCardExplosionRadius()
     {
         UpgradeState.Instance.explosionRadiusBonus += 0.5f;
+        RoundManager.Instance.StartRound();
+    }
+
+    void OnCardMaxBombCount()
+    {
+        UpgradeState.Instance.maxBombCountBonus += 1;
         RoundManager.Instance.StartRound();
     }
 }

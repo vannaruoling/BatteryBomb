@@ -35,6 +35,8 @@ public class RoundManager : MonoBehaviour
 
         ResetGameBoard();
         GameManager.Instance.inputEnabled = true;
+
+        bombSpawner.ResetForRound();
         bombSpawner.SpawnBombNow();
 
         // Displays HP

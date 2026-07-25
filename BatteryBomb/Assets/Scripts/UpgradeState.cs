@@ -7,6 +7,7 @@ public class UpgradeState : MonoBehaviour
     public float bombTimerBonus = 0f;
     public float explosionRadiusBonus = 0f;
     public float turretFireRateMultiplier = 1f;
+    public int maxBombCountBonus = 0;
 
     void Awake()
     {

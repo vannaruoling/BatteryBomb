@@ -669,6 +669,7 @@ MonoBehaviour:
   bombTimerBonus: 0
   explosionRadiusBonus: 0
   turretFireRateMultiplier: 1
+  maxBombCountBonus: 0
 --- !u!4 &354395032
 Transform:
   m_ObjectHideFlags: 0
@@ -1537,7 +1538,7 @@ MonoBehaviour:
   roundCardPanel: {fileID: 1092427115}
   roundCounter: {fileID: 2048830719}
   currentRound: 5
-  enemiesPerRound: 1
+  enemiesPerRound: 5
   spawnInterval: 1.5
   roundEndDelay: 0.6
 --- !u!4 &1360769657
@@ -3508,6 +3509,10 @@ PrefabInstance:
     - target: {fileID: 1791062796044498214, guid: 7e4dee1d9fdd447cca14c72e14af53d3, type: 3}
       propertyPath: spawnInterval
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791062796044498214, guid: 7e4dee1d9fdd447cca14c72e14af53d3, type: 3}
+      propertyPath: baseBombsPerRound
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6284481394047957758, guid: 7e4dee1d9fdd447cca14c72e14af53d3, type: 3}
       propertyPath: m_LocalPosition.x
