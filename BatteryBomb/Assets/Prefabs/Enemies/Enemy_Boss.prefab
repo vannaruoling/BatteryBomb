@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.43161, y: -2.07568, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   maxHealth: 15
   speed: 1
   movementEnabled: 1
+  flashMaterial: {fileID: 0}
 --- !u!212 &2866960587233379162
 SpriteRenderer:
   serializedVersion: 3
