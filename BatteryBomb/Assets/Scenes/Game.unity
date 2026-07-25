@@ -1905,7 +1905,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 2
   currentRound: 10
-  enemiesPerRound: 1
+  enemiesPerRound: 5
   spawnInterval: 1.5
   roundEndDelay: 0.6
 --- !u!4 &1360769657

@@ -32,6 +32,7 @@ public class BatteryBomb : MonoBehaviour
     private bool isDragging = false;
     private Camera mainCamera;
     private TurretBase attachedTurret = null;
+    private static bool anyBombDragging = false;
 
     void Awake()
     {
@@ -130,6 +131,7 @@ public class BatteryBomb : MonoBehaviour
     void Drop()
     {
         isDragging = false;
+        anyBombDragging = false;
         spriteRenderer.sortingOrder = 20;
 
         if (highlightedTurret != null)
@@ -157,6 +159,7 @@ public class BatteryBomb : MonoBehaviour
         }
 
         isDragging = true;
+        anyBombDragging = true;
         spriteRenderer.sortingOrder = 5;
         SetBombOutlineVisible(false);
     }
@@ -164,6 +167,9 @@ public class BatteryBomb : MonoBehaviour
     public void Detach()
     {
         if (attachedTurret.attachedBomb == this) attachedTurret.attachedBomb = null;
+
+        transform.position = attachedTurret.transform.position + new Vector3(0f, -0.6f, 0f);
+
         attachedTurret.SetPowered(false);
         attachedTurret = null;
         SetPowering();
@@ -188,6 +194,7 @@ public class BatteryBomb : MonoBehaviour
                 attachedTurret.SetPowered(true);
                 attachedTurret.attachedBomb = this;
                 SetPowering();
+                // SetBombOutlineVisible(false);
                 return;
             }
         }
@@ -249,12 +256,17 @@ public class BatteryBomb : MonoBehaviour
         }
     }
 
-
     void OnMouseEnter()
     {
+
         if (!GameManager.Instance.inputEnabled) return;
         if (isDragging) return;
+        if (anyBombDragging) return;
         SetBombOutlineVisible(true);
+        // if (!GameManager.Instance.inputEnabled) return;
+        // if (isDragging) return;
+        // if (attachedTurret != null) return;
+        // SetBombOutlineVisible(true);
     }
 
 
