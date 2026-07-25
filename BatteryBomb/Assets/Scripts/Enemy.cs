@@ -6,6 +6,12 @@ public class Enemy : MonoBehaviour
     public float speed = 2f;
     public bool movementEnabled = true;
     public Transform[] waypoints;
+    public GameObject chainExplosionEffect;
+
+    public float chainExplosionRadius = 2f;
+    public int chainExplosionDamage = 2;
+    // Cascading bomb explosions
+    private bool hasCascaded = false;
 
     private int waypointIndex = 0;
     private Animator animator;
@@ -137,6 +143,36 @@ public class Enemy : MonoBehaviour
             {
                 if (this != null) Destroy(gameObject);
             });
+    }
+
+    public void TakeChainDamage(int amount)
+    {
+        TakeDamage(amount);
+        TriggerChainExplosion();
+    }
+
+    void TriggerChainExplosion()
+    {
+        if (hasCascaded) return;
+        hasCascaded = true;
+
+        if (chainExplosionEffect != null)
+        {
+            GameObject explosion = Instantiate(chainExplosionEffect, transform.position, Quaternion.identity);
+            Destroy(explosion, 1f);
+        }
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, chainExplosionRadius, LayerMask.GetMask("Default"));
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject == gameObject) continue;
+
+            Enemy enemy = hit.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeChainDamage(chainExplosionDamage);
+            }
+        }
     }
 
     // void Die()

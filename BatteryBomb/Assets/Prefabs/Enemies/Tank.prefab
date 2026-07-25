@@ -51,6 +51,9 @@ MonoBehaviour:
   speed: 1
   movementEnabled: 1
   waypoints: []
+  chainExplosionEffect: {fileID: 564930320001899514, guid: 426ebd5e7770940a892d044cffe192dc, type: 3}
+  chainExplosionRadius: 2
+  chainExplosionDamage: 2
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:
