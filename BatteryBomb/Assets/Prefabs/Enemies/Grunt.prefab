@@ -53,7 +53,10 @@ MonoBehaviour:
   waypoints: []
   chainExplosionEffect: {fileID: 564930320001899514, guid: 426ebd5e7770940a892d044cffe192dc, type: 3}
   chainExplosionRadius: 1
-  chainDetonateDelay: 1
+  chainDetonateDelay: 0.3
+  chainWarningColor: {r: 0, g: 1, b: 1, a: 1}
+  chainWarningFlickerRate: 0.08
+  chainBloatScale: 1.2
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:

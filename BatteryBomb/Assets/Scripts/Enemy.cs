@@ -11,6 +11,12 @@ public class Enemy : MonoBehaviour
     public GameObject chainExplosionEffect;
     public float chainExplosionRadius = 1.5f;
     public float chainDetonateDelay = 1f;
+    public float chainShakeMagnitude = 0.05f;
+
+    public Color chainWarningColor = Color.cyan;
+    public float chainWarningFlickerRate = 0.08f;
+    public float chainBloatScale = 1.4f;
+    private Vector3 baseScale;
     private bool hasCascaded = false;
 
     private int waypointIndex = 0;
@@ -27,6 +33,7 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        baseScale = transform.localScale;
 
         GameObject overlayObj = new GameObject("FlashOverlay");
         overlayObj.transform.SetParent(transform);
@@ -169,12 +176,45 @@ public class Enemy : MonoBehaviour
     IEnumerator ChainDeathRoutine(int inheritedDamage)
     {
         movementEnabled = false;
+
+        Coroutine flicker = StartCoroutine(ChainWarningFlicker());
+        StartCoroutine(ChainBloatRoutine());
+        Juice.Instance.ShakeTransform(transform, chainShakeMagnitude, chainDetonateDelay);
+
         yield return new WaitForSeconds(chainDetonateDelay);
+
+        if (flicker != null) StopCoroutine(flicker);
+        if (flashOverlay != null) flashOverlay.enabled = false;
 
         if (this == null) yield break;
 
         TriggerChainExplosion(inheritedDamage);
         Die();
+    }
+
+    IEnumerator ChainWarningFlicker()
+    {
+        while (true)
+        {
+            if (flashOverlay != null)
+            {
+                flashOverlay.color = chainWarningColor;
+                flashOverlay.enabled = !flashOverlay.enabled;
+            }
+            yield return new WaitForSeconds(chainWarningFlickerRate);
+        }
+    }
+
+    IEnumerator ChainBloatRoutine()
+    {
+        float t = 0f;
+        while (t < chainDetonateDelay)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / chainDetonateDelay);
+            transform.localScale = Vector3.Lerp(baseScale, baseScale * chainBloatScale, p);
+            yield return null;
+        }
     }
 
 
