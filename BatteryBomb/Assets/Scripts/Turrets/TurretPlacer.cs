@@ -9,6 +9,11 @@ public class TurretPlacer : MonoBehaviour
     public Color validColor = new Color(0.4f, 1f, 0.4f, 0.6f);
     public Color invalidColor = new Color(1f, 0.4f, 0.4f, 0.6f);
 
+    public GameObject rangeIndicatorPrefab;
+    private SpriteRenderer rangeIndicatorRenderer;
+    private float rangeIndicatorBaseAlpha = 0.5f;
+    private GameObject rangeIndicatorInstance;
+
     private GameObject ghostInstance;
     private SpriteRenderer ghostRenderer;
     private Camera mainCamera;
@@ -27,7 +32,21 @@ public class TurretPlacer : MonoBehaviour
 
         ghostInstance = Instantiate(ghostPrefab);
         ghostRenderer = ghostInstance.GetComponent<SpriteRenderer>();
-        ghostRenderer.sortingOrder = 30; // above resting bomb (20)
+        ghostRenderer.sortingOrder = 30;
+
+
+        if (rangeIndicatorPrefab != null)
+        {
+            rangeIndicatorInstance = Instantiate(rangeIndicatorPrefab, ghostInstance.transform);
+            rangeIndicatorInstance.transform.localPosition = Vector3.zero;
+            rangeIndicatorRenderer = rangeIndicatorInstance.GetComponent<SpriteRenderer>();
+            rangeIndicatorBaseAlpha = rangeIndicatorRenderer.color.a;
+
+            float turretRange = turretPrefab.GetComponent<TurretBase>().range;
+            float nativeDiameter = rangeIndicatorRenderer.sprite.bounds.size.x;
+            float desiredDiameter = turretRange * 2f;
+            rangeIndicatorInstance.transform.localScale = Vector3.one * (desiredDiameter / nativeDiameter);
+        }
     }
 
     void Update()
@@ -41,11 +60,21 @@ public class TurretPlacer : MonoBehaviour
         bool valid = IsValidPlacement(mouseWorldPos);
         ghostRenderer.color = valid ? validColor : invalidColor;
 
+        // Make the range indicator apepar and colour change too
+        if (rangeIndicatorRenderer != null)
+        {
+            Color c = valid ? Color.white : invalidColor;
+            c.a = rangeIndicatorBaseAlpha;
+            rangeIndicatorRenderer.color = c;
+        }
+
+
         if (Input.GetMouseButtonDown(0) && valid)
         {
             Commit(mouseWorldPos);
         }
     }
+
 
     bool IsValidPlacement(Vector3 pos)
     {
