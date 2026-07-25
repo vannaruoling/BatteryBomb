@@ -5,8 +5,17 @@ using System.Collections.Generic;
 
 public class RoundCardManager : MonoBehaviour
 {
-    public static RoundCardManager Instance;
 
+    // Option setup for picking a turret
+    [System.Serializable]
+    public class TurretOption
+    {
+        public string label;
+        public GameObject prefab;
+    }
+
+    public TurretOption[] turretOptions;
+    public static RoundCardManager Instance;
     public GameObject[] cards;
 
     // Card option with a label and effect
@@ -99,5 +108,36 @@ public class RoundCardManager : MonoBehaviour
     {
         UpgradeState.Instance.maxBombCountBonus += 1;
         RoundManager.Instance.StartRound();
+    }
+
+    public void PresentTurretCards()
+    {
+        List<TurretOption> pool = new List<TurretOption>(turretOptions);
+
+        for (int i = 0; i < cards.Length; i++)
+        {
+            int index = Random.Range(0, pool.Count);
+            TurretOption chosen = pool[index];
+            pool.RemoveAt(index);
+
+            Button btn = cards[i].GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+
+            GameObject prefab = chosen.prefab;
+            btn.onClick.AddListener(() => OnTurretCardChosen(prefab));
+
+            TextMeshProUGUI label = cards[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null)
+            {
+                label.text = chosen.label;
+            }
+        }
+    }
+
+    void OnTurretCardChosen(GameObject turretPrefab)
+    {
+        RoundManager.Instance.roundCardPanel.SetActive(false);
+        RoundManager.Instance.turretPlacer.turretPrefab = turretPrefab;
+        RoundManager.Instance.turretPlacer.BeginPlacement(RoundManager.Instance.StartRound);
     }
 }

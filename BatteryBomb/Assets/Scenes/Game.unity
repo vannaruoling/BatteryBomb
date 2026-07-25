@@ -978,6 +978,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ec9a3b067ad4925b68b3820cff8e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundCardManager
+  turretOptions:
+  - label: Basic Shooter
+    prefab: {fileID: 7874510347638130693, guid: bc9f7208f1ca14e89a81bf0ad4097502, type: 3}
+  - label: Spread Shooter
+    prefab: {fileID: 7858230754891672541, guid: d4fad97ab0fc84bff8c16b6c76ad3efe, type: 3}
+  - label: Cannon
+    prefab: {fileID: 7874510347638130693, guid: 5376198bc865b40f9ad84c4a12fce249, type: 3}
   cards:
   - {fileID: 53468043}
   - {fileID: 9017979916097307527}

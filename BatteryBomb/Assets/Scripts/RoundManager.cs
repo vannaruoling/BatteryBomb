@@ -129,12 +129,11 @@ public class RoundManager : MonoBehaviour
     // If getting a turret, no buff this round. Otherwise they always give buffs.
     public void RequestNextRound()
     {
+        roundCardPanel.SetActive(true);
+
         if (wavesPlayed % roundsPerPlacement == 0)
-            turretPlacer.BeginPlacement(StartRound);
+            RoundCardManager.Instance.PresentTurretCards();
         else
-        {
-            roundCardPanel.SetActive(true);
             RoundCardManager.Instance.PresentRandomCards();
-        }
     }
 }
