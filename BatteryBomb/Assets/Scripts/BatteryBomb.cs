@@ -11,6 +11,21 @@ public class BatteryBomb : MonoBehaviour
     public float explosionRadius = 2f;
     public int explosionDamage = 3;
     public bool IsAttached => attachedTurret != null;
+    public Material outlineMaterial;
+
+
+
+    // Visual countdown tuning
+    public float tickShakeMagnitude = 0.05f;
+    public float tickShakeDuration = 0.15f;
+    public Color tickFlashColor = Color.white;
+    public float tickFlashDuration = 0.1f;
+    private int lastDisplayedSecond = -1;
+
+
+
+
+    private SpriteRenderer outlineRenderer;
 
     private TurretBase highlightedTurret = null;
     private SpriteRenderer spriteRenderer;
@@ -28,6 +43,12 @@ public class BatteryBomb : MonoBehaviour
         countdownTime += UpgradeState.Instance.bombTimerBonus;
         explosionRadius += UpgradeState.Instance.explosionRadiusBonus;
         SetPowering();
+
+        lastDisplayedSecond = Mathf.CeilToInt(countdownTime);
+
+        // Selector outline
+        outlineRenderer = OutlineUtility.CreateOutline(transform, spriteRenderer, outlineMaterial);
+        if (outlineRenderer != null) outlineRenderer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -65,6 +86,15 @@ public class BatteryBomb : MonoBehaviour
         if (attachedTurret != null)
         {
             countdownTime -= Time.deltaTime;
+            int currentSecond = Mathf.CeilToInt(countdownTime);
+            if (currentSecond != lastDisplayedSecond)
+            {
+                lastDisplayedSecond = currentSecond;
+                Juice.Instance.ShakeTransform(transform, tickShakeMagnitude, tickShakeDuration);
+                Juice.Instance.FlashSprite(spriteRenderer, tickFlashColor, tickFlashDuration);
+            }
+
+
             if (countdownTime <= 0f)
             {
                 Detonate();
@@ -72,6 +102,14 @@ public class BatteryBomb : MonoBehaviour
         }
 
         UpdateCountdownDisplay();
+    }
+
+    void LateUpdate()
+    {
+        if (outlineRenderer != null && outlineRenderer.gameObject.activeSelf && !isDragging)
+        {
+            outlineRenderer.sprite = spriteRenderer.sprite;
+        }
     }
 
     void UpdateCountdownDisplay()
@@ -89,6 +127,26 @@ public class BatteryBomb : MonoBehaviour
         GetComponent<SpriteRenderer>().color = isPowered ? Color.Lerp(Color.white, Color.red, 0.3f) : Color.yellow;
     }
 
+    void Drop()
+    {
+        isDragging = false;
+        spriteRenderer.sortingOrder = 20;
+
+        if (highlightedTurret != null)
+        {
+            highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret.SetOutlineVisible(false);
+            highlightedTurret = null;
+        }
+
+        Attach();
+    }
+    void OnMouseUp()
+    {
+        if (!GameManager.Instance.inputEnabled) return;
+        Drop();
+    }
+
     void OnMouseDown()
     {
         if (!GameManager.Instance.inputEnabled) return;
@@ -100,26 +158,10 @@ public class BatteryBomb : MonoBehaviour
 
         isDragging = true;
         spriteRenderer.sortingOrder = 5;
-
+        SetBombOutlineVisible(false);
     }
 
-    void OnMouseUp()
-    {
-        if (!GameManager.Instance.inputEnabled) return;
-        isDragging = false;
-        spriteRenderer.sortingOrder = 20;
 
-
-        if (highlightedTurret != null)
-        {
-            highlightedTurret.SetRangeIndicatorVisible(false);
-            highlightedTurret.SetOutlineVisible(false);
-
-            highlightedTurret = null;
-        }
-
-        Attach();
-    }
 
     void Detach()
     {
@@ -201,6 +243,29 @@ public class BatteryBomb : MonoBehaviour
             highlightedTurret.SetRangeIndicatorVisible(false);
             highlightedTurret.SetOutlineVisible(false);
             highlightedTurret = null;
+        }
+    }
+
+
+    void OnMouseEnter()
+    {
+        if (!GameManager.Instance.inputEnabled) return;
+        if (isDragging) return;
+        SetBombOutlineVisible(true);
+    }
+
+
+    void OnMouseExit()
+    {
+        if (isDragging) return;
+        SetBombOutlineVisible(false);
+    }
+    void SetBombOutlineVisible(bool show)
+    {
+        if (outlineRenderer != null)
+        {
+            outlineRenderer.gameObject.SetActive(show);
+            if (show) outlineRenderer.sprite = spriteRenderer.sprite;
         }
     }
 }
