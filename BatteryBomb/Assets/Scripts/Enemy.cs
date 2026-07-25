@@ -1,16 +1,16 @@
 
 using UnityEngine;
+using System.Collections;
 public class Enemy : MonoBehaviour
 {
     public int maxHealth = 3;
     public float speed = 2f;
     public bool movementEnabled = true;
     public Transform[] waypoints;
-    public GameObject chainExplosionEffect;
 
-    public float chainExplosionRadius = 2f;
-    public int chainExplosionDamage = 2;
-    // Cascading bomb explosions
+    public GameObject chainExplosionEffect;
+    public float chainExplosionRadius = 1.5f;
+    public float chainDetonateDelay = 1f;
     private bool hasCascaded = false;
 
     private int waypointIndex = 0;
@@ -145,17 +145,42 @@ public class Enemy : MonoBehaviour
             });
     }
 
+    // Chain damage occurs if they get hit by one
     public void TakeChainDamage(int amount)
     {
-        TakeDamage(amount);
-        TriggerChainExplosion();
+        currentHealth -= amount;
+        Debug.Log("Enemy hurt (chain): " + amount + ", curr health: " + currentHealth);
+
+        if (flashOverlay != null)
+        {
+            StopCoroutine(nameof(FlashRoutine));
+            StartCoroutine(FlashRoutine());
+        }
+
+        if (currentHealth <= 0 && !hasCascaded)
+        {
+            hasCascaded = true;
+            StartCoroutine(ChainDeathRoutine(amount));
+        }
     }
 
-    void TriggerChainExplosion()
-    {
-        if (hasCascaded) return;
-        hasCascaded = true;
 
+    // Animation effect for when enemy suffers chain death
+    IEnumerator ChainDeathRoutine(int inheritedDamage)
+    {
+        movementEnabled = false;
+        yield return new WaitForSeconds(chainDetonateDelay);
+
+        if (this == null) yield break;
+
+        TriggerChainExplosion(inheritedDamage);
+        Die();
+    }
+
+
+    // Only triggered if the enemy dies to the chain explosion
+    void TriggerChainExplosion(int damage)
+    {
         if (chainExplosionEffect != null)
         {
             GameObject explosion = Instantiate(chainExplosionEffect, transform.position, Quaternion.identity);
@@ -170,7 +195,7 @@ public class Enemy : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeChainDamage(chainExplosionDamage);
+                enemy.TakeChainDamage(damage);
             }
         }
     }

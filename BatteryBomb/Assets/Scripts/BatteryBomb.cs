@@ -293,6 +293,7 @@ public class BatteryBomb : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeChainDamage(explosionDamage);
+
                 }
             }
         }
