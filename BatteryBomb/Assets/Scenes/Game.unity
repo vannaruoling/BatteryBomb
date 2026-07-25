@@ -2309,6 +2309,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3473167848095476270, guid: 5376198bc865b40f9ad84c4a12fce249, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7874510347638130693, guid: 5376198bc865b40f9ad84c4a12fce249, type: 3}
       propertyPath: m_Name
       value: Turret_Cannon
@@ -2577,6 +2581,10 @@ PrefabInstance:
     - target: {fileID: 1400214075778019259, guid: b65d30bfff30c4d1f9161d53caf1b952, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209175193266959309, guid: b65d30bfff30c4d1f9161d53caf1b952, type: 3}
+      propertyPath: attachRadius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7143475250246746141, guid: b65d30bfff30c4d1f9161d53caf1b952, type: 3}
       propertyPath: m_Name
