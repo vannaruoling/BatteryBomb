@@ -8,6 +8,8 @@ public class RoundManager : MonoBehaviour
     public EnemySpawner enemySpawner;
     public BombSpawner bombSpawner;
     public GameObject roundCardPanel;
+    public CounterDisplay roundCounter;
+
 
     //TODO: change to like 100
     public int currentRound = 2;
@@ -37,6 +39,7 @@ public class RoundManager : MonoBehaviour
 
         // Displays HP
         DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
+        if (roundCounter != null) roundCounter.SetValue(currentRound, true);
 
         enemiesAlive = enemiesPerRound;
         roundActive = true;
@@ -88,15 +91,18 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+
     void EndRound()
     {
         GameManager.Instance.inputEnabled = false;
 
         currentRound--;
 
+        if (roundCounter != null) roundCounter.SetValue(currentRound);
+
         if (currentRound <= 0)
         {
-            // TODO: win state, out of scope for now
+            // TODO: win state, right now game just dies
             Debug.Log("All rounds cleared");
             return;
         }
