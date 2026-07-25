@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class BatteryBomb : MonoBehaviour
 {
@@ -20,12 +21,19 @@ public class BatteryBomb : MonoBehaviour
     public float tickShakeDuration = 0.15f;
     public Color tickFlashColor = Color.white;
     public float tickFlashDuration = 0.1f;
+
+
+    // Booting animation for when a bomb is swapped out
+    public float puntDuration = 0.25f;
+    public float puntHeight = 0.3f;
+    private bool isPunting = false;
     private int lastDisplayedSecond = -1;
 
 
 
-
+    private Coroutine puntRoutine;
     private SpriteRenderer outlineRenderer;
+
 
     private TurretBase highlightedTurret = null;
     private SpriteRenderer spriteRenderer;
@@ -153,6 +161,12 @@ public class BatteryBomb : MonoBehaviour
     {
         if (!GameManager.Instance.inputEnabled) return;
 
+        if (isPunting)
+        {
+            StopCoroutine(puntRoutine);
+            isPunting = false;
+        }
+
         if (attachedTurret != null)
         {
             Detach();
@@ -164,15 +178,48 @@ public class BatteryBomb : MonoBehaviour
         SetBombOutlineVisible(false);
     }
 
-    public void Detach()
+    public void Detach(bool punted = false)
     {
         if (attachedTurret.attachedBomb == this) attachedTurret.attachedBomb = null;
 
-        transform.position = attachedTurret.transform.position + new Vector3(0f, -0.6f, 0f);
+        Vector3 restPos = attachedTurret.transform.position + new Vector3(0f, -0.6f, 0f);
 
         attachedTurret.SetPowered(false);
         attachedTurret = null;
         SetPowering();
+
+        if (punted)
+        {
+            puntRoutine = StartCoroutine(PuntRoutine(restPos));
+        }
+        else
+        {
+            transform.position = restPos;
+        }
+    }
+
+    IEnumerator PuntRoutine(Vector3 restPos)
+    {
+        isPunting = true;
+        Vector3 start = transform.position;
+        float sideDir = Random.value > 0.5f ? 1f : -1f;
+
+        float t = 0f;
+        while (t < puntDuration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / puntDuration);
+
+            Vector3 pos = Vector3.Lerp(start, restPos, p);
+            pos.y += Mathf.Sin(p * Mathf.PI) * puntHeight; // little hop
+            pos.x += sideDir * 0.15f * (1f - p);            // drifts sideways, settles
+
+            transform.position = pos;
+            yield return null;
+        }
+
+        transform.position = restPos;
+        isPunting = false;
     }
 
     void Attach()
@@ -186,7 +233,7 @@ public class BatteryBomb : MonoBehaviour
             {
                 if (turret.attachedBomb != null && turret.attachedBomb != this)
                 {
-                    turret.attachedBomb.Detach();
+                    turret.attachedBomb.Detach(true);
                 }
 
                 attachedTurret = turret;
