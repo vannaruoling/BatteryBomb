@@ -27,6 +27,13 @@ public class BatteryBomb : MonoBehaviour
     public float puntDuration = 0.25f;
     public float puntHeight = 0.3f;
     private bool isPunting = false;
+
+    public float attachPunchScale = 1.3f;
+    public float attachPunchDuration = 0.15f;
+    public Color attachFlashColor = Color.white;
+    public float attachFlashDuration = 0.12f;
+    private Vector3 baseScale;
+
     private int lastDisplayedSecond = -1;
 
 
@@ -44,6 +51,7 @@ public class BatteryBomb : MonoBehaviour
 
     void Awake()
     {
+        baseScale = transform.localScale;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = 20;
@@ -222,6 +230,20 @@ public class BatteryBomb : MonoBehaviour
         isPunting = false;
     }
 
+    IEnumerator AttachPunchRoutine()
+    {
+        float t = 0f;
+        while (t < attachPunchDuration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / attachPunchDuration);
+            float scale = Mathf.Lerp(attachPunchScale, 1f, p);
+            transform.localScale = baseScale * scale;
+            yield return null;
+        }
+        transform.localScale = baseScale;
+    }
+
     void Attach()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attachRadius, LayerMask.GetMask("Default"));
@@ -241,6 +263,8 @@ public class BatteryBomb : MonoBehaviour
                 attachedTurret.SetPowered(true);
                 attachedTurret.attachedBomb = this;
                 SetPowering();
+                Juice.Instance.FlashSprite(spriteRenderer, attachFlashColor, attachFlashDuration);
+                StartCoroutine(AttachPunchRoutine());
                 // SetBombOutlineVisible(false);
                 return;
             }
