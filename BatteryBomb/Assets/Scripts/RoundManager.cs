@@ -9,6 +9,9 @@ public class RoundManager : MonoBehaviour
     public BombSpawner bombSpawner;
     public GameObject roundCardPanel;
     public CounterDisplay roundCounter;
+    public TurretPlacer turretPlacer;
+
+    public int roundsPerPlacement = 1;
 
 
     //TODO: change to like 100
@@ -16,7 +19,7 @@ public class RoundManager : MonoBehaviour
     public int enemiesPerRound = 5;
     public float spawnInterval = 1.5f;
     public float roundEndDelay = 0.4f;
-
+    // Rounds per turret placement
 
     private int enemiesAlive = 0;
     private int wavesPlayed = 0;
@@ -118,7 +121,20 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(roundEndDelay);
 
         Time.timeScale = 0f;
-        roundCardPanel.SetActive(true);
-        RoundCardManager.Instance.PresentRandomCards();
+        RequestNextRound();
+        // roundCardPanel.SetActive(true);
+        //     RoundCardManager.Instance.PresentRandomCards();
+    }
+
+    // If getting a turret, no buff this round. Otherwise they always give buffs.
+    public void RequestNextRound()
+    {
+        if (wavesPlayed % roundsPerPlacement == 0)
+            turretPlacer.BeginPlacement(StartRound);
+        else
+        {
+            roundCardPanel.SetActive(true);
+            RoundCardManager.Instance.PresentRandomCards();
+        }
     }
 }

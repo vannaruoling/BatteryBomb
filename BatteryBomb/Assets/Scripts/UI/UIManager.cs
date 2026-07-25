@@ -45,9 +45,10 @@ public class UIManager : MonoBehaviour
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
-        GameManager.Instance.inputEnabled = true;
-
-        RoundManager.Instance.StartRound();
+        // Request next round should handle these next two calls in one now
+        // GameManager.Instance.inputEnabled = true;
+        // RoundManager.Instance.StartRound();
+        RoundManager.Instance.RequestNextRound();
     }
 
     public void ShowGameOver()
