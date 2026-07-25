@@ -12,13 +12,21 @@ public class BatteryBomb : MonoBehaviour
     public int explosionDamage = 3;
     public bool IsAttached => attachedTurret != null;
 
+    private TurretBase highlightedTurret = null;
+    private SpriteRenderer spriteRenderer;
     private bool isDragging = false;
     private Camera mainCamera;
-    private Turret attachedTurret = null;
+    private TurretBase attachedTurret = null;
 
     void Awake()
     {
         mainCamera = Camera.main;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sortingOrder = 20;
+
+        // TODO: imrpvoe the code for upgrades so its not hardcoded like this
+        countdownTime += UpgradeState.Instance.bombTimerBonus;
+        explosionRadius += UpgradeState.Instance.explosionRadiusBonus;
         SetPowering();
     }
 
@@ -27,11 +35,31 @@ public class BatteryBomb : MonoBehaviour
     {
         UpdateCountdownDisplay();
 
+        if (!GameManager.Instance.inputEnabled) return;
+
         if (isDragging)
         {
+            // Track mouse position
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
             transform.position = mouseWorldPos;
+
+            // Get highlighted turret range
+            TurretBase target = FindAttachableTurret();
+            if (target != highlightedTurret)
+            {
+                if (highlightedTurret != null)
+                {
+                    highlightedTurret.SetRangeIndicatorVisible(false);
+                    highlightedTurret.SetOutlineVisible(false);
+                }
+                if (target != null)
+                {
+                    target.SetRangeIndicatorVisible(true);
+                    target.SetOutlineVisible(true);
+                }
+                highlightedTurret = target;
+            }
         }
 
         if (attachedTurret != null)
@@ -63,17 +91,32 @@ public class BatteryBomb : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (!GameManager.Instance.inputEnabled) return;
+
         if (attachedTurret != null)
         {
             Detach();
         }
 
         isDragging = true;
+        spriteRenderer.sortingOrder = 5;
+
     }
 
     void OnMouseUp()
     {
+        if (!GameManager.Instance.inputEnabled) return;
         isDragging = false;
+        spriteRenderer.sortingOrder = 20;
+
+
+        if (highlightedTurret != null)
+        {
+            highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret.SetOutlineVisible(false);
+
+            highlightedTurret = null;
+        }
 
         Attach();
     }
@@ -91,7 +134,7 @@ public class BatteryBomb : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            Turret turret = hit.GetComponent<Turret>();
+            TurretBase turret = hit.GetComponent<TurretBase>();
             if (turret != null && !turret.isDead && !turret.isPowered)
             {
                 Debug.Log("Found turret to attach to: " + hit.gameObject.name);
@@ -99,13 +142,13 @@ public class BatteryBomb : MonoBehaviour
                 transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
                 attachedTurret.SetPowered(true);
                 SetPowering();
-                return; // stop after attaching to the first valid turret found
+                return;
             }
         }
 
         Debug.Log("No turret found to attach to");
-
     }
+
 
     void Detonate()
     {
@@ -118,10 +161,8 @@ public class BatteryBomb : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
 
-        // TODO: make bombs destory other bombs
         foreach (Collider2D hit in hits)
         {
-
             if (hit.CompareTag("Enemy"))
             {
                 Enemy enemy = hit.GetComponent<Enemy>();
@@ -134,5 +175,32 @@ public class BatteryBomb : MonoBehaviour
 
         attachedTurret.Die();
         Destroy(gameObject);
+    }
+
+    TurretBase FindAttachableTurret()
+    {
+        // FInd turret on defualt layer
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attachRadius, LayerMask.GetMask("Default"));
+
+        foreach (Collider2D hit in hits)
+        {
+            TurretBase turret = hit.GetComponent<TurretBase>();
+            if (turret != null && !turret.isDead && !turret.isPowered)
+            {
+                return turret;
+            }
+        }
+
+        return null;
+    }
+
+    void OnDestroy()
+    {
+        if (highlightedTurret != null)
+        {
+            highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret.SetOutlineVisible(false);
+            highlightedTurret = null;
+        }
     }
 }

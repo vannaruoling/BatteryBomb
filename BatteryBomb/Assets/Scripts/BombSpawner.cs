@@ -5,12 +5,16 @@ public class BombSpawner : MonoBehaviour
 {
 
     public GameObject bombPrefab;
+    public CounterDisplay bombCounter;
     public float spawnInterval = 5f;
     // TODO: the amount in use shouldnt effect the max amount of bombs spawnnable
     public int maxUnattachedBombs = 4;
+    public int baseBombsPerRound = 3;
 
     public Vector2 spawnAreaMin = new Vector2(-6f, -3f);
     public Vector2 spawnAreaMax = new Vector2(6f, 3f);
+
+    private int bombsRemainingThisRound;
 
     private float spawnTimer;
     private List<GameObject> activeBombs = new List<GameObject>();
@@ -27,12 +31,21 @@ public class BombSpawner : MonoBehaviour
         {
             spawnTimer = spawnInterval;
 
-            if (activeBombs.Count < maxUnattachedBombs)
-            {
-                SpawnBomb();
-            }
+            SpawnBombNow();
         }
 
+    }
+
+    public void SpawnBombNow()
+    {
+        if (bombsRemainingThisRound <= 0) return;
+
+        if (CountUnattachedBombs() < maxUnattachedBombs)
+        {
+            SpawnBomb();
+            bombsRemainingThisRound--;
+            if (bombCounter != null) bombCounter.SetValue(bombsRemainingThisRound);
+        }
     }
 
 
@@ -61,5 +74,13 @@ public class BombSpawner : MonoBehaviour
 
         GameObject bomb = Instantiate(bombPrefab, spawnPos, Quaternion.identity);
         activeBombs.Add(bomb);
+    }
+
+    public void ResetForRound()
+    {
+        bombsRemainingThisRound = baseBombsPerRound + UpgradeState.Instance.maxBombCountBonus;
+        spawnTimer = spawnInterval;
+
+        if (bombCounter != null) bombCounter.SetValue(bombsRemainingThisRound, true);
     }
 }

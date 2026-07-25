@@ -1,0 +1,124 @@
+using UnityEngine;
+using System.Collections;
+
+public class RoundManager : MonoBehaviour
+{
+    public static RoundManager Instance;
+
+    public EnemySpawner enemySpawner;
+    public BombSpawner bombSpawner;
+    public GameObject roundCardPanel;
+    public CounterDisplay roundCounter;
+
+
+    //TODO: change to like 100
+    public int currentRound = 2;
+    public int enemiesPerRound = 5;
+    public float spawnInterval = 1.5f;
+    public float roundEndDelay = 0.4f;
+
+
+    private int enemiesAlive = 0;
+    private int wavesPlayed = 0;
+    private bool roundActive = false;
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else { Destroy(gameObject); return; }
+    }
+
+    public void StartRound()
+    {
+        roundCardPanel.SetActive(false);
+        Time.timeScale = 1f;
+
+        ResetGameBoard();
+        GameManager.Instance.inputEnabled = true;
+
+        bombSpawner.ResetForRound();
+        bombSpawner.SpawnBombNow();
+
+        // Displays HP
+        DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
+        if (roundCounter != null) roundCounter.SetValue(currentRound, true);
+
+        enemiesAlive = enemiesPerRound;
+        roundActive = true;
+        wavesPlayed++;
+        enemySpawner.SpawnWave(enemiesPerRound, spawnInterval, wavesPlayed);
+    }
+
+    void ResetGameBoard()
+    {
+        Debug.Log("Resetting game board");
+        BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
+        foreach (BatteryBomb b in bombs)
+        {
+            Destroy(b.gameObject);
+        }
+
+        // Destroy all enemies to prevent them from persisting
+        Debug.Log("Destroying all enemies");
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        foreach (Enemy e in enemies)
+        {
+            Destroy(e.gameObject);
+        }
+
+        TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
+        foreach (TurretBase t in turrets)
+        {
+            t.Revive();
+            t.SetRangeIndicatorVisible(false);
+            t.SetOutlineVisible(false);
+        }
+    }
+
+    // Call this from Enemy.Die()
+    public void ReportEnemyDeath()
+    {
+        // PRevents bug where deaths were reported between rounds
+        if (!roundActive) return;
+
+        GameManager.Instance.AddKill();
+
+        enemiesAlive--;
+        Debug.Log("Enemy died, remaining: " + enemiesAlive);
+        if (enemiesAlive <= 0)
+        {
+            roundActive = false;
+            Debug.Log("Calling end round");
+            EndRound();
+        }
+    }
+
+
+    void EndRound()
+    {
+        GameManager.Instance.inputEnabled = false;
+
+        currentRound--;
+
+        if (roundCounter != null) roundCounter.SetValue(currentRound);
+
+        if (currentRound <= 0)
+        {
+            // TODO: win state, right now game just dies
+            Debug.Log("All rounds cleared");
+            return;
+        }
+
+        // Lets player see last enemy death, feels less abrupt.
+        StartCoroutine(EndRoundDelayed());
+    }
+
+    IEnumerator EndRoundDelayed()
+    {
+        yield return new WaitForSecondsRealtime(roundEndDelay);
+
+        Time.timeScale = 0f;
+        roundCardPanel.SetActive(true);
+        RoundCardManager.Instance.PresentRandomCards();
+    }
+}

@@ -1,64 +1,37 @@
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Turret : TurretBase
 {
-    public float range = 5f;
-    public float fireRate = 1f;
-    public GameObject projectilePrefab;
-
-    public bool isPowered = false;
-    public bool isDead = false;
-    private float fireCooldown = 0f;
     private Transform target;
-
-    void Start()
-    {
-        SetPowered(false);
-        // Initialization
-    }
+    private Vector2 dir; 
 
     void Update()
     {
-        if (!isPowered || isDead)
-        {
-            return;
-        }
+        // Call the base class Update so firing cooldowns and outlines work!
+        base.Update(); 
+
+        // If the turret is offline or dead, don't track targets
+        if (!isPowered || isDead) return;
 
         FindTarget();
-
+        
         if (target != null)
         {
-            fireCooldown -= Time.deltaTime;
-            if (fireCooldown <= 0f)
-            {
-                Shoot();
-                fireCooldown = 1f / fireRate;
-            }
+            dir = (target.position - transform.position);
+            RotateTowardsTarget();
         }
     }
 
-    public void SetPowered(bool powered)
+    protected override bool TryFire()
     {
-        if (isDead) return;
-        isPowered = powered;
-        GetComponent<SpriteRenderer>().color = powered ? Color.green : Color.gray;
+        if (target == null) return false;
+
+        GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        
+        projectile.SetDirection(dir);
+        return true;
     }
-
-
-    public void Die()
-    {
-        isDead = true;
-        SetPowered(false);
-        GetComponent<SpriteRenderer>().color = Color.black;
-    }
-
-    // TODO:
-    public void Revive()
-    {
-        isDead = false;
-        SetPowered(false);
-    }
-
 
     void FindTarget()
     {
@@ -66,7 +39,6 @@ public class Turret : MonoBehaviour
         float closestDistance = Mathf.Infinity;
         Transform closestEnemy = null;
 
-        // Find closest enemy in radius
         foreach (GameObject enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
@@ -80,11 +52,12 @@ public class Turret : MonoBehaviour
         target = closestEnemy;
     }
 
-    void Shoot()
+    // Removed 'new' because TurretBase doesn't actually have this method
+    void RotateTowardsTarget() 
     {
-        GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectile = projectileObj.GetComponent<Projectile>();
-        Vector2 dir = (target.position - transform.position);
-        projectile.SetDirection(dir);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        
+        // Adjust the -90f offset depending on which way your sprite faces by default
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 270f);
     }
 }

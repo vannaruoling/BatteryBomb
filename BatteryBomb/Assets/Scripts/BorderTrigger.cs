@@ -10,7 +10,11 @@ public class BorderTrigger : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             GameManager.Instance.DamagePlayer(damageToPlayer);
-            Destroy(other.gameObject);
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(int.MaxValue);
+            }
         }
     }
     // // Start is called once before the first execution of Update after the MonoBehaviour is created
