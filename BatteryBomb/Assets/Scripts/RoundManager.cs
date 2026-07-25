@@ -65,6 +65,8 @@ public class RoundManager : MonoBehaviour
         foreach (TurretBase t in turrets)
         {
             t.Revive();
+            t.SetRangeIndicatorVisible(false);
+            t.SetOutlineVisible(false);
         }
     }
 

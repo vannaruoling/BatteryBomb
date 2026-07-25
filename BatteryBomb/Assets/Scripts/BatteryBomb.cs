@@ -193,4 +193,14 @@ public class BatteryBomb : MonoBehaviour
 
         return null;
     }
+
+    void OnDestroy()
+    {
+        if (highlightedTurret != null)
+        {
+            highlightedTurret.SetRangeIndicatorVisible(false);
+            highlightedTurret.SetOutlineVisible(false);
+            highlightedTurret = null;
+        }
+    }
 }
