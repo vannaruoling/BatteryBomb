@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,12 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverPanel;
 
     public GameObject winPanel;
+    public float postTitleFadeDelay = 1f;
+    public float titleFadeOutDuration = 0.4f;
+    public CanvasGroup titleCanvasGroup;
 
+    public CanvasGroup gameplayCanvasGroup;
+    public float gameplayFadeInDuration = 0.4f;
 
     // Singleton
     void Awake()
@@ -39,6 +45,7 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 1f;
         titlePanel.SetActive(true);
+        if (titleCanvasGroup != null) titleCanvasGroup.alpha = 1f;
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(false);
 
@@ -46,28 +53,47 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+        StartCoroutine(StartGameSequence());
+    }
+
+    IEnumerator StartGameSequence()
+    {
+        if (titleCanvasGroup != null)
+        {
+            float t = 0f;
+            while (t < titleFadeOutDuration)
+            {
+                t += Time.unscaledDeltaTime;
+                titleCanvasGroup.alpha = 1f - Mathf.Clamp01(t / titleFadeOutDuration);
+                yield return null;
+            }
+            titleCanvasGroup.alpha = 0f;
+        }
+
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
+        if (gameplayCanvasGroup != null) gameplayCanvasGroup.alpha = 0f;
+
         Time.timeScale = 1f;
         GameManager.Instance.inputEnabled = false;
 
+        if (gameplayCanvasGroup != null)
+        {
+            float t = 0f;
+            while (t < gameplayFadeInDuration)
+            {
+                t += Time.unscaledDeltaTime;
+                gameplayCanvasGroup.alpha = Mathf.Clamp01(t / gameplayFadeInDuration);
+                yield return null;
+            }
+            gameplayCanvasGroup.alpha = 1f;
+        }
+
         Debug.Log("starting tutorial..");
-
         TutorialManager.Instance.BeginTutorial(() => RoundManager.Instance.RequestNextRound());
-
-        // OLD VERSION
-        // AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
-
-        // titlePanel.SetActive(false);
-        // gameplayPanel.SetActive(true);
-        // gameOverPanel.SetActive(false);
-
-        // // Request next round should handle these next two calls in one now
-        // // GameManager.Instance.inputEnabled = true;
-        // // RoundManager.Instance.StartRound();
-        // RoundManager.Instance.RequestNextRound();
     }
 
     public void ShowGameOver()

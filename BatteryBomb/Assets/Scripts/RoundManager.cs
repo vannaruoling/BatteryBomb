@@ -64,7 +64,13 @@ public class RoundManager : MonoBehaviour
         roundActive = true;
         wavesPlayed++;
 
-        bool bossRound = wavesPlayed % bossRoundInterval == 0;
+        bool bossRound = (wavesPlayed % bossRoundInterval == 0);
+
+        if (bossRound)
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.bossMusic);
+        else
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
+
         enemySpawner.SpawnWave(scaledEnemies, scaledInterval, wavesPlayed, bossRound);
     }
 
@@ -185,6 +191,8 @@ public class RoundManager : MonoBehaviour
     // Clears all bombs
     void ClearBombs()
     {
+        AudioManager.Instance.StopSFX();
+
         BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
         foreach (BatteryBomb b in bombs)
         {

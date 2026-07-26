@@ -4,7 +4,8 @@ using System.Collections;
 
 public class BatteryBomb : MonoBehaviour
 {
-
+    public RuntimeAnimatorController unpoweredController;
+    public RuntimeAnimatorController poweredController;
     public float countdownTime = 10f;
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
@@ -30,6 +31,8 @@ public class BatteryBomb : MonoBehaviour
     // TUTORIAL PURPOSSESS
     public bool isInert = false;
     public TurretBase AttachedTurret => attachedTurret;
+
+    private bool hasBeenAttached = false;
     private bool isPunting = false;
 
     public float attachPunchScale = 1.3f;
@@ -39,6 +42,8 @@ public class BatteryBomb : MonoBehaviour
     private Vector3 baseScale;
 
     private int lastDisplayedSecond = -1;
+    private Animator animator;
+
 
 
     private const float zOffset = -0.5f;
@@ -55,6 +60,7 @@ public class BatteryBomb : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         baseScale = transform.localScale;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -142,8 +148,13 @@ public class BatteryBomb : MonoBehaviour
     {
         if (countdownText != null)
         {
-            // round up so that 0 is gonezo
-            countdownText.text = isInert ? "" : Mathf.CeilToInt(countdownTime).ToString();
+            bool shouldShow = hasBeenAttached && !isInert;
+            countdownText.gameObject.SetActive(shouldShow);
+
+            if (shouldShow)
+            {
+                countdownText.text = Mathf.CeilToInt(countdownTime).ToString();
+            }
         }
     }
 
@@ -152,10 +163,17 @@ public class BatteryBomb : MonoBehaviour
         if (isInert)
         {
             GetComponent<SpriteRenderer>().color = Color.gray;
+            if (animator != null && unpoweredController != null) animator.runtimeAnimatorController = unpoweredController;
             return;
         }
         bool isPowered = attachedTurret != null;
         GetComponent<SpriteRenderer>().color = isPowered ? Color.Lerp(Color.white, Color.red, 0.3f) : Color.yellow;
+
+        if (animator != null)
+        {
+            RuntimeAnimatorController target = isPowered ? poweredController : unpoweredController;
+            if (target != null) animator.runtimeAnimatorController = target;
+        }
     }
 
     void Drop()
@@ -280,6 +298,8 @@ public class BatteryBomb : MonoBehaviour
                 }
 
                 attachedTurret = turret;
+                hasBeenAttached = true;
+
                 Vector3 snapPos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
                 snapPos.z = zOffset;
                 transform.position = snapPos;
@@ -303,11 +323,24 @@ public class BatteryBomb : MonoBehaviour
     void Detonate()
     {
         Debug.Log("Battery BOOOOOMMMBBB");
+        Debug.Log("Detonate() called on " + gameObject.name + " at frame " + Time.frameCount);
+
 
         Vector3 explosionPosition = attachedTurret.transform.position;
 
+
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
-        Destroy(explosion, 1f);
+        SpriteRenderer explosionSprite = explosion.GetComponentInChildren<SpriteRenderer>();
+        if (explosionSprite != null)
+        {
+            Color fadeColor = explosionSprite.color;
+            fadeColor.a = 0f;
+            Juice.Instance.FadeSpriteToColor(explosionSprite, fadeColor, 1f, () => Destroy(explosion));
+        }
+        else
+        {
+            Destroy(explosion, 1.5f);
+        }
 
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode);
 
@@ -389,6 +422,7 @@ public class BatteryBomb : MonoBehaviour
     public void TutorialAttachTo(TurretBase turret, bool powerTurret)
     {
         attachedTurret = turret;
+        hasBeenAttached = true;
         turret.attachedBomb = this;
         Vector3 pos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
         pos.z = zOffset;

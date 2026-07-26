@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 10
-  speed: 1
+  speed: 0.7
   movementEnabled: 1
   waypoints: []
   chainExplosionEffect: {fileID: 564930320001899514, guid: 426ebd5e7770940a892d044cffe192dc, type: 3}
