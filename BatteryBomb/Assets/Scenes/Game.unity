@@ -348,6 +348,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1092427116}
     m_Modifications:
+    - target: {fileID: 3828874143446669602, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -52
+      objectReference: {fileID: 0}
     - target: {fileID: 4145643728095622052, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -446,6 +450,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4145643728095622052, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
   m_PrefabInstance: {fileID: 223596922}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &223596924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3833649505705315428, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+  m_PrefabInstance: {fileID: 223596922}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &242227420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1060,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1092427116}
     m_Modifications:
+    - target: {fileID: 3828874143446669602, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -52
+      objectReference: {fileID: 0}
     - target: {fileID: 4145643728095622052, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1129,6 +1148,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6128782803088412603, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1139,6 +1162,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4145643728095622052, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
   m_PrefabInstance: {fileID: 354543003}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &354543005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3833649505705315428, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+  m_PrefabInstance: {fileID: 354543003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &386093372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,14 +1205,26 @@ MonoBehaviour:
   turretOptions:
   - label: Basic Shooter
     prefab: {fileID: 7874510347638130693, guid: bc9f7208f1ca14e89a81bf0ad4097502, type: 3}
+    icon: {fileID: 0}
   - label: Spread Shooter
     prefab: {fileID: 7858230754891672541, guid: d4fad97ab0fc84bff8c16b6c76ad3efe, type: 3}
+    icon: {fileID: 0}
   - label: Cannon
     prefab: {fileID: 7874510347638130693, guid: 5376198bc865b40f9ad84c4a12fce249, type: 3}
+    icon: {fileID: 0}
   cards:
   - {fileID: 53468043}
   - {fileID: 9017979916097307527}
   - {fileID: 792901711}
+  healIcon: {fileID: 5436642949703905381, guid: d8924899faa916c4990ed577e1fd6c07, type: 3}
+  bombTimerIcon: {fileID: -6999803026230979001, guid: 034b8e850d6138244b78e8cd7d315371, type: 3}
+  fireRateIcon: {fileID: 8688843994422956024, guid: ee4a7fb1ca4fbfe42954c773537e3e1e, type: 3}
+  explosionRadiusIcon: {fileID: 4650092460327343774, guid: 73928aee049ddfe49afc555a673c0579, type: 3}
+  bombAmmoIcon: {fileID: 8688843994422956024, guid: ee4a7fb1ca4fbfe42954c773537e3e1e, type: 3}
+  cardIcons:
+  - {fileID: 354543005}
+  - {fileID: 8526022617203593518}
+  - {fileID: 223596924}
 --- !u!4 &386093374
 Transform:
   m_ObjectHideFlags: 0
@@ -2472,7 +2518,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 2
   currentRound: 10
-  enemiesPerRound: 5
+  enemiesPerRound: 1
   spawnInterval: 1.5
   roundEndDelay: 0.6
   waveClearedBanner: {fileID: 1257892573}
@@ -4866,6 +4912,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1092427116}
     m_Modifications:
+    - target: {fileID: 3828874143446669602, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -52
+      objectReference: {fileID: 0}
     - target: {fileID: 4145643728095622052, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4959,6 +5009,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+--- !u!114 &8526022617203593518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3833649505705315428, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
+  m_PrefabInstance: {fileID: 8526022617203593517}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &9017979916097307527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6128782803088412603, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}

@@ -12,6 +12,7 @@ public class RoundCardManager : MonoBehaviour
     {
         public string label;
         public GameObject prefab;
+        public Sprite icon;
     }
 
     public TurretOption[] turretOptions;
@@ -22,14 +23,24 @@ public class RoundCardManager : MonoBehaviour
     private struct CardOption
     {
         public string label;
+        public Sprite icon;
         public System.Action effect;
 
-        public CardOption(string label, System.Action effect)
+        public CardOption(string label, Sprite icon, System.Action effect)
         {
             this.label = label;
+            this.icon = icon;
             this.effect = effect;
         }
     }
+
+    public Sprite healIcon;
+    public Sprite bombTimerIcon;
+    public Sprite fireRateIcon;
+    public Sprite explosionRadiusIcon;
+    public Sprite bombAmmoIcon;
+
+    public Image[] cardIcons;
 
     private List<CardOption> allCards;
 
@@ -40,12 +51,11 @@ public class RoundCardManager : MonoBehaviour
 
         allCards = new List<CardOption>
         {
-            // TODO: ADd any new buffs here.
-            new CardOption("Heal +2", OnCardHeal),
-            new CardOption("Bomb Timer +3s", OnCardBombTimer),
-            new CardOption("Turret Fire Rate +25%", OnCardTurretFireRate),
-            new CardOption("Explosion Radius +0.5", OnCardExplosionRadius),
-            new CardOption("Bomb Ammo +1", OnCardMaxBombCount),
+            new CardOption("Heal +2", healIcon, OnCardHeal),
+            new CardOption("Bomb Timer +3s", bombTimerIcon, OnCardBombTimer),
+            new CardOption("Turret Fire Rate +25%", fireRateIcon, OnCardTurretFireRate),
+            new CardOption("Explosion Radius +0.5", explosionRadiusIcon, OnCardExplosionRadius),
+            new CardOption("Bomb Ammo +1", bombAmmoIcon, OnCardMaxBombCount),
         };
     }
 
@@ -71,6 +81,11 @@ public class RoundCardManager : MonoBehaviour
             if (label != null)
             {
                 label.text = chosen.label;
+            }
+            if (cardIcons != null && i < cardIcons.Length && cardIcons[i] != null)
+            {
+                cardIcons[i].sprite = chosen.icon;
+                cardIcons[i].enabled = chosen.icon != null;
             }
         }
     }
@@ -134,6 +149,12 @@ public class RoundCardManager : MonoBehaviour
             if (label != null)
             {
                 label.text = chosen.label;
+            }
+
+            if (cardIcons != null && i < cardIcons.Length && cardIcons[i] != null)
+            {
+                cardIcons[i].sprite = chosen.icon;
+                cardIcons[i].enabled = chosen.icon != null;
             }
         }
     }
