@@ -32,6 +32,9 @@ public class BatteryBomb : MonoBehaviour
     public bool isInert = false;
     public TurretBase AttachedTurret => attachedTurret;
 
+
+    public float detonateShakeMagnitude = 0.25f;
+    public float detonateShakeDuration = 0.2f;
     private bool hasBeenAttached = false;
     private bool isPunting = false;
 
@@ -322,11 +325,9 @@ public class BatteryBomb : MonoBehaviour
     void Detonate()
     {
         Debug.Log("Battery BOOOOOMMMBBB");
-        Debug.Log("Detonate() called on " + gameObject.name + " at frame " + Time.frameCount);
-
-
         Vector3 explosionPosition = attachedTurret.transform.position;
 
+        Juice.Instance.ShakeTransform(Camera.main.transform, detonateShakeMagnitude, detonateShakeDuration);
 
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
         SpriteRenderer explosionSprite = explosion.GetComponentInChildren<SpriteRenderer>();
@@ -341,7 +342,7 @@ public class BatteryBomb : MonoBehaviour
             Destroy(explosion, 1.5f);
         }
 
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode, 1.3f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
 
