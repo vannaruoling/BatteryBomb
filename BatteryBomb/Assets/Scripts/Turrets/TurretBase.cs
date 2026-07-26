@@ -12,6 +12,9 @@ public abstract class TurretBase : MonoBehaviour
     public BatteryBomb attachedBomb;
     public GameObject rangeIndicatorPrefab;
     public Material outlineMaterial;
+
+    public float reattachCooldown = 0.2f;
+    private float lastDetachTime = -999f;
     private SpriteRenderer outlineRenderer;
     private SpriteRenderer spriteRenderer;
     private GameObject rangeIndicatorInstance;
@@ -122,5 +125,15 @@ public abstract class TurretBase : MonoBehaviour
             if (show) UpdateRangeIndicatorScale();
             rangeIndicatorInstance.SetActive(show);
         }
+    }
+
+    public bool CanAttach()
+    {
+        return Time.time - lastDetachTime >= reattachCooldown;
+    }
+
+    public void NotifyDetached()
+    {
+        lastDetachTime = Time.time;
     }
 }

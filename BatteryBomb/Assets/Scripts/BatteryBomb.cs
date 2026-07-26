@@ -207,6 +207,8 @@ public class BatteryBomb : MonoBehaviour
     {
         if (attachedTurret.attachedBomb == this) attachedTurret.attachedBomb = null;
 
+        attachedTurret.NotifyDetached();
+
         Vector3 restPos = attachedTurret.transform.position + new Vector3(0f, -0.6f, 0f);
 
         attachedTurret.SetPowered(false);
@@ -268,7 +270,7 @@ public class BatteryBomb : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             TurretBase turret = hit.GetComponent<TurretBase>();
-            if (turret != null && !turret.isDead)
+            if (turret != null && !turret.isDead && turret.CanAttach())
             {
                 if (turret.attachedBomb != null && turret.attachedBomb != this)
                 {
@@ -331,7 +333,7 @@ public class BatteryBomb : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             TurretBase turret = hit.GetComponent<TurretBase>();
-            if (turret != null && !turret.isDead)
+            if (turret != null && !turret.isDead && turret.CanAttach())
             {
                 return turret;
             }
