@@ -1205,10 +1205,10 @@ MonoBehaviour:
   turretOptions:
   - label: Basic Shooter
     prefab: {fileID: 7874510347638130693, guid: bc9f7208f1ca14e89a81bf0ad4097502, type: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 6730857694960510823, guid: 6d24557014309924bb88ecb8eec44086, type: 3}
   - label: Spread Shooter
     prefab: {fileID: 7858230754891672541, guid: d4fad97ab0fc84bff8c16b6c76ad3efe, type: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 3076007309240706615, guid: f1c5ae41002bb2649967c03dec95aa75, type: 3}
   - label: Cannon
     prefab: {fileID: 7874510347638130693, guid: 5376198bc865b40f9ad84c4a12fce249, type: 3}
     icon: {fileID: 0}
