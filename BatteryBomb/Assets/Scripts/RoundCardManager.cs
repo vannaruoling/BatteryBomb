@@ -63,6 +63,9 @@ public class RoundCardManager : MonoBehaviour
     public void PresentRandomCards()
     {
         selectionMade = false;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardsShown, 1.5f);
+
+
         List<CardOption> pool = new List<CardOption>(allCards);
 
         for (int i = 0; i < cards.Length; i++)
@@ -152,6 +155,8 @@ public class RoundCardManager : MonoBehaviour
     public void PresentTurretCards()
     {
         selectionMade = false;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardsShown, 1.5f);
+
 
         List<TurretOption> pool = new List<TurretOption>(turretOptions);
 

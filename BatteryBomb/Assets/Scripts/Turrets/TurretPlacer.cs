@@ -10,6 +10,9 @@ public class TurretPlacer : MonoBehaviour
     public Color invalidColor = new Color(1f, 0.4f, 0.4f, 0.6f);
 
     public GameObject rangeIndicatorPrefab;
+    public float placeShakeMagnitude = 0.1f;
+    public float placeShakeDuration = 0.1f;
+
     private SpriteRenderer rangeIndicatorRenderer;
     private float rangeIndicatorBaseAlpha = 0.5f;
     private GameObject rangeIndicatorInstance;
@@ -94,6 +97,7 @@ public class TurretPlacer : MonoBehaviour
     void Commit(Vector3 pos)
     {
         AudioManager.Instance.PlaySFX(AudioManager.Instance.turretPlace);
+        Juice.Instance.ShakeTransform(Camera.main.transform, placeShakeMagnitude, placeShakeDuration);
 
         Instantiate(turretPrefab, pos, Quaternion.identity);
         Destroy(ghostInstance);

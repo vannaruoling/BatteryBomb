@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     // SFX
     public AudioClip bombPickup;
     public AudioClip bombAttach;
+    public AudioClip bombDetach;
     public AudioClip bombTick;
     public AudioClip bombExplode;
     public AudioClip chainExplode;
@@ -28,6 +29,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip turretPlace;
     public AudioClip cardPick;
     public AudioClip waveCleared;
+    public AudioClip roundChange;
+    public AudioClip bombSpawn;
+    public AudioClip enemyHit;
+    public AudioClip cardsShown;
+    public AudioClip buttonPress;
     public AudioClip gameOver;
     public AudioClip victory;
 

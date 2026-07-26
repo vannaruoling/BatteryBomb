@@ -288,8 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c057463cf8ec4de1b4e0823de719562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatteryBomb
-  unpoweredController: {fileID: -414114329958634683, guid: da22e779a53ccd14e8a7ba2e1093b436, type: 3}
-  poweredController: {fileID: -5483334274647819973, guid: 97f382e5ae76184428a88817bcce48d5, type: 3}
   countdownTime: 5
   countdownText: {fileID: 3825264526564879463}
   attachRadius: 0.35
@@ -297,6 +295,8 @@ MonoBehaviour:
   explosionRadius: 2
   explosionDamage: 3
   outlineMaterial: {fileID: 2100000, guid: a91904895b1c14b3db1024ad8b8e4779, type: 2}
+  boltStateName: power state
+  numberedStateName: no bolt
   tickShakeMagnitude: 0.05
   tickShakeDuration: 0.15
   tickFlashColor: {r: 1, g: 1, b: 1, a: 1}
@@ -304,6 +304,8 @@ MonoBehaviour:
   puntDuration: 0.25
   puntHeight: 0.3
   isInert: 0
+  detonateShakeMagnitude: 0.25
+  detonateShakeDuration: 0.2
   attachPunchScale: 1.3
   attachPunchDuration: 0.15
   attachFlashColor: {r: 1, g: 1, b: 1, a: 1}
@@ -357,7 +359,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1919083682764735535, guid: da22e779a53ccd14e8a7ba2e1093b436, type: 3}
+  m_Sprite: {fileID: 5011175901342084272, guid: 827fdc8eab798024f84e1646f11fae57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -414,7 +416,7 @@ Animator:
   m_GameObject: {fileID: 7143475250246746141}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: -414114329958634683, guid: da22e779a53ccd14e8a7ba2e1093b436, type: 3}
+  m_Controller: {fileID: 1955849504722523357, guid: 827fdc8eab798024f84e1646f11fae57, type: 3}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

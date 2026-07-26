@@ -125,7 +125,13 @@ public class RoundManager : MonoBehaviour
 
         currentRound--;
 
-        if (roundCounter != null) roundCounter.SetValue(currentRound);
+        if (roundCounter != null)
+        {
+            roundCounter.SetValue(currentRound);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.roundChange);
+
+        }
+
 
         if (currentRound <= 0)
         {

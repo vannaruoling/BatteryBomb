@@ -4,8 +4,6 @@ using System.Collections;
 
 public class BatteryBomb : MonoBehaviour
 {
-    public RuntimeAnimatorController unpoweredController;
-    public RuntimeAnimatorController poweredController;
     public float countdownTime = 10f;
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
@@ -17,6 +15,8 @@ public class BatteryBomb : MonoBehaviour
 
 
 
+    public string boltStateName = "no bolt";
+    public string numberedStateName = "power state";
     // Visual countdown tuning
     public float tickShakeMagnitude = 0.05f;
     public float tickShakeDuration = 0.15f;
@@ -32,6 +32,9 @@ public class BatteryBomb : MonoBehaviour
     public bool isInert = false;
     public TurretBase AttachedTurret => attachedTurret;
 
+
+    public float detonateShakeMagnitude = 0.25f;
+    public float detonateShakeDuration = 0.2f;
     private bool hasBeenAttached = false;
     private bool isPunting = false;
 
@@ -163,7 +166,7 @@ public class BatteryBomb : MonoBehaviour
         if (isInert)
         {
             GetComponent<SpriteRenderer>().color = Color.gray;
-            if (animator != null && unpoweredController != null) animator.runtimeAnimatorController = unpoweredController;
+            if (animator != null) animator.Play(boltStateName);
             return;
         }
         bool isPowered = attachedTurret != null;
@@ -171,8 +174,7 @@ public class BatteryBomb : MonoBehaviour
 
         if (animator != null)
         {
-            RuntimeAnimatorController target = isPowered ? poweredController : unpoweredController;
-            if (target != null) animator.runtimeAnimatorController = target;
+            animator.Play(hasBeenAttached ? numberedStateName : boltStateName);
         }
     }
 
@@ -191,17 +193,19 @@ public class BatteryBomb : MonoBehaviour
 
         Attach();
     }
-    void OnMouseUp()
-    {
-        if (!GameManager.Instance.inputEnabled) return;
-        Drop();
-    }
+
 
     void OnMouseDown()
     {
         if (!GameManager.Instance.inputEnabled) return;
+        if (anyBombDragging && !isDragging) return;
 
-
+        // Second click while latched to cursor = drop
+        if (isDragging)
+        {
+            Drop();
+            return;
+        }
 
         if (isPunting)
         {
@@ -215,6 +219,8 @@ public class BatteryBomb : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
+        Juice.Instance.FlashSprite(spriteRenderer, attachFlashColor, attachFlashDuration);
+        StartCoroutine(AttachPunchRoutine());
 
         isDragging = true;
         anyBombDragging = true;
@@ -234,6 +240,9 @@ public class BatteryBomb : MonoBehaviour
         attachedTurret.SetPowered(false);
         attachedTurret = null;
         SetPowering();
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombDetach);
+
 
         if (punted)
         {
@@ -317,17 +326,17 @@ public class BatteryBomb : MonoBehaviour
         }
 
         Debug.Log("No turret found to attach to");
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombDetach);
+
     }
 
 
     void Detonate()
     {
         Debug.Log("Battery BOOOOOMMMBBB");
-        Debug.Log("Detonate() called on " + gameObject.name + " at frame " + Time.frameCount);
-
-
         Vector3 explosionPosition = attachedTurret.transform.position;
 
+        Juice.Instance.ShakeTransform(Camera.main.transform, detonateShakeMagnitude, detonateShakeDuration);
 
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
         SpriteRenderer explosionSprite = explosion.GetComponentInChildren<SpriteRenderer>();
@@ -342,7 +351,7 @@ public class BatteryBomb : MonoBehaviour
             Destroy(explosion, 1.5f);
         }
 
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode, 1.3f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
 
@@ -381,6 +390,8 @@ public class BatteryBomb : MonoBehaviour
 
     void OnDestroy()
     {
+        if (isDragging) anyBombDragging = false;
+
         if (highlightedTurret != null)
         {
             highlightedTurret.SetRangeIndicatorVisible(false);

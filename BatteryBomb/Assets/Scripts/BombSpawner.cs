@@ -74,6 +74,9 @@ public class BombSpawner : MonoBehaviour
 
         GameObject bomb = Instantiate(bombPrefab, spawnPos, Quaternion.identity);
         activeBombs.Add(bomb);
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombSpawn, 0.5f);
+
     }
 
     public void ResetForRound()

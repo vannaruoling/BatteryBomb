@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     // Score
     public int killCount = 0;
 
+    public float damageShakeMagnitude = 0.15f;
+    public float damageShakeDuration = 0.12f;
+
     private bool isGameOver = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
 
         playerHealth -= amount;
         Debug.Log("Player hurt: " + amount + ", curr health: " + playerHealth);
+
+        Juice.Instance.ShakeTransform(Camera.main.transform, damageShakeMagnitude, damageShakeDuration);
 
         DamageFlashDisplay.Instance.ShowDamage(playerHealth);
 
