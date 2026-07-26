@@ -84,8 +84,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6730857694960510823, guid: 6d24557014309924bb88ecb8eec44086, type: 3}
-  m_Color: {r: 0.3288977, g: 0.41509432, b: 0.27607688, a: 1}
+  m_Sprite: {fileID: 6682576312087502376, guid: 5d88275beba866146ae7461f20389b6a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   isPowered: 0
   isDead: 0
   range: 3
+  attachedBomb: {fileID: 0}
   rangeIndicatorPrefab: {fileID: 7918671086076103592, guid: a6725db4880da419f8d048b7b82a65c7, type: 3}
   outlineMaterial: {fileID: 2100000, guid: a91904895b1c14b3db1024ad8b8e4779, type: 2}
 --- !u!95 &-8114794632164069379
@@ -160,7 +161,7 @@ Animator:
   m_GameObject: {fileID: 7874510347638130693}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 5300881583150746613, guid: 6d24557014309924bb88ecb8eec44086, type: 3}
+  m_Controller: {fileID: -684166618789171285, guid: 5d88275beba866146ae7461f20389b6a, type: 3}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

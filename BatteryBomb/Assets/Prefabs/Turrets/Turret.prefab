@@ -89,7 +89,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.8125, y: 0.84375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -148,6 +148,7 @@ MonoBehaviour:
   isPowered: 0
   isDead: 0
   range: 4.5
+  attachedBomb: {fileID: 0}
   rangeIndicatorPrefab: {fileID: 7918671086076103592, guid: a6725db4880da419f8d048b7b82a65c7, type: 3}
   outlineMaterial: {fileID: 2100000, guid: a91904895b1c14b3db1024ad8b8e4779, type: 2}
 --- !u!95 &-4273635667671092498
