@@ -4,8 +4,6 @@ using System.Collections;
 
 public class BatteryBomb : MonoBehaviour
 {
-    public RuntimeAnimatorController unpoweredController;
-    public RuntimeAnimatorController poweredController;
     public float countdownTime = 10f;
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
@@ -17,6 +15,8 @@ public class BatteryBomb : MonoBehaviour
 
 
 
+    public string boltStateName = "no bolt";
+    public string numberedStateName = "power state";
     // Visual countdown tuning
     public float tickShakeMagnitude = 0.05f;
     public float tickShakeDuration = 0.15f;
@@ -163,7 +163,7 @@ public class BatteryBomb : MonoBehaviour
         if (isInert)
         {
             GetComponent<SpriteRenderer>().color = Color.gray;
-            if (animator != null && unpoweredController != null) animator.runtimeAnimatorController = unpoweredController;
+            if (animator != null) animator.Play(boltStateName);
             return;
         }
         bool isPowered = attachedTurret != null;
@@ -171,8 +171,7 @@ public class BatteryBomb : MonoBehaviour
 
         if (animator != null)
         {
-            RuntimeAnimatorController target = isPowered ? poweredController : unpoweredController;
-            if (target != null) animator.runtimeAnimatorController = target;
+            animator.Play(hasBeenAttached ? numberedStateName : boltStateName);
         }
     }
 
