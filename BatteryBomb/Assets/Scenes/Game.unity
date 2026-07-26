@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 219299419}
   - component: {fileID: 219299421}
   - component: {fileID: 219299420}
+  - component: {fileID: 219299422}
   m_Layer: 5
   m_Name: GameplayPanel
   m_TagString: Untagged
@@ -630,6 +631,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219299418}
   m_CullTransparentMesh: 1
+--- !u!225 &219299422
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219299418}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &223596922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4896,6 +4909,7 @@ GameObject:
   - component: {fileID: 1457139739}
   - component: {fileID: 1457139741}
   - component: {fileID: 1457139740}
+  - component: {fileID: 1457139742}
   m_Layer: 5
   m_Name: TitlePanel
   m_TagString: Untagged
@@ -4962,6 +4976,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457139738}
   m_CullTransparentMesh: 1
+--- !u!225 &1457139742
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457139738}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1503687464
 GameObject:
   m_ObjectHideFlags: 0
@@ -6270,6 +6296,11 @@ MonoBehaviour:
   gameplayPanel: {fileID: 219299418}
   gameOverPanel: {fileID: 2091973441}
   winPanel: {fileID: 441356907}
+  postTitleFadeDelay: 1
+  titleFadeOutDuration: 0.4
+  titleCanvasGroup: {fileID: 1457139742}
+  gameplayCanvasGroup: {fileID: 219299422}
+  gameplayFadeInDuration: 0.4
 --- !u!4 &1829821344
 Transform:
   m_ObjectHideFlags: 0
