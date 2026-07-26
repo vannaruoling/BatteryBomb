@@ -140,6 +140,8 @@ public class UIManager : MonoBehaviour
 
     public void SetActiveTileset(GameObject active)
     {
+        Debug.Log("SetActiveTileset called with: " + (active == null ? "NULL" : active.name));
+
         if (titleScreenTileMap != null) titleScreenTileMap.SetActive(active == titleScreenTileMap);
         if (tutorialTileMap != null) tutorialTileMap.SetActive(active == tutorialTileMap);
         if (groundTileMap != null) groundTileMap.SetActive(active == groundTileMap);

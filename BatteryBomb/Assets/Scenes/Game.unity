@@ -1729,7 +1729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &295910041
 Transform:
   m_ObjectHideFlags: 0
@@ -3626,6 +3626,9 @@ MonoBehaviour:
   explosionRadiusBonus: 0
   turretFireRateMultiplier: 1
   maxBombCountBonus: 0
+  chainExplosionDisabled: 0
+  explosionDamageBonus: 0
+  chainUnlocked: 0
 --- !u!4 &354395032
 Transform:
   m_ObjectHideFlags: 0
@@ -3900,10 +3903,12 @@ MonoBehaviour:
   fireRateIcon: {fileID: 8688843994422956024, guid: ee4a7fb1ca4fbfe42954c773537e3e1e, type: 3}
   explosionRadiusIcon: {fileID: 4650092460327343774, guid: 73928aee049ddfe49afc555a673c0579, type: 3}
   bombAmmoIcon: {fileID: 8688843994422956024, guid: ee4a7fb1ca4fbfe42954c773537e3e1e, type: 3}
+  chainUnlockIcon: {fileID: -4851346434883200180, guid: 6f4d94e120c3f9a4caf755b307dfbe06, type: 3}
   cardIcons:
   - {fileID: 354543005}
   - {fileID: 8526022617203593518}
   - {fileID: 223596924}
+  chainUnlocked: 0
 --- !u!4 &386093374
 Transform:
   m_ObjectHideFlags: 0

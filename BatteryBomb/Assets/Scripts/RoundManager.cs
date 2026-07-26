@@ -188,6 +188,12 @@ public class RoundManager : MonoBehaviour
     // If getting a turret, no buff this round. Otherwise they always give buffs.
     public void RequestNextRound()
     {
+
+        UIManager.Instance.SetActiveTileset(UIManager.Instance.groundTileMap);
+
+        roundCardPanel.SetActive(true);
+
+
         if (roundCounter != null) roundCounter.gameObject.SetActive(true);
         if (bombSpawner.bombCounter != null) bombSpawner.bombCounter.gameObject.SetActive(true);
 
