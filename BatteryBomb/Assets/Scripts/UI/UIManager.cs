@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
         StartCoroutine(StartGameSequence());
     }
 

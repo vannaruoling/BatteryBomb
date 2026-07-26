@@ -372,7 +372,7 @@ Transform:
   m_GameObject: {fileID: 50673225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.04, y: -1.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -394,22 +394,22 @@ MonoBehaviour:
   sfxSource: {fileID: 50673226}
   musicVolume: 0.6
   sfxVolume: 0.8
-  titleMusic: {fileID: 0}
-  stageMusic: {fileID: 0}
-  bossMusic: {fileID: 0}
-  bombPickup: {fileID: 0}
-  bombAttach: {fileID: 0}
-  bombTick: {fileID: 0}
-  bombExplode: {fileID: 0}
-  chainExplode: {fileID: 0}
-  enemyDeath: {fileID: 0}
-  enemyLeak: {fileID: 0}
-  turretShoot: {fileID: 0}
-  turretPlace: {fileID: 0}
-  cardPick: {fileID: 0}
-  waveCleared: {fileID: 0}
-  gameOver: {fileID: 0}
-  victory: {fileID: 0}
+  titleMusic: {fileID: 8300000, guid: 01403e6cc212f43ae8e717e4556f0300, type: 3}
+  stageMusic: {fileID: 8300000, guid: 0785d6186fa5445039ceb8828fa61fbb, type: 3}
+  bossMusic: {fileID: 8300000, guid: 05f81d7eff5e746c5b022592f9489db3, type: 3}
+  bombPickup: {fileID: 8300000, guid: d3184963b99dc4c9082cf0b99342bff1, type: 3}
+  bombAttach: {fileID: 8300000, guid: 2b739cc22588d485a89cd7851c2881b2, type: 3}
+  bombTick: {fileID: 8300000, guid: 5cc3f3b7e3dac41c094031393660bbb0, type: 3}
+  bombExplode: {fileID: 8300000, guid: bf57a5416865d4e32a4806ac453c18b7, type: 3}
+  chainExplode: {fileID: 8300000, guid: 396ae6b555509480cb5581541c893dc7, type: 3}
+  enemyDeath: {fileID: 8300000, guid: 83f34cdf26c864e7d95a3d16ec9daa80, type: 3}
+  enemyLeak: {fileID: 8300000, guid: b3d4ab4fcf38d4832968a5eef3170476, type: 3}
+  turretShoot: {fileID: 8300000, guid: 77f2f2750a60f42baae028d351f16502, type: 3}
+  turretPlace: {fileID: 8300000, guid: 38f1f0c04f2f846c1843d0422f539961, type: 3}
+  cardPick: {fileID: 8300000, guid: 4ab654b64f9c14592a930654c162bd65, type: 3}
+  waveCleared: {fileID: 8300000, guid: 1321031635fa24632a940e886822158f, type: 3}
+  gameOver: {fileID: 8300000, guid: 6fe41acaf296e4ce59fd93d780985fe4, type: 3}
+  victory: {fileID: 8300000, guid: 0b0370b63c675461ebdd51910c412c6f, type: 3}
 --- !u!1 &53468043 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6128782803088412603, guid: 84321f246f9a446d0afe61c4056f6fa0, type: 3}
