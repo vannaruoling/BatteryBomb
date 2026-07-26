@@ -202,6 +202,7 @@ public class BatteryBomb : MonoBehaviour
     void OnMouseDown()
     {
         if (!GameManager.Instance.inputEnabled) return;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
 
 
 
@@ -216,7 +217,7 @@ public class BatteryBomb : MonoBehaviour
             Detach();
         }
 
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
+
 
         isDragging = true;
         anyBombDragging = true;

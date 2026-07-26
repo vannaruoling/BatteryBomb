@@ -28,6 +28,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip turretPlace;
     public AudioClip cardPick;
     public AudioClip waveCleared;
+    public AudioClip roundChange;
+    public AudioClip bombSpawn;
+    public AudioClip enemyHit;
+    public AudioClip cardsShown;
+    public AudioClip buttonPress;
     public AudioClip gameOver;
     public AudioClip victory;
 

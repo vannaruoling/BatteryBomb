@@ -134,6 +134,9 @@ public class Enemy : MonoBehaviour
         currentHealth -= amount;
         Debug.Log("Enemy hurt: " + amount + ", curr health: " + currentHealth);
 
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyHit, 0.2f);
+
+
         if (flashOverlay != null)
         {
             StopCoroutine(nameof(FlashRoutine));
