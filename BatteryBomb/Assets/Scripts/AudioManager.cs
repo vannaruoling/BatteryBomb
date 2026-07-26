@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     // SFX
     public AudioClip bombPickup;
     public AudioClip bombAttach;
+    public AudioClip bombDetach;
     public AudioClip bombTick;
     public AudioClip bombExplode;
     public AudioClip chainExplode;

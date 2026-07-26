@@ -238,6 +238,9 @@ public class BatteryBomb : MonoBehaviour
         attachedTurret = null;
         SetPowering();
 
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombDetach);
+
+
         if (punted)
         {
             puntRoutine = StartCoroutine(PuntRoutine(restPos));
@@ -320,6 +323,8 @@ public class BatteryBomb : MonoBehaviour
         }
 
         Debug.Log("No turret found to attach to");
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombDetach);
+
     }
 
 

@@ -555,6 +555,7 @@ MonoBehaviour:
   bossMusic: {fileID: 8300000, guid: 05f81d7eff5e746c5b022592f9489db3, type: 3}
   bombPickup: {fileID: 8300000, guid: 3cdcf7bfe611f492ab6889a466377863, type: 3}
   bombAttach: {fileID: 8300000, guid: 2b739cc22588d485a89cd7851c2881b2, type: 3}
+  bombDetach: {fileID: 8300000, guid: 3f3f48bb1334c41cf8cad32e26be3085, type: 3}
   bombTick: {fileID: 8300000, guid: 81e4c523a7a25453db577746cc0c5982, type: 3}
   bombExplode: {fileID: 8300000, guid: bf57a5416865d4e32a4806ac453c18b7, type: 3}
   chainExplode: {fileID: 8300000, guid: 396ae6b555509480cb5581541c893dc7, type: 3}
