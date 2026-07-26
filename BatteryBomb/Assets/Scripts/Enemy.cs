@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     public float chainWarningFlickerRate = 0.08f;
     public float chainBloatScale = 1.4f;
     public float spriteForwardOffset = -90;
+
+    public float chainShakeDuration = 0.15f;
+    public float chainShakeEffectMagnitude = 0.12f;
     private Vector3 baseScale;
     private bool hasCascaded = false;
 
@@ -189,7 +192,6 @@ public class Enemy : MonoBehaviour
 
         Coroutine flicker = StartCoroutine(ChainWarningFlicker());
         StartCoroutine(ChainBloatRoutine());
-        Juice.Instance.ShakeTransform(transform, chainShakeMagnitude, chainDetonateDelay);
 
         yield return new WaitForSeconds(chainDetonateDelay);
 
@@ -237,7 +239,8 @@ public class Enemy : MonoBehaviour
             Destroy(explosion, 1f);
         }
 
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.chainExplode, 0.7f);
+        Juice.Instance.ShakeTransform(transform, chainShakeEffectMagnitude, chainDetonateDelay);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.chainExplode, 0.35f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, chainExplosionRadius, LayerMask.GetMask("Default"));
         foreach (Collider2D hit in hits)
