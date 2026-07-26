@@ -39,11 +39,14 @@ public class RoundCardManager : MonoBehaviour
     public Sprite fireRateIcon;
     public Sprite explosionRadiusIcon;
     public Sprite bombAmmoIcon;
+    public Sprite chainUnlockIcon;
 
     public Image[] cardIcons;
 
     private List<CardOption> allCards;
     private bool selectionMade = false;
+
+    public bool chainUnlocked = false;
 
     void Awake()
     {
@@ -57,6 +60,7 @@ public class RoundCardManager : MonoBehaviour
             new CardOption("Turret Fire Rate +25%", fireRateIcon, OnCardTurretFireRate),
             new CardOption("Explosion Radius +0.5", explosionRadiusIcon, OnCardExplosionRadius),
             new CardOption("Bomb Ammo +1", bombAmmoIcon, OnCardMaxBombCount),
+            new CardOption("Chain Bomb: explosions cascade killed bugs", chainUnlockIcon, OnCardUnlockChain),
         };
     }
 
@@ -128,6 +132,17 @@ public class RoundCardManager : MonoBehaviour
         {
             t.fireRate *= 1.25f;
         }
+
+        RoundManager.Instance.StartRound();
+    }
+
+    void OnCardUnlockChain()
+    {
+        if (selectionMade) return;
+        selectionMade = true;
+
+        UpgradeState.Instance.chainUnlocked = true;
+        allCards.RemoveAll(c => c.label.StartsWith("Unstable Core"));
 
         RoundManager.Instance.StartRound();
     }

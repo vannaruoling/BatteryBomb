@@ -362,8 +362,10 @@ public class BatteryBomb : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeChainDamage(explosionDamage);
-
+                    if (UpgradeState.Instance.chainUnlocked)
+                        enemy.TakeChainDamage(explosionDamage);
+                    else
+                        enemy.TakeDamage(explosionDamage);
                 }
             }
         }
