@@ -58,10 +58,10 @@ public class RoundCardManager : MonoBehaviour
 
         allCards = new List<CardOption>
         {
-            new CardOption("Heal +2", healIcon, OnCardHeal),
+            new CardOption("Health +2", healIcon, OnCardHeal),
             new CardOption("Bomb Timer +0.5s", bombTimerIcon, OnCardBombTimer),
             new CardOption("Bomb Ammo +1", bombAmmoIcon, OnCardMaxBombCount),
-            new CardOption("Unstable Core: explosions chain", chainUnlockIcon, OnCardUnlockChain),
+            new CardOption("Turret explosions now chain", chainUnlockIcon, OnCardUnlockChain),
 
             new CardOption("Basic Turret: Fire Rate +5%", fireRateIcon, () => ApplyFireRate(TurretType.Basic), TurretType.Basic),
             new CardOption("Basic Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Basic, 0.25f), TurretType.Basic),

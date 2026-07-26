@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     private int currentHealth;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer flashOverlay;
+
+    private bool isDead = false;
     public Material flashMaterial;
 
 
@@ -138,6 +140,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (isDead) return;
+
+
         currentHealth -= amount;
         Debug.Log("Enemy hurt: " + amount + ", curr health: " + currentHealth);
 
@@ -158,6 +163,13 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+
+        if (isDead) return;
+        isDead = true;
+        // STOP collider from working
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
         RoundManager.Instance.ReportEnemyDeath();
         movementEnabled = false;
 
@@ -178,6 +190,9 @@ public class Enemy : MonoBehaviour
     // Chain damage occurs if they get hit by one
     public void TakeChainDamage(int amount)
     {
+        if (isDead) return;
+
+
         currentHealth -= amount;
         Debug.Log("Enemy hurt (chain): " + amount + ", curr health: " + currentHealth);
 
