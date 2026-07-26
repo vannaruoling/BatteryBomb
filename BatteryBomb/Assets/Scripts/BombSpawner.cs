@@ -65,7 +65,10 @@ public class BombSpawner : MonoBehaviour
 
     public void ResetForRound()
     {
-        bombsRemainingThisRound = baseBombsPerRound + UpgradeState.Instance.maxBombCountBonus;
+        bombsRemainingThisRound = baseBombsPerRound
+            + UpgradeState.Instance.maxBombCountBonus
+            + (RoundManager.Instance.WavesPlayed / 2);
+
         spawnTimer = spawnInterval;
 
         if (bombCounter != null) bombCounter.SetValue(bombsRemainingThisRound, true);

@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour
 
     public float speedGrowthPerWave = 0.05f;
     public float maxSpeed = 4f;
+
+    public bool isBoss = false;
+    public float bossHealthGrowthPerWave = 0.35f;
     private Vector3 baseScale;
     private bool hasCascaded = false;
 
@@ -40,6 +43,12 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         currentHealth = maxHealth;
+        if (isBoss && RoundManager.Instance != null)
+        {
+            maxHealth = Mathf.RoundToInt(maxHealth * (1f + bossHealthGrowthPerWave * RoundManager.Instance.WavesPlayed));
+            currentHealth = maxHealth;
+        }
+
         if (RoundManager.Instance != null)
         {
             speed = Mathf.Min(maxSpeed, speed + (RoundManager.Instance.WavesPlayed * speedGrowthPerWave));
