@@ -49,6 +49,15 @@ MonoBehaviour:
   maxHealth: 15
   speed: 1
   movementEnabled: 1
+  waypoints: []
+  chainExplosionEffect: {fileID: 0}
+  chainExplosionRadius: 1.5
+  chainDetonateDelay: 1
+  chainShakeMagnitude: 0.05
+  chainWarningColor: {r: 0, g: 1, b: 1, a: 1}
+  chainWarningFlickerRate: 0.08
+  chainBloatScale: 1.4
+  spriteForwardOffset: 90
   flashMaterial: {fileID: 0}
 --- !u!212 &2866960587233379162
 SpriteRenderer:

@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public Color chainWarningColor = Color.cyan;
     public float chainWarningFlickerRate = 0.08f;
     public float chainBloatScale = 1.4f;
+    public float spriteForwardOffset = -90;
     private Vector3 baseScale;
     private bool hasCascaded = false;
 
@@ -68,6 +69,13 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
+                    Vector3 dir = (target.position - transform.position).normalized;
+                    if (dir.sqrMagnitude > 0.0001f)
+                    {
+                        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                        transform.rotation = Quaternion.Euler(0f, 0f, angle + spriteForwardOffset);
+                    }
+
                     transform.position = Vector3.MoveTowards(
                         transform.position, target.position, speed * Time.deltaTime);
 
