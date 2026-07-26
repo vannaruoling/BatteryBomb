@@ -65,9 +65,9 @@ public class RoundCardManager : MonoBehaviour
 
             new CardOption("Basic Turret: Fire Rate +5%", fireRateIcon, () => ApplyFireRate(TurretType.Basic), TurretType.Basic),
             new CardOption("Basic Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Basic, 0.25f), TurretType.Basic),
-            new CardOption("Spread Turret: Fire Rate +25%", fireRateIcon, () => ApplyFireRate(TurretType.Spread), TurretType.Spread),
+            new CardOption("Spread Turret: Fire Rate +5%", fireRateIcon, () => ApplyFireRate(TurretType.Spread), TurretType.Spread),
             new CardOption("Spread Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Spread, 0.25f), TurretType.Spread),
-            new CardOption("Cannon Turret: Fire Rate +25%", fireRateIcon, () => ApplyFireRate(TurretType.Cannon), TurretType.Cannon),
+            new CardOption("Cannon Turret: Fire Rate +5%", fireRateIcon, () => ApplyFireRate(TurretType.Cannon), TurretType.Cannon),
             new CardOption("Cannon Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Cannon, 0.25f), TurretType.Cannon),
         };
     }
