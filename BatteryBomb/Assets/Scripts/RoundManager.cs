@@ -70,7 +70,8 @@ public class RoundManager : MonoBehaviour
         bombSpawner.SpawnBombNow();
 
         // Displays HP
-        DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
+        if (DamageFlashDisplay.Instance != null)
+            DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
         if (roundCounter != null) roundCounter.SetValue(currentRound, true);
 
         // Calculate difficulty
@@ -250,6 +251,8 @@ public class RoundManager : MonoBehaviour
 
         if (roundCounter != null) roundCounter.gameObject.SetActive(true);
         if (bombSpawner.bombCounter != null) bombSpawner.bombCounter.gameObject.SetActive(true);
+        if (UIManager.Instance.gameplayPanel != null)
+            UIManager.Instance.gameplayPanel.SetActive(true);
 
         roundCardPanel.SetActive(true);
 

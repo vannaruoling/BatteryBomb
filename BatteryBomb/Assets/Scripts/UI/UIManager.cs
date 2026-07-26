@@ -86,7 +86,6 @@ public class UIManager : MonoBehaviour
         SetActiveTileset(tutorialTileMap);
 
         titlePanel.SetActive(false);
-        gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
         if (gameplayCanvasGroup != null) gameplayCanvasGroup.alpha = 0f;
