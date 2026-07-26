@@ -42,6 +42,10 @@ public class BatteryBomb : MonoBehaviour
     public float attachPunchDuration = 0.15f;
     public Color attachFlashColor = Color.white;
     public float attachFlashDuration = 0.12f;
+
+    public float landSquashAmount = 0.35f;
+    public float landSquashDuration = 0.15f;
+
     private Vector3 baseScale;
 
     private bool mouseOver = false;
@@ -201,8 +205,18 @@ public class BatteryBomb : MonoBehaviour
     public void DropIn(Vector3 landingPos)
     {
         transform.position = landingPos + new Vector3(0f, 0.8f, 0f);
-        puntRoutine = StartCoroutine(PuntRoutine(new Vector3(landingPos.x, landingPos.y, zOffset)));
+        StartCoroutine(DropInRoutine(new Vector3(landingPos.x, landingPos.y, zOffset)));
+        // transform.position = landingPos + new Vector3(0f, 0.8f, 0f);
+        // puntRoutine = StartCoroutine(PuntRoutine(new Vector3(landingPos.x, landingPos.y, zOffset)));
+        // AudioManager.Instance.PlaySFX(AudioManager.Instance.bombSpawn, 0.5f);
+    }
+
+    IEnumerator DropInRoutine(Vector3 landingPos)
+    {
+        yield return StartCoroutine(PuntRoutine(landingPos));
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombSpawn, 0.5f);
+        yield return StartCoroutine(LandSquashRoutine());
     }
 
     void OnMouseDown()
@@ -460,6 +474,27 @@ public class BatteryBomb : MonoBehaviour
         transform.position = pos;
         if (powerTurret) turret.SetPowered(true);
         SetPowering();
+    }
+
+    IEnumerator LandSquashRoutine()
+    {
+        float t = 0f;
+        while (t < landSquashDuration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / landSquashDuration);
+
+            // squash wide + flat, then ease back to normal
+            float squash = Mathf.Lerp(landSquashAmount, 0f, p);
+            transform.localScale = new Vector3(
+                baseScale.x * (1f + squash),
+                baseScale.y * (1f - squash),
+                baseScale.z
+            );
+
+            yield return null;
+        }
+        transform.localScale = baseScale;
     }
 
     // TUTORIAL PURPOSES
