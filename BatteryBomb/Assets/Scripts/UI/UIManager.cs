@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialTileMap;
     public GameObject groundTileMap;
 
+    private bool gameStarted = false;
+
 
     // Singleton
     void Awake()
@@ -59,6 +61,11 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+
+        if (gameStarted) return;
+
+        gameStarted = true;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonPress);
         StartCoroutine(StartGameSequence());
     }

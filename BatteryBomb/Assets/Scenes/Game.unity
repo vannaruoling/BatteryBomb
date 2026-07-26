@@ -5076,7 +5076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6504b080a75f4a6bb317327fe8c8bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  skipTutorial: 1
+  skipTutorial: 0
   dialogue: {fileID: 579785884}
   roundCounter: {fileID: 2048830719}
   professorPrefab: {fileID: 7874510347638130693, guid: 9ec202813326f4e619d254e40cdeff1b, type: 3}
@@ -9576,7 +9576,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 5
   currentRound: 30
-  baseEnemiesPerRound: 1
+  baseEnemiesPerRound: 3
   enemiesPerRoundGrowth: 4
   baseSpawnInterval: 1.5
   minSpawnInterval: 0.4

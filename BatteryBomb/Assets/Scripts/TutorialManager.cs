@@ -26,6 +26,8 @@ public class TutorialManager : MonoBehaviour
     private BatteryBomb bomb;
     private System.Action onComplete;
 
+
+
     void Awake()
     {
         if (Instance == null) Instance = this;

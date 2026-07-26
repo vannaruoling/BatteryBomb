@@ -78,7 +78,8 @@ public class RoundCardManager : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardsShown, 1.5f);
 
         List<CardOption> pool = allCards.FindAll(c =>
-            c.requiredType == null || UpgradeState.Instance.ownedTypes.Contains(c.requiredType.Value));
+      (c.requiredType == null || UpgradeState.Instance.ownedTypes.Contains(c.requiredType.Value))
+      && (!c.label.StartsWith("Unstable Core") || RoundManager.Instance.WavesPlayed >= 5));
 
         for (int i = 0; i < cards.Length; i++)
         {

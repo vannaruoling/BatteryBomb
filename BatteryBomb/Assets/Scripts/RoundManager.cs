@@ -29,6 +29,8 @@ public class RoundManager : MonoBehaviour
     public float bannerFadeInDuration = 0.15f;
     public float bannerHoldDuration = 0.6f;
     public float bannerFadeOutDuration = 0.2f;
+
+    public int WavesPlayed => wavesPlayed;
     // Rounds per turret placement
 
     private int enemiesAlive = 0;
