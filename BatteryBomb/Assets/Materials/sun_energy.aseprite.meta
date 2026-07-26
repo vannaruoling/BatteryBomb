@@ -101,7 +101,7 @@ ScriptedImporter:
     addShadowCasters: 0
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
-  platformSettingsDirtyTick: 639206016841305790
+  platformSettingsDirtyTick: 639206317615461680
   singleSpriteImportData:
   - name: 
     originalName: 

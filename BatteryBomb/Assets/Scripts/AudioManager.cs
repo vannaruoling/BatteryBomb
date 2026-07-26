@@ -7,16 +7,19 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
+
     public float musicVolume = 0.6f;
     public float sfxVolume = 0.8f;
 
     // Music
     public AudioClip titleMusic;
     public AudioClip stageMusic;
+    public AudioClip bossMusic;
 
     // SFX
     public AudioClip bombPickup;
     public AudioClip bombAttach;
+    public AudioClip bombDetach;
     public AudioClip bombTick;
     public AudioClip bombExplode;
     public AudioClip chainExplode;
@@ -26,6 +29,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip turretPlace;
     public AudioClip cardPick;
     public AudioClip waveCleared;
+    public AudioClip roundChange;
+    public AudioClip bombSpawn;
+    public AudioClip enemyHit;
+    public AudioClip cardsShown;
+    public AudioClip buttonPress;
     public AudioClip gameOver;
     public AudioClip victory;
 
@@ -51,9 +59,17 @@ public class AudioManager : MonoBehaviour
         if (musicSource != null) musicSource.Stop();
     }
 
-    public void PlaySFX(AudioClip clip, float volumeScale = 1f)
+    public void PlaySFX(AudioClip clip, float volumeScale = 1f, float pitch = 1f)
     {
         if (sfxSource == null || clip == null) return;
+        float originalPitch = sfxSource.pitch;
+        sfxSource.pitch = pitch;
         sfxSource.PlayOneShot(clip, sfxVolume * volumeScale);
+        sfxSource.pitch = originalPitch;
+    }
+
+    public void StopSFX()
+    {
+        if (sfxSource != null) sfxSource.Stop();
     }
 }

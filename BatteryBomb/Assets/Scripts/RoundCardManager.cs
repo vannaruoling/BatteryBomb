@@ -43,6 +43,7 @@ public class RoundCardManager : MonoBehaviour
     public Image[] cardIcons;
 
     private List<CardOption> allCards;
+    private bool selectionMade = false;
 
     void Awake()
     {
@@ -61,6 +62,10 @@ public class RoundCardManager : MonoBehaviour
 
     public void PresentRandomCards()
     {
+        selectionMade = false;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardsShown, 1.5f);
+
+
         List<CardOption> pool = new List<CardOption>(allCards);
 
         for (int i = 0; i < cards.Length; i++)
@@ -92,6 +97,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardHeal()
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         GameManager.Instance.HealPlayer(2);
@@ -100,6 +107,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardBombTimer()
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         UpgradeState.Instance.bombTimerBonus += 3f;
@@ -108,6 +117,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardTurretFireRate()
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         UpgradeState.Instance.turretFireRateMultiplier *= 1.25f;
@@ -123,6 +134,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardExplosionRadius()
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         UpgradeState.Instance.explosionRadiusBonus += 0.5f;
@@ -131,6 +144,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardMaxBombCount()
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         UpgradeState.Instance.maxBombCountBonus += 1;
@@ -139,6 +154,10 @@ public class RoundCardManager : MonoBehaviour
 
     public void PresentTurretCards()
     {
+        selectionMade = false;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardsShown, 1.5f);
+
+
         List<TurretOption> pool = new List<TurretOption>(turretOptions);
 
         for (int i = 0; i < cards.Length; i++)
@@ -171,6 +190,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnTurretCardChosen(GameObject turretPrefab)
     {
+        if (selectionMade) return;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
         RoundManager.Instance.roundCardPanel.SetActive(false);

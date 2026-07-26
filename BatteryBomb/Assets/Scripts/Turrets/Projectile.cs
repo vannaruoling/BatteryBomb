@@ -62,8 +62,10 @@ public class Projectile : MonoBehaviour
     {
         if (explosionEffect != null)
         {
+
             GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             explosion.transform.localScale *= explosionScale;
+
             Destroy(explosion, 0.5f);
         }
 
