@@ -13,18 +13,19 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public WeightedEnemy[] weightedEnemies;
-    public float spawnInterval = 2f;
+    private float spawnInterval = 2f;
     public Vector2 spawnPoint = new Vector2(-8f, 0f);
     public Transform[] waypoints;
 
     // TODO: Edit these
     public GameObject bossPrefab; // null for no boss
-    public int bossSpawnAfter = 4; // num enemies
+    public float bossSpawnThreshold = 0.2f;
+    private bool bossSpawnedThisWave = false;
 
-
+    private bool includeBoss = false;
+    private int totalEnemiesThisWave = 0;
     private float spawnTimer;
     private int enemiesToSpawn = 0;
-    private int enemiesSpawnedCurrentWave = 0;
     private bool spawning = false;
     private int currentWave = 0;
 
@@ -47,14 +48,24 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void SpawnWave(int count, float interval, int waveNumber)
+    public void SpawnWave(int count, float interval, int waveNumber, bool spawnBoss = false)
     {
         enemiesToSpawn = count;
+        totalEnemiesThisWave = count;
         spawnInterval = interval;
         spawnTimer = 0f;
         spawning = true;
-        enemiesSpawnedCurrentWave = 0;
         currentWave = waveNumber;
+        includeBoss = spawnBoss;
+        bossSpawnedThisWave = false;
+
+        // OLD SPAWNER
+        // enemiesToSpawn = count;
+        // spawnInterval = interval;
+        // spawnTimer = 0f;
+        // spawning = true;
+        // enemiesSpawnedCurrentWave = 0;
+        // currentWave = waveNumber;
     }
 
 
@@ -62,10 +73,20 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject enemyToSpawn;
 
-        if (bossPrefab != null && enemiesSpawnedCurrentWave == bossSpawnAfter)
+
+
+        int bossThreshold = Mathf.Max(1, Mathf.RoundToInt(totalEnemiesThisWave * bossSpawnThreshold));
+        bool isBossSlot = enemiesToSpawn <= bossThreshold;
+
+        if (bossPrefab != null && includeBoss && isBossSlot && !bossSpawnedThisWave)
+        {
             enemyToSpawn = bossPrefab;
+            bossSpawnedThisWave = true;
+        }
         else
+        {
             enemyToSpawn = PickWeightedEnemy();
+        }
 
         Vector3 spawnPos = (waypoints != null && waypoints.Length > 0 && waypoints[0] != null)
             ? waypoints[0].position
@@ -75,8 +96,6 @@ public class EnemySpawner : MonoBehaviour
 
         Enemy enemy = spawned.GetComponent<Enemy>();
         if (enemy != null) enemy.SetPath(waypoints);
-
-        enemiesSpawnedCurrentWave++;
     }
 
     // void SpawnEnemy()

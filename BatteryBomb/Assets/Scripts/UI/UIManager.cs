@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     {
         AudioManager.Instance.PlayMusic(AudioManager.Instance.titleMusic);
 
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         titlePanel.SetActive(true);
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -46,16 +46,28 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
-
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
-        // Request next round should handle these next two calls in one now
-        // GameManager.Instance.inputEnabled = true;
-        // RoundManager.Instance.StartRound();
-        RoundManager.Instance.RequestNextRound();
+        Time.timeScale = 1f;
+        GameManager.Instance.inputEnabled = false;
+
+        Debug.Log("starting tutorial..");
+
+        TutorialManager.Instance.BeginTutorial(() => RoundManager.Instance.RequestNextRound());
+
+        // OLD VERSION
+        // AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
+
+        // titlePanel.SetActive(false);
+        // gameplayPanel.SetActive(true);
+        // gameOverPanel.SetActive(false);
+
+        // // Request next round should handle these next two calls in one now
+        // // GameManager.Instance.inputEnabled = true;
+        // // RoundManager.Instance.StartRound();
+        // RoundManager.Instance.RequestNextRound();
     }
 
     public void ShowGameOver()
