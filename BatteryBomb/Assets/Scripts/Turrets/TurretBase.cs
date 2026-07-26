@@ -57,7 +57,10 @@ public abstract class TurretBase : MonoBehaviour
         if (fireCooldown <= 0f)
         {
             if (TryFire())
+            {
+                fireCooldown = 1f / fireRate;
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.turretShoot, 0.25f, shootPitch);
+            }
         }
     }
 
