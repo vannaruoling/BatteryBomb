@@ -85,7 +85,21 @@ public abstract class TurretBase : MonoBehaviour
         {
             animator.Play(powered ? "shooting" : "stationary");
         }
+        if (powered)
+        {
+            Juice.Instance.ShakeTransform(transform, 0.06f, 0.12f);
+            Juice.Instance.FlashSprite(GetComponent<SpriteRenderer>(), Color.white, 0.1f);
+        }
     }
+    // public void SetPowered(bool powered)
+    // {
+    //     if (isDead) return;
+    //     isPowered = powered;
+    //     if (animator != null)
+    //     {
+    //         animator.Play(powered ? "shooting" : "stationary");
+    //     }
+    // }
 
     public void Die()
     {
