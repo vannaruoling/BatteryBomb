@@ -7,12 +7,14 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
+
     public float musicVolume = 0.6f;
     public float sfxVolume = 0.8f;
 
     // Music
     public AudioClip titleMusic;
     public AudioClip stageMusic;
+    public AudioClip bossMusic;
 
     // SFX
     public AudioClip bombPickup;
