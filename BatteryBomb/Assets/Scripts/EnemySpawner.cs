@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+
 public class EnemySpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -13,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     public WeightedEnemy[] weightedEnemies;
     public float spawnInterval = 2f;
     public Vector2 spawnPoint = new Vector2(-8f, 0f);
+    public Transform[] waypoints;
 
     // TODO: Edit these
     public GameObject bossPrefab; // null for no boss
@@ -54,22 +57,44 @@ public class EnemySpawner : MonoBehaviour
         currentWave = waveNumber;
     }
 
+
     void SpawnEnemy()
     {
         GameObject enemyToSpawn;
 
         if (bossPrefab != null && enemiesSpawnedCurrentWave == bossSpawnAfter)
-        {
             enemyToSpawn = bossPrefab;
-        }
         else
-        {
             enemyToSpawn = PickWeightedEnemy();
-        }
 
-        Instantiate(enemyToSpawn, spawnPoint, Quaternion.identity);
+        Vector3 spawnPos = (waypoints != null && waypoints.Length > 0 && waypoints[0] != null)
+            ? waypoints[0].position
+            : (Vector3)spawnPoint;
+
+        GameObject spawned = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity);
+
+        Enemy enemy = spawned.GetComponent<Enemy>();
+        if (enemy != null) enemy.SetPath(waypoints);
+
         enemiesSpawnedCurrentWave++;
     }
+
+    // void SpawnEnemy()
+    // {
+    //     GameObject enemyToSpawn;
+
+    //     if (bossPrefab != null && enemiesSpawnedCurrentWave == bossSpawnAfter)
+    //     {
+    //         enemyToSpawn = bossPrefab;
+    //     }
+    //     else
+    //     {
+    //         enemyToSpawn = PickWeightedEnemy();
+    //     }
+
+    //     Instantiate(enemyToSpawn, spawnPoint, Quaternion.identity);
+    //     enemiesSpawnedCurrentWave++;
+    // }
 
     GameObject PickWeightedEnemy()
     {

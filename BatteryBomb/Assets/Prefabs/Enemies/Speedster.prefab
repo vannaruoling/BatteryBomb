@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.43161, y: -2.07568, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,8 +48,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 1
-  speed: 5
+  speed: 3
   movementEnabled: 1
+  waypoints: []
+  chainExplosionEffect: {fileID: 564930320001899514, guid: 426ebd5e7770940a892d044cffe192dc, type: 3}
+  chainExplosionRadius: 1
+  chainDetonateDelay: 0.3
+  chainShakeMagnitude: 0.05
+  chainWarningColor: {r: 0, g: 1, b: 1, a: 1}
+  chainWarningFlickerRate: 0.08
+  chainBloatScale: 1.2
+  spriteForwardOffset: 90
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:
@@ -100,8 +109,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3138486848293625725, guid: bb1b6b1957c8b7443815b3aa4cb43edf, type: 3}
-  m_Color: {r: 0.8301887, g: 0.3485226, b: 0.55551684, a: 1}
+  m_Sprite: {fileID: 2662196583378564231, guid: ab3f288ccefecfc4bb38645e00542e70, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -157,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 5395611819641696461}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 99228630760295388, guid: bb1b6b1957c8b7443815b3aa4cb43edf, type: 3}
+  m_Controller: {fileID: -8310898001579986859, guid: ab3f288ccefecfc4bb38645e00542e70, type: 3}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

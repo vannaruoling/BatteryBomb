@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.43161, y: -2.07568, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,8 +48,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 2
-  speed: 2
+  speed: 1
   movementEnabled: 1
+  waypoints: []
+  chainExplosionEffect: {fileID: 564930320001899514, guid: 426ebd5e7770940a892d044cffe192dc, type: 3}
+  chainExplosionRadius: 1
+  chainDetonateDelay: 0.3
+  chainShakeMagnitude: 0.05
+  chainWarningColor: {r: 0, g: 1, b: 1, a: 1}
+  chainWarningFlickerRate: 0.08
+  chainBloatScale: 1.2
+  spriteForwardOffset: 90
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:

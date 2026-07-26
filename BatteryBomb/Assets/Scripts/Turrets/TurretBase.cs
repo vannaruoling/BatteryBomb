@@ -8,6 +8,8 @@ public abstract class TurretBase : MonoBehaviour
     public bool isPowered = false;
     public bool isDead = false;
     public float range = 5f;
+
+    public BatteryBomb attachedBomb;
     public GameObject rangeIndicatorPrefab;
     public Material outlineMaterial;
     private SpriteRenderer outlineRenderer;
@@ -51,6 +53,8 @@ public abstract class TurretBase : MonoBehaviour
         {
             if (TryFire())
             {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.turretShoot, 0.25f);
+
                 fireCooldown = 1f / fireRate;
             }
         }

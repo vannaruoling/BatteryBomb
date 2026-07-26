@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     public GameObject gameplayPanel;
     public GameObject gameOverPanel;
 
+    public GameObject winPanel;
+
+
     // Singleton
     void Awake()
     {
@@ -32,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     public void ShowTitle()
     {
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.titleMusic);
+
         Time.timeScale = 0f;
         titlePanel.SetActive(true);
         gameplayPanel.SetActive(false);
@@ -41,17 +46,25 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
+
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
-        GameManager.Instance.inputEnabled = true;
-
-        RoundManager.Instance.StartRound();
+        // Request next round should handle these next two calls in one now
+        // GameManager.Instance.inputEnabled = true;
+        // RoundManager.Instance.StartRound();
+        RoundManager.Instance.RequestNextRound();
     }
 
     public void ShowGameOver()
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.gameOver);
+
+
+
         Time.timeScale = 0f;
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(false);
@@ -64,5 +77,19 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowWin()
+    {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.victory);
+
+        Time.timeScale = 0f;
+        titlePanel.SetActive(false);
+        gameplayPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(true);
+
+        GameManager.Instance.inputEnabled = false;
     }
 }

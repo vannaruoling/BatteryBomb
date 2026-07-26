@@ -9,6 +9,9 @@ public class RoundManager : MonoBehaviour
     public BombSpawner bombSpawner;
     public GameObject roundCardPanel;
     public CounterDisplay roundCounter;
+    public TurretPlacer turretPlacer;
+
+    public int roundsPerPlacement = 1;
 
 
     //TODO: change to like 100
@@ -17,6 +20,11 @@ public class RoundManager : MonoBehaviour
     public float spawnInterval = 1.5f;
     public float roundEndDelay = 0.4f;
 
+    public CanvasGroup waveClearedBanner;
+    public float bannerFadeInDuration = 0.15f;
+    public float bannerHoldDuration = 0.6f;
+    public float bannerFadeOutDuration = 0.2f;
+    // Rounds per turret placement
 
     private int enemiesAlive = 0;
     private int wavesPlayed = 0;
@@ -104,8 +112,7 @@ public class RoundManager : MonoBehaviour
 
         if (currentRound <= 0)
         {
-            // TODO: win state, right now game just dies
-            Debug.Log("All rounds cleared");
+            UIManager.Instance.ShowWin();
             return;
         }
 
@@ -116,9 +123,49 @@ public class RoundManager : MonoBehaviour
     IEnumerator EndRoundDelayed()
     {
         yield return new WaitForSecondsRealtime(roundEndDelay);
-
         Time.timeScale = 0f;
+
+        if (waveClearedBanner != null)
+            yield return StartCoroutine(ShowWaveClearedBanner());
+
+        RequestNextRound();
+    }
+
+    IEnumerator ShowWaveClearedBanner()
+    {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.waveCleared);
+
+        waveClearedBanner.gameObject.SetActive(true);
+        waveClearedBanner.alpha = 0f;
+
+        float t = 0f;
+        while (t < bannerFadeInDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            waveClearedBanner.alpha = Mathf.Clamp01(t / bannerFadeInDuration);
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(bannerHoldDuration);
+
+        t = 0f;
+        while (t < bannerFadeOutDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            waveClearedBanner.alpha = 1f - Mathf.Clamp01(t / bannerFadeOutDuration);
+            yield return null;
+        }
+        waveClearedBanner.gameObject.SetActive(false);
+    }
+
+    // If getting a turret, no buff this round. Otherwise they always give buffs.
+    public void RequestNextRound()
+    {
         roundCardPanel.SetActive(true);
-        RoundCardManager.Instance.PresentRandomCards();
+
+        if (wavesPlayed % roundsPerPlacement == 0)
+            RoundCardManager.Instance.PresentTurretCards();
+        else
+            RoundCardManager.Instance.PresentRandomCards();
     }
 }
