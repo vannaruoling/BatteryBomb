@@ -59,16 +59,16 @@ public class RoundCardManager : MonoBehaviour
         allCards = new List<CardOption>
         {
             new CardOption("Heal +2", healIcon, OnCardHeal),
-            new CardOption("Bomb Timer +3s", bombTimerIcon, OnCardBombTimer),
+            new CardOption("Bomb Timer +0.5s", bombTimerIcon, OnCardBombTimer),
             new CardOption("Bomb Ammo +1", bombAmmoIcon, OnCardMaxBombCount),
             new CardOption("Unstable Core: explosions chain", chainUnlockIcon, OnCardUnlockChain),
 
-            new CardOption("Basic Turret: Fire Rate +25%", fireRateIcon, () => ApplyFireRate(TurretType.Basic), TurretType.Basic),
-            new CardOption("Basic Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Basic, 1f), TurretType.Basic),
+            new CardOption("Basic Turret: Fire Rate +5%", fireRateIcon, () => ApplyFireRate(TurretType.Basic), TurretType.Basic),
+            new CardOption("Basic Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Basic, 0.25f), TurretType.Basic),
             new CardOption("Spread Turret: Fire Rate +25%", fireRateIcon, () => ApplyFireRate(TurretType.Spread), TurretType.Spread),
-            new CardOption("Spread Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Spread, 1f), TurretType.Spread),
+            new CardOption("Spread Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Spread, 0.25f), TurretType.Spread),
             new CardOption("Cannon Turret: Fire Rate +25%", fireRateIcon, () => ApplyFireRate(TurretType.Cannon), TurretType.Cannon),
-            new CardOption("Cannon Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Cannon, 1f), TurretType.Cannon),
+            new CardOption("Cannon Turret: Range +1", rangeIcon, () => ApplyRange(TurretType.Cannon, 0.25f), TurretType.Cannon),
         };
     }
 
@@ -126,7 +126,7 @@ public class RoundCardManager : MonoBehaviour
 
         AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
 
-        UpgradeState.Instance.bombTimerBonus += 3f;
+        UpgradeState.Instance.bombTimerBonus += 0.5f;
         RoundManager.Instance.StartRound();
     }
 
@@ -136,10 +136,10 @@ public class RoundCardManager : MonoBehaviour
         selectionMade = true;
 
         var upg = UpgradeState.Instance.GetUpgrade(type);
-        upg.fireRateMultiplier *= 1.25f;
+        upg.fireRateMultiplier *= 1.05f;
 
         foreach (TurretBase t in FindObjectsByType<TurretBase>(FindObjectsSortMode.None))
-            if (t.turretType == type) t.fireRate *= 1.25f;
+            if (t.turretType == type) t.fireRate *= 1.05f;
 
         RoundManager.Instance.StartRound();
     }

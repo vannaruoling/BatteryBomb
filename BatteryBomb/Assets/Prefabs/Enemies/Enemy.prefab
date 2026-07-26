@@ -58,9 +58,11 @@ MonoBehaviour:
   chainWarningColor: {r: 0, g: 1, b: 1, a: 1}
   chainWarningFlickerRate: 0.08
   chainBloatScale: 1.4
-  spriteForwardOffset: -90
+  spriteForwardOffset: 90
   chainShakeDuration: 0.15
   chainShakeEffectMagnitude: 0.12
+  speedGrowthPerWave: 0.05
+  maxSpeed: 4
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:

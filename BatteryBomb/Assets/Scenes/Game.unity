@@ -5076,7 +5076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6504b080a75f4a6bb317327fe8c8bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  skipTutorial: 0
+  skipTutorial: 1
   dialogue: {fileID: 579785884}
   roundCounter: {fileID: 2048830719}
   professorPrefab: {fileID: 7874510347638130693, guid: 9ec202813326f4e619d254e40cdeff1b, type: 3}
@@ -9128,6 +9128,15 @@ MonoBehaviour:
   - prefab: {fileID: 5395611819641696461, guid: 5cd776998db004190a63a1834c407430, type: 3}
     baseWeight: -0.3
     weightPerWave: 0.2
+  - prefab: {fileID: 8937928188784504191, guid: db2a5af3b9a384bcd80ec0f852a8c8a7, type: 3}
+    baseWeight: -2
+    weightPerWave: 0.4
+  - prefab: {fileID: 8937928188784504191, guid: 146b4459f014347d88f68bac46f8b393, type: 3}
+    baseWeight: -10
+    weightPerWave: 0.6
+  - prefab: {fileID: 8937928188784504191, guid: 2a0189ddc13c949e0b4500227887f910, type: 3}
+    baseWeight: -15
+    weightPerWave: 0.15
   spawnPoint: {x: -8, y: 0}
   waypoints:
   - {fileID: 2077187133}
@@ -9576,7 +9585,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 5
   currentRound: 30
-  baseEnemiesPerRound: 3
+  baseEnemiesPerRound: 50
   enemiesPerRoundGrowth: 4
   baseSpawnInterval: 1.5
   minSpawnInterval: 0.4

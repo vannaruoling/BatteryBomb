@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
 
     public float chainShakeDuration = 0.15f;
     public float chainShakeEffectMagnitude = 0.12f;
+
+    public float speedGrowthPerWave = 0.05f;
+    public float maxSpeed = 4f;
     private Vector3 baseScale;
     private bool hasCascaded = false;
 
@@ -35,6 +38,10 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         currentHealth = maxHealth;
+        if (RoundManager.Instance != null)
+        {
+            speed = Mathf.Min(maxSpeed, speed + (RoundManager.Instance.WavesPlayed * speedGrowthPerWave));
+        }
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         baseScale = transform.localScale;
