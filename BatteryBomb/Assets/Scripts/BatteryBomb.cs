@@ -323,11 +323,24 @@ public class BatteryBomb : MonoBehaviour
     void Detonate()
     {
         Debug.Log("Battery BOOOOOMMMBBB");
+        Debug.Log("Detonate() called on " + gameObject.name + " at frame " + Time.frameCount);
+
 
         Vector3 explosionPosition = attachedTurret.transform.position;
 
+
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
-        Destroy(explosion, 1f);
+        SpriteRenderer explosionSprite = explosion.GetComponentInChildren<SpriteRenderer>();
+        if (explosionSprite != null)
+        {
+            Color fadeColor = explosionSprite.color;
+            fadeColor.a = 0f;
+            Juice.Instance.FadeSpriteToColor(explosionSprite, fadeColor, 1f, () => Destroy(explosion));
+        }
+        else
+        {
+            Destroy(explosion, 1.5f);
+        }
 
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode);
 
