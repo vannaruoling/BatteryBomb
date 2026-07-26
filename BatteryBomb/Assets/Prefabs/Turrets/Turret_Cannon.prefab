@@ -109,10 +109,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turret
   fireRate: 0.7
   projectilePrefab: {fileID: 784659337802387777, guid: 43ad12582a778441ead42a0156bdabca, type: 3}
+  turretType: 2
   isPowered: 0
   isDead: 0
   range: 1.5
   shootPitch: 0.4
+  reviveFlashColor: {r: 0, g: 1, b: 0, a: 1}
+  reviveFlashDuration: 0.3
+  revivePulseScale: 1.4
+  revivePulseDuration: 0.35
   attachedBomb: {fileID: 0}
   rangeIndicatorPrefab: {fileID: 7918671086076103592, guid: a6725db4880da419f8d048b7b82a65c7, type: 3}
   outlineMaterial: {fileID: 2100000, guid: a91904895b1c14b3db1024ad8b8e4779, type: 2}

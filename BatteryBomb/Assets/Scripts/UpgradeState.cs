@@ -1,7 +1,24 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class UpgradeState : MonoBehaviour
 {
+    [System.Serializable]
+    public class TurretUpgrade
+    {
+        public float fireRateMultiplier = 1f;
+        public float rangeBonus = 0f;
+    }
+
+    private Dictionary<TurretType, TurretUpgrade> turretUpgrades = new Dictionary<TurretType, TurretUpgrade>();
+    public HashSet<TurretType> ownedTypes = new HashSet<TurretType>();
+
+    public TurretUpgrade GetUpgrade(TurretType type)
+    {
+        if (!turretUpgrades.ContainsKey(type))
+            turretUpgrades[type] = new TurretUpgrade();
+        return turretUpgrades[type];
+    }
+
     public static UpgradeState Instance;
 
     public float bombTimerBonus = 0f;

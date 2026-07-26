@@ -99,7 +99,9 @@ public class TurretPlacer : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioManager.Instance.turretPlace);
         Juice.Instance.ShakeTransform(Camera.main.transform, placeShakeMagnitude, placeShakeDuration);
 
-        Instantiate(turretPrefab, pos, Quaternion.identity);
+        GameObject placed = Instantiate(turretPrefab, pos, Quaternion.identity);
+        TurretBase placedTurret = placed.GetComponent<TurretBase>();
+        if (placedTurret != null) UpgradeState.Instance.ownedTypes.Add(placedTurret.turretType);
         Destroy(ghostInstance);
         active = false;
 

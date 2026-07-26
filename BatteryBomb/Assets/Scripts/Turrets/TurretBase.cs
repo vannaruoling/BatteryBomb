@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+
+public enum TurretType { Basic, Spread, Cannon }
 public abstract class TurretBase : MonoBehaviour
 {
     public float fireRate = 1f;
     public GameObject projectilePrefab;
-
+    public TurretType turretType;
     public bool isPowered = false;
     public bool isDead = false;
     public float range = 5f;
@@ -39,6 +41,10 @@ public abstract class TurretBase : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         SetPowered(false);
+
+        UpgradeState.TurretUpgrade upg = UpgradeState.Instance.GetUpgrade(turretType);
+        fireRate *= upg.fireRateMultiplier;
+        range += upg.rangeBonus;
 
         if (rangeIndicatorPrefab != null)
         {

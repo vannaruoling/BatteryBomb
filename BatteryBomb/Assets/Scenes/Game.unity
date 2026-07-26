@@ -3723,6 +3723,7 @@ MonoBehaviour:
   explosionRadiusIcon: {fileID: 4650092460327343774, guid: 73928aee049ddfe49afc555a673c0579, type: 3}
   bombAmmoIcon: {fileID: 8688843994422956024, guid: ee4a7fb1ca4fbfe42954c773537e3e1e, type: 3}
   chainUnlockIcon: {fileID: -4851346434883200180, guid: 6f4d94e120c3f9a4caf755b307dfbe06, type: 3}
+  rangeIcon: {fileID: 4060564606799676577, guid: c9139692552c90d43a794fa33f7cd778, type: 3}
   cardIcons:
   - {fileID: 354543005}
   - {fileID: 8526022617203593518}
@@ -5075,7 +5076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6504b080a75f4a6bb317327fe8c8bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  skipTutorial: 0
+  skipTutorial: 1
   dialogue: {fileID: 579785884}
   roundCounter: {fileID: 2048830719}
   professorPrefab: {fileID: 7874510347638130693, guid: 9ec202813326f4e619d254e40cdeff1b, type: 3}
@@ -9122,8 +9123,8 @@ MonoBehaviour:
     baseWeight: 3
     weightPerWave: 0.3
   - prefab: {fileID: 5395611819641696461, guid: 580f4b6e827c8452a9032fdf2b62dc53, type: 3}
-    baseWeight: -0.1
-    weightPerWave: 0.1
+    baseWeight: -1
+    weightPerWave: 0.2
   - prefab: {fileID: 5395611819641696461, guid: 5cd776998db004190a63a1834c407430, type: 3}
     baseWeight: -0.3
     weightPerWave: 0.2
@@ -9575,7 +9576,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 5
   currentRound: 30
-  baseEnemiesPerRound: 2
+  baseEnemiesPerRound: 1
   enemiesPerRoundGrowth: 4
   baseSpawnInterval: 1.5
   minSpawnInterval: 0.4

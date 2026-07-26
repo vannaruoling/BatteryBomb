@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80267ccff64a244e5b62dee33e84bde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 2
+  maxHealth: 1
   speed: 1
   movementEnabled: 1
   waypoints: []
@@ -59,6 +59,8 @@ MonoBehaviour:
   chainWarningFlickerRate: 0.08
   chainBloatScale: 1.2
   spriteForwardOffset: 90
+  chainShakeDuration: 0.15
+  chainShakeEffectMagnitude: 0.12
   flashMaterial: {fileID: 2100000, guid: 82fdea796cc4148fa829cf5cbe494955, type: 2}
 --- !u!212 &2866960587233379162
 SpriteRenderer:
