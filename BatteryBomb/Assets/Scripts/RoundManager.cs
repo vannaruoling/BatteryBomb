@@ -16,8 +16,13 @@ public class RoundManager : MonoBehaviour
 
     //TODO: change to like 100
     public int currentRound = 2;
-    public int enemiesPerRound = 5;
-    public float spawnInterval = 1.5f;
+    public int baseEnemiesPerRound = 5;
+    public float enemiesPerRoundGrowth = 0.6f;
+    public float baseSpawnInterval = 1.5f;
+    public float minSpawnInterval = 0.4f;
+
+    public float spawnIntervalDecay = 0.03f;
+    public int bossRoundInterval = 3;
     public float roundEndDelay = 0.4f;
 
     public CanvasGroup waveClearedBanner;
@@ -51,10 +56,16 @@ public class RoundManager : MonoBehaviour
         DamageFlashDisplay.Instance.ShowDamage(GameManager.Instance.playerHealth);
         if (roundCounter != null) roundCounter.SetValue(currentRound, true);
 
-        enemiesAlive = enemiesPerRound;
+        // Calculate difficulty
+        int scaledEnemies = baseEnemiesPerRound + Mathf.FloorToInt(wavesPlayed * enemiesPerRoundGrowth);
+        float scaledInterval = Mathf.Max(minSpawnInterval, baseSpawnInterval - (wavesPlayed * spawnIntervalDecay));
+
+        enemiesAlive = scaledEnemies;
         roundActive = true;
         wavesPlayed++;
-        enemySpawner.SpawnWave(enemiesPerRound, spawnInterval, wavesPlayed);
+
+        bool bossRound = wavesPlayed % bossRoundInterval == 0;
+        enemySpawner.SpawnWave(scaledEnemies, scaledInterval, wavesPlayed, bossRound);
     }
 
     void ResetGameBoard()

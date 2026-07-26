@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
+
+    public bool skipTutorial = false;
+
     public static TutorialManager Instance;
 
     public TutorialDialogue dialogue;
@@ -31,6 +34,12 @@ public class TutorialManager : MonoBehaviour
 
     public void BeginTutorial(System.Action onCompleteCallback)
     {
+        if (skipTutorial)
+        {
+            onCompleteCallback?.Invoke();
+            return;
+        }
+
         Debug.Log("Runing begin tutorial");
         onComplete = onCompleteCallback;
         StartCoroutine(Run());

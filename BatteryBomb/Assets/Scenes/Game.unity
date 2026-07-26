@@ -2529,6 +2529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6504b080a75f4a6bb317327fe8c8bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
+  skipTutorial: 1
   dialogue: {fileID: 579785884}
   roundCounter: {fileID: 2048830719}
   professorPrefab: {fileID: 7874510347638130693, guid: 9ec202813326f4e619d254e40cdeff1b, type: 3}
@@ -3051,21 +3052,20 @@ MonoBehaviour:
   weightedEnemies:
   - prefab: {fileID: 5395611819641696461, guid: 8a1e6de8263c7417ba7008c27c27287c, type: 3}
     baseWeight: 3
-    weightPerWave: 0
+    weightPerWave: 0.3
   - prefab: {fileID: 5395611819641696461, guid: 580f4b6e827c8452a9032fdf2b62dc53, type: 3}
-    baseWeight: 1
+    baseWeight: -0.1
     weightPerWave: 0.1
   - prefab: {fileID: 5395611819641696461, guid: 5cd776998db004190a63a1834c407430, type: 3}
-    baseWeight: 0.5
-    weightPerWave: 0.3
-  spawnInterval: 2
+    baseWeight: -0.3
+    weightPerWave: 0.2
   spawnPoint: {x: -8, y: 0}
   waypoints:
   - {fileID: 2077187133}
   - {fileID: 577709351}
   - {fileID: 1380586142}
-  bossPrefab: {fileID: 0}
-  bossSpawnAfter: 4
+  bossPrefab: {fileID: 5395611819641696461, guid: 51617ca7baef942198458d61fce18b70, type: 3}
+  bossSpawnThreshold: 0.2
 --- !u!4 &1270056544
 Transform:
   m_ObjectHideFlags: 0
@@ -3372,8 +3372,12 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 2
   currentRound: 10
-  enemiesPerRound: 1
-  spawnInterval: 1.5
+  baseEnemiesPerRound: 5
+  enemiesPerRoundGrowth: 0.6
+  baseSpawnInterval: 1.5
+  minSpawnInterval: 0.4
+  spawnIntervalDecay: 0.03
+  bossRoundInterval: 3
   roundEndDelay: 0.6
   waveClearedBanner: {fileID: 1257892573}
   bannerFadeInDuration: 0.15
