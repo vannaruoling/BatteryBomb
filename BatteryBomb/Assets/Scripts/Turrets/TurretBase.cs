@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class TurretBase : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public abstract class TurretBase : MonoBehaviour
     public float range = 5f;
 
     public float shootPitch = 1f;
+
+    public Color reviveFlashColor = Color.green;
+    public float reviveFlashDuration = 0.3f;
+    public float revivePulseScale = 1.4f;
+    public float revivePulseDuration = 0.35f;
+    private Vector3 baseTurretScale;
 
     public BatteryBomb attachedBomb;
     public GameObject rangeIndicatorPrefab;
@@ -28,6 +35,7 @@ public abstract class TurretBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        baseTurretScale = transform.localScale;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         SetPowered(false);
@@ -112,8 +120,15 @@ public abstract class TurretBase : MonoBehaviour
 
     public void Revive()
     {
+        bool wasDead = isDead;
         isDead = false;
         SetPowered(false);
+
+        if (wasDead)
+        {
+            if (spriteRenderer != null) Juice.Instance.FlashSprite(spriteRenderer, reviveFlashColor, reviveFlashDuration);
+            StartCoroutine(RevivePulseRoutine());
+        }
     }
 
     // TODO: when player clicks a turret, display its range
@@ -150,5 +165,23 @@ public abstract class TurretBase : MonoBehaviour
     public void NotifyDetached()
     {
         lastDetachTime = Time.time;
+    }
+
+    IEnumerator RevivePulseRoutine()
+    {
+        float t = 0f;
+        while (t < revivePulseDuration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / revivePulseDuration);
+
+            // overshoot up then settle, like a squish-bounce
+            float eased = Mathf.Sin(p * Mathf.PI); // rises then falls back to 1
+            float scale = Mathf.Lerp(1f, revivePulseScale, eased);
+
+            transform.localScale = baseTurretScale * scale;
+            yield return null;
+        }
+        transform.localScale = baseTurretScale;
     }
 }
