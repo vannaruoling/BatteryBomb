@@ -193,18 +193,19 @@ public class BatteryBomb : MonoBehaviour
 
         Attach();
     }
-    void OnMouseUp()
-    {
-        if (!GameManager.Instance.inputEnabled) return;
-        Drop();
-    }
+
 
     void OnMouseDown()
     {
         if (!GameManager.Instance.inputEnabled) return;
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
+        if (anyBombDragging && !isDragging) return;
 
-
+        // Second click while latched to cursor = drop
+        if (isDragging)
+        {
+            Drop();
+            return;
+        }
 
         if (isPunting)
         {
@@ -217,7 +218,9 @@ public class BatteryBomb : MonoBehaviour
             Detach();
         }
 
-
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
+        Juice.Instance.FlashSprite(spriteRenderer, attachFlashColor, attachFlashDuration);
+        StartCoroutine(AttachPunchRoutine());
 
         isDragging = true;
         anyBombDragging = true;
@@ -387,6 +390,8 @@ public class BatteryBomb : MonoBehaviour
 
     void OnDestroy()
     {
+        if (isDragging) anyBombDragging = false;
+
         if (highlightedTurret != null)
         {
             highlightedTurret.SetRangeIndicatorVisible(false);
