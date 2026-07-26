@@ -31,6 +31,8 @@ public class BatteryBomb : MonoBehaviour
     // TUTORIAL PURPOSSESS
     public bool isInert = false;
     public TurretBase AttachedTurret => attachedTurret;
+
+    private bool hasBeenAttached = false;
     private bool isPunting = false;
 
     public float attachPunchScale = 1.3f;
@@ -146,8 +148,13 @@ public class BatteryBomb : MonoBehaviour
     {
         if (countdownText != null)
         {
-            // round up so that 0 is gonezo
-            countdownText.text = isInert ? "" : Mathf.CeilToInt(countdownTime).ToString();
+            bool shouldShow = hasBeenAttached && !isInert;
+            countdownText.gameObject.SetActive(shouldShow);
+
+            if (shouldShow)
+            {
+                countdownText.text = Mathf.CeilToInt(countdownTime).ToString();
+            }
         }
     }
 
@@ -291,6 +298,8 @@ public class BatteryBomb : MonoBehaviour
                 }
 
                 attachedTurret = turret;
+                hasBeenAttached = true;
+
                 Vector3 snapPos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
                 snapPos.z = zOffset;
                 transform.position = snapPos;
@@ -400,6 +409,7 @@ public class BatteryBomb : MonoBehaviour
     public void TutorialAttachTo(TurretBase turret, bool powerTurret)
     {
         attachedTurret = turret;
+        hasBeenAttached = true;
         turret.attachedBomb = this;
         Vector3 pos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
         pos.z = zOffset;
