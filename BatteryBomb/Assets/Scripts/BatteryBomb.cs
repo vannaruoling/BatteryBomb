@@ -44,6 +44,8 @@ public class BatteryBomb : MonoBehaviour
     public float attachFlashDuration = 0.12f;
     private Vector3 baseScale;
 
+    private bool mouseOver = false;
+
     private int lastDisplayedSecond = -1;
     private Animator animator;
 
@@ -192,8 +194,16 @@ public class BatteryBomb : MonoBehaviour
         }
 
         Attach();
+
+        if (mouseOver) SetBombOutlineVisible(true);
     }
 
+    public void DropIn(Vector3 landingPos)
+    {
+        transform.position = landingPos + new Vector3(0f, 0.8f, 0f);
+        puntRoutine = StartCoroutine(PuntRoutine(new Vector3(landingPos.x, landingPos.y, zOffset)));
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombSpawn, 0.5f);
+    }
 
     void OnMouseDown()
     {
@@ -328,6 +338,10 @@ public class BatteryBomb : MonoBehaviour
         Debug.Log("No turret found to attach to");
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombDetach);
 
+        Vector3 landPos = transform.position;
+        landPos.z = zOffset;
+        puntRoutine = StartCoroutine(PuntRoutine(landPos));
+
     }
 
 
@@ -404,6 +418,7 @@ public class BatteryBomb : MonoBehaviour
 
     void OnMouseEnter()
     {
+        mouseOver = true;
 
         if (!GameManager.Instance.inputEnabled) return;
         if (isDragging) return;
@@ -418,6 +433,9 @@ public class BatteryBomb : MonoBehaviour
 
     void OnMouseExit()
     {
+        mouseOver = false;
+
+
         if (isDragging) return;
         SetBombOutlineVisible(false);
     }

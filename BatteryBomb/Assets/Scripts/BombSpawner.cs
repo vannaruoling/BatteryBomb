@@ -75,6 +75,9 @@ public class BombSpawner : MonoBehaviour
         GameObject bomb = Instantiate(bombPrefab, spawnPos, Quaternion.identity);
         activeBombs.Add(bomb);
 
+        BatteryBomb bombScript = bomb.GetComponent<BatteryBomb>();
+        if (bombScript != null) bombScript.DropIn(spawnPos);
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombSpawn, 0.5f);
 
     }
