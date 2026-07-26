@@ -20,6 +20,8 @@ public abstract class TurretBase : MonoBehaviour
     private GameObject rangeIndicatorInstance;
     private Animator animator;
 
+    public ParticleSystem reviveParticleFx;
+
 
 
     protected float fireCooldown = 0f;
@@ -92,6 +94,17 @@ public abstract class TurretBase : MonoBehaviour
         if (animator != null)
         {
             animator.Play("dead");
+            if (reviveParticleFx != null)
+            {
+            ParticleSystem effect = Instantiate(
+                reviveParticleFx,
+                transform.position,
+                Quaternion.identity
+            );
+            effect.Play();
+            Debug.Log("KILLING  turret!");
+            Debug.Log(effect.name);
+            }
         }
     }
 
@@ -99,6 +112,18 @@ public abstract class TurretBase : MonoBehaviour
     {
         isDead = false;
         SetPowered(false);
+
+        if (reviveParticleFx != null)
+        {
+        ParticleSystem effect = Instantiate(
+            reviveParticleFx,
+            transform.position,
+            Quaternion.identity
+        );
+        Debug.Log("Reviving turret!");
+
+        effect.Play();
+        }
     }
 
     // TODO: when player clicks a turret, display its range
