@@ -122,6 +122,7 @@ public abstract class TurretBase : MonoBehaviour
         {
             animator.Play("dead");
         }
+        if (RoundManager.Instance != null) RoundManager.Instance.NotifyTurretDied();
     }
 
     public void Revive()

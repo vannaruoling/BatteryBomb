@@ -9585,7 +9585,7 @@ MonoBehaviour:
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 5
   currentRound: 30
-  baseEnemiesPerRound: 50
+  baseEnemiesPerRound: 3
   enemiesPerRoundGrowth: 4
   baseSpawnInterval: 1.5
   minSpawnInterval: 0.4
@@ -9596,6 +9596,8 @@ MonoBehaviour:
   bannerFadeInDuration: 0.15
   bannerHoldDuration: 0.6
   bannerFadeOutDuration: 0.2
+  earlyTurretRounds: 01000000020000000400000005000000070000000a000000
+  lateTurretGap: 4
 --- !u!4 &1360769657
 Transform:
   m_ObjectHideFlags: 0

@@ -33,14 +33,27 @@ public class RoundManager : MonoBehaviour
     public int WavesPlayed => wavesPlayed;
     // Rounds per turret placement
 
+    public int[] earlyTurretRounds = { 1, 2, 4, 5, 7, 10 };
+    public int lateTurretGap = 4;
+
+    private int turretsGranted = 0;
+    private int nextTurretRound = 1;
+
     private int enemiesAlive = 0;
     private int wavesPlayed = 0;
     private bool roundActive = false;
+
+    private bool lastRoundWasWipe = false;
+    public float wipeResolveDelay = 0.5f;
+
 
     void Awake()
     {
         if (Instance == null) Instance = this;
         else { Destroy(gameObject); return; }
+
+        // Yes this is terrible coding practice. HArdcoding necessary to balance like this early
+        if (earlyTurretRounds.Length > 0) nextTurretRound = earlyTurretRounds[0];
     }
 
     public void StartRound()
@@ -77,6 +90,43 @@ public class RoundManager : MonoBehaviour
 
         enemySpawner.SpawnWave(scaledEnemies, scaledInterval, wavesPlayed, bossRound);
     }
+
+    public void NotifyTurretDied()
+    {
+        if (!roundActive) return;
+
+        TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
+        if (turrets.Length == 0) return;
+
+        foreach (TurretBase t in turrets)
+        {
+            if (!t.isDead) return;
+        }
+
+        roundActive = false;
+        StartCoroutine(TurretsWipedRoutine());
+    }
+
+    IEnumerator TurretsWipedRoutine()
+    {
+        enemySpawner.StopSpawning();
+        GameManager.Instance.inputEnabled = false;
+
+        // let the final explosion read before the screen changes
+        yield return new WaitForSeconds(wipeResolveDelay);
+
+        int leaked = enemiesAlive;
+
+        foreach (Enemy e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
+            Destroy(e.gameObject);
+
+        GameManager.Instance.DamagePlayer(leaked);
+
+        if (GameManager.Instance.playerHealth <= 0) yield break; // ShowGameOver already fired
+
+        EndRound();
+    }
+
 
     void ResetGameBoard()
     {
@@ -154,8 +204,10 @@ public class RoundManager : MonoBehaviour
 
         ClearBombs();
 
-        if (waveClearedBanner != null)
+        if (waveClearedBanner != null && !lastRoundWasWipe)
             yield return StartCoroutine(ShowWaveClearedBanner());
+
+        lastRoundWasWipe = false;
 
         RequestNextRound();
     }
@@ -201,10 +253,15 @@ public class RoundManager : MonoBehaviour
 
         roundCardPanel.SetActive(true);
 
-        if (wavesPlayed % roundsPerPlacement == 0)
+        if (IsPlacementRound())
+        {
+            AdvanceTurretSchedule();
             RoundCardManager.Instance.PresentTurretCards();
+        }
         else
+        {
             RoundCardManager.Instance.PresentRandomCards();
+        }
     }
 
     // Clears all bombs
@@ -223,6 +280,26 @@ public class RoundManager : MonoBehaviour
         {
             t.SetRangeIndicatorVisible(false);
             t.SetOutlineVisible(false);
+        }
+    }
+
+    bool IsPlacementRound()
+    {
+        return (wavesPlayed + 1) == nextTurretRound;
+    }
+
+    void AdvanceTurretSchedule()
+    {
+        turretsGranted++;
+
+        if (turretsGranted < earlyTurretRounds.Length)
+        {
+            nextTurretRound = earlyTurretRounds[turretsGranted];
+        }
+        else
+        {
+            nextTurretRound += lateTurretGap;
+            lateTurretGap++;
         }
     }
 }

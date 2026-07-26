@@ -66,6 +66,7 @@ public class BatteryBomb : MonoBehaviour
     private Camera mainCamera;
     private TurretBase attachedTurret = null;
     private static bool anyBombDragging = false;
+    private int dragStartFrame = -1;
 
     void Awake()
     {
@@ -117,6 +118,11 @@ public class BatteryBomb : MonoBehaviour
                         target.SetOutlineVisible(true);
                     }
                     highlightedTurret = target;
+                }
+
+                if (Time.frameCount != dragStartFrame && Input.GetMouseButtonDown(0))
+                {
+                    Drop();
                 }
             }
         }
@@ -222,14 +228,8 @@ public class BatteryBomb : MonoBehaviour
     void OnMouseDown()
     {
         if (!GameManager.Instance.inputEnabled) return;
-        if (anyBombDragging && !isDragging) return;
-
-        // Second click while latched to cursor = drop
-        if (isDragging)
-        {
-            Drop();
-            return;
-        }
+        if (isDragging) return;
+        if (anyBombDragging) return;
 
         if (isPunting)
         {
@@ -242,9 +242,10 @@ public class BatteryBomb : MonoBehaviour
             Detach();
         }
 
+        dragStartFrame = Time.frameCount;
+
         AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
         Juice.Instance.FlashSprite(spriteRenderer, attachFlashColor, attachFlashDuration);
-        StartCoroutine(AttachPunchRoutine());
 
         isDragging = true;
         anyBombDragging = true;

@@ -115,6 +115,10 @@ public class EnemySpawner : MonoBehaviour
     //     enemiesSpawnedCurrentWave++;
     // }
 
+    public void StopSpawning()
+    {
+        spawning = false;
+    }
     GameObject PickWeightedEnemy()
     {
         float totalWeight = 0f;

@@ -86,7 +86,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         professor.Revive();
-        yield return dialogue.Show("Every new round brings us back. Now go.");
+        yield return dialogue.Show("Every new round revives us. Now go, reach Corruption 0!");
 
         Cleanup();
 
