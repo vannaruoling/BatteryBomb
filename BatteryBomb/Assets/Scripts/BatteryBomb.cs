@@ -106,6 +106,9 @@ public class BatteryBomb : MonoBehaviour
             int currentSecond = Mathf.CeilToInt(countdownTime);
             if (currentSecond != lastDisplayedSecond)
             {
+                // TODO: this might be super annoying
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.bombTick, 0.5f);
+
                 lastDisplayedSecond = currentSecond;
                 Juice.Instance.ShakeTransform(transform, tickShakeMagnitude, tickShakeDuration);
                 Juice.Instance.FlashSprite(spriteRenderer, tickFlashColor, tickFlashDuration);
@@ -169,6 +172,8 @@ public class BatteryBomb : MonoBehaviour
     {
         if (!GameManager.Instance.inputEnabled) return;
 
+
+
         if (isPunting)
         {
             StopCoroutine(puntRoutine);
@@ -179,6 +184,8 @@ public class BatteryBomb : MonoBehaviour
         {
             Detach();
         }
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombPickup);
 
         isDragging = true;
         anyBombDragging = true;
@@ -260,6 +267,9 @@ public class BatteryBomb : MonoBehaviour
 
                 attachedTurret = turret;
                 transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.bombAttach);
+
                 attachedTurret.SetPowered(true);
                 attachedTurret.attachedBomb = this;
                 SetPowering();
@@ -282,6 +292,8 @@ public class BatteryBomb : MonoBehaviour
 
         GameObject explosion = Instantiate(explosionEffect, explosionPosition, Quaternion.identity);
         Destroy(explosion, 1f);
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.bombExplode);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius, LayerMask.GetMask("Default"));
 

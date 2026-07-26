@@ -133,6 +133,8 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator ShowWaveClearedBanner()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.waveCleared);
+
         waveClearedBanner.gameObject.SetActive(true);
         waveClearedBanner.alpha = 0f;
 

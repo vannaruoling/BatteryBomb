@@ -92,18 +92,24 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardHeal()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         GameManager.Instance.HealPlayer(2);
         RoundManager.Instance.StartRound();
     }
 
     void OnCardBombTimer()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         UpgradeState.Instance.bombTimerBonus += 3f;
         RoundManager.Instance.StartRound();
     }
 
     void OnCardTurretFireRate()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         UpgradeState.Instance.turretFireRateMultiplier *= 1.25f;
 
         TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
@@ -117,12 +123,16 @@ public class RoundCardManager : MonoBehaviour
 
     void OnCardExplosionRadius()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         UpgradeState.Instance.explosionRadiusBonus += 0.5f;
         RoundManager.Instance.StartRound();
     }
 
     void OnCardMaxBombCount()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         UpgradeState.Instance.maxBombCountBonus += 1;
         RoundManager.Instance.StartRound();
     }
@@ -161,6 +171,8 @@ public class RoundCardManager : MonoBehaviour
 
     void OnTurretCardChosen(GameObject turretPrefab)
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.cardPick);
+
         RoundManager.Instance.roundCardPanel.SetActive(false);
         RoundManager.Instance.turretPlacer.turretPrefab = turretPrefab;
         RoundManager.Instance.turretPlacer.BeginPlacement(RoundManager.Instance.StartRound);

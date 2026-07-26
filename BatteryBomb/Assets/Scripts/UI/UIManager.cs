@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     public void ShowTitle()
     {
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.titleMusic);
+
         Time.timeScale = 0f;
         titlePanel.SetActive(true);
         gameplayPanel.SetActive(false);
@@ -44,6 +46,8 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.stageMusic);
+
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
@@ -56,6 +60,11 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOver()
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.gameOver);
+
+
+
         Time.timeScale = 0f;
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(false);
@@ -72,6 +81,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowWin()
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.victory);
+
         Time.timeScale = 0f;
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(false);

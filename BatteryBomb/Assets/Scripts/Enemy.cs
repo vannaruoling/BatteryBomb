@@ -153,6 +153,8 @@ public class Enemy : MonoBehaviour
             animator.Play("dead");
         }
 
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyDeath, 0.6f);
+
         Color deathColor = new Color(1f, 0f, 0f, 0f); // red, translucent
         Juice.Instance.FadeSpriteToColor(spriteRenderer, deathColor, 0.1f, () =>
             {
@@ -234,6 +236,8 @@ public class Enemy : MonoBehaviour
             GameObject explosion = Instantiate(chainExplosionEffect, transform.position, Quaternion.identity);
             Destroy(explosion, 1f);
         }
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.chainExplode, 0.7f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, chainExplosionRadius, LayerMask.GetMask("Default"));
         foreach (Collider2D hit in hits)

@@ -92,6 +92,8 @@ public class TurretPlacer : MonoBehaviour
 
     void Commit(Vector3 pos)
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.turretPlace);
+
         Instantiate(turretPrefab, pos, Quaternion.identity);
         Destroy(ghostInstance);
         active = false;

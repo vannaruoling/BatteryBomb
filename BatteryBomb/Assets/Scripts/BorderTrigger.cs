@@ -13,6 +13,8 @@ public class BorderTrigger : MonoBehaviour
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyLeak);
+
                 enemy.TakeDamage(int.MaxValue);
             }
         }
