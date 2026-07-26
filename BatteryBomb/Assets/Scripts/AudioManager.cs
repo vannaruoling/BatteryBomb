@@ -53,9 +53,12 @@ public class AudioManager : MonoBehaviour
         if (musicSource != null) musicSource.Stop();
     }
 
-    public void PlaySFX(AudioClip clip, float volumeScale = 1f)
+    public void PlaySFX(AudioClip clip, float volumeScale = 1f, float pitch = 1f)
     {
         if (sfxSource == null || clip == null) return;
+        float originalPitch = sfxSource.pitch;
+        sfxSource.pitch = pitch;
         sfxSource.PlayOneShot(clip, sfxVolume * volumeScale);
+        sfxSource.pitch = originalPitch;
     }
 }
