@@ -125,6 +125,8 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(roundEndDelay);
         Time.timeScale = 0f;
 
+        ClearBombs();
+
         if (waveClearedBanner != null)
             yield return StartCoroutine(ShowWaveClearedBanner());
 
@@ -167,5 +169,22 @@ public class RoundManager : MonoBehaviour
             RoundCardManager.Instance.PresentTurretCards();
         else
             RoundCardManager.Instance.PresentRandomCards();
+    }
+
+    // Clears all bombs
+    void ClearBombs()
+    {
+        BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
+        foreach (BatteryBomb b in bombs)
+        {
+            Destroy(b.gameObject);
+        }
+
+        TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
+        foreach (TurretBase t in turrets)
+        {
+            t.SetRangeIndicatorVisible(false);
+            t.SetOutlineVisible(false);
+        }
     }
 }
