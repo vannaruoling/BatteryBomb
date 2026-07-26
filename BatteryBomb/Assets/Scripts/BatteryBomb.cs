@@ -41,7 +41,7 @@ public class BatteryBomb : MonoBehaviour
     private int lastDisplayedSecond = -1;
 
 
-
+    private const float zOffset = -0.5f;
     private Coroutine puntRoutine;
     private SpriteRenderer outlineRenderer;
 
@@ -83,7 +83,7 @@ public class BatteryBomb : MonoBehaviour
             {
                 // Track mouse position
                 Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                mouseWorldPos.z = 0f;
+                mouseWorldPos.z = zOffset;
                 transform.position = mouseWorldPos;
 
                 // Get highlighted turret range
@@ -210,6 +210,7 @@ public class BatteryBomb : MonoBehaviour
         attachedTurret.NotifyDetached();
 
         Vector3 restPos = attachedTurret.transform.position + new Vector3(0f, -0.6f, 0f);
+        restPos.z = zOffset;
 
         attachedTurret.SetPowered(false);
         attachedTurret = null;
@@ -278,7 +279,9 @@ public class BatteryBomb : MonoBehaviour
                 }
 
                 attachedTurret = turret;
-                transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+                Vector3 snapPos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+                snapPos.z = zOffset;
+                transform.position = snapPos;
 
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.bombAttach);
 
@@ -386,7 +389,9 @@ public class BatteryBomb : MonoBehaviour
     {
         attachedTurret = turret;
         turret.attachedBomb = this;
-        transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+        Vector3 pos = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+        pos.z = zOffset;
+        transform.position = pos;
         if (powerTurret) turret.SetPowered(true);
         SetPowering();
     }
