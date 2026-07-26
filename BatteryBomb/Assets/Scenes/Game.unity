@@ -1244,15 +1244,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.10000001
-    y: 0.1
-    width: 0.8000001
-    height: 0.8
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.5
+  orthographic size: 4.21875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1341,8 +1341,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
   m_AssetsPPU: 32
-  m_RefResolutionX: 512
-  m_RefResolutionY: 288
+  m_RefResolutionX: 480
+  m_RefResolutionY: 270
   m_CropFrame: 3
   m_GridSnapping: 2
   m_FilterMode: 0
@@ -2638,7 +2638,7 @@ Tilemap:
   - first: {x: -6, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 12
+      m_TileIndex: 21
       m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
@@ -2974,7 +2974,7 @@ Tilemap:
     m_RefCount: 0
     m_Data: {fileID: 11400000, guid: ceea17eb69030604181ae46de7729c18, type: 2}
   - serializedVersion: 2
-    m_RefCount: 1
+    m_RefCount: 0
     m_Data: {fileID: 11400000, guid: d079eba272fee3f41bb2d6b8a9271bb3, type: 2}
   - serializedVersion: 2
     m_RefCount: 8
@@ -3001,8 +3001,8 @@ Tilemap:
     m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 3d5565cdc7b786d4186f34dd092b716b, type: 2}
   - serializedVersion: 2
-    m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 03e3c019b6767d24fb534dff8f350690, type: 2}
+    m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 1dbf19508e6674644a0f2733cf4ba509, type: 2}
   - serializedVersion: 2
     m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 7b92f8badf5756841930814d959cffb3, type: 2}
@@ -3060,7 +3060,7 @@ Tilemap:
     m_Data: {fileID: 744764133, guid: 838b2568d8c38de44a3896b0b61295ac, type: 3}
   - serializedVersion: 2
     m_RefCount: 1
-    m_Data: {fileID: 1873917168148291061, guid: 838b2568d8c38de44a3896b0b61295ac, type: 3}
+    m_Data: {fileID: -1518065538, guid: 838b2568d8c38de44a3896b0b61295ac, type: 3}
   - serializedVersion: 2
     m_RefCount: 1
     m_Data: {fileID: -695665475, guid: 838b2568d8c38de44a3896b0b61295ac, type: 3}
@@ -4026,7 +4026,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -456750106403715661, guid: 0eb42553c83d58f4a914724de920dd48, type: 3}
+  m_Sprite: {fileID: -3365581615612706564, guid: d9c03aee6723b4041afb72fc07d16533, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

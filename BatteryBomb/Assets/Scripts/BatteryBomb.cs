@@ -84,6 +84,7 @@ public class BatteryBomb : MonoBehaviour
                 // Track mouse position
                 Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 mouseWorldPos.z = zOffset;
+                mouseWorldPos = ScreenBounds.ClampToCameraView(mouseWorldPos, mainCamera, 1f); // 32px pad
                 transform.position = mouseWorldPos;
 
                 // Get highlighted turret range

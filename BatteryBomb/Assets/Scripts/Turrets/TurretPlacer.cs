@@ -55,6 +55,7 @@ public class TurretPlacer : MonoBehaviour
 
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
+        mouseWorldPos = ScreenBounds.ClampToCameraView(mouseWorldPos, mainCamera, 1f); // 1 unit = 32px
         ghostInstance.transform.position = mouseWorldPos;
 
         bool valid = IsValidPlacement(mouseWorldPos);
