@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
         if (flashOverlay != null)
         {
             flashOverlay.sprite = spriteRenderer.sprite;
-            Debug.Log("Copying sprite: " + spriteRenderer.sprite);
+            // Debug.Log("Copying sprite: " + spriteRenderer.sprite);
         }
 
     }
