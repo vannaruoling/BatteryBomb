@@ -43,6 +43,8 @@ public class RoundManager : MonoBehaviour
 
     public void StartRound()
     {
+        if (UIManager.Instance.groundTileMap != null) UIManager.Instance.SetActiveTileset(UIManager.Instance.groundTileMap);
+
         roundCardPanel.SetActive(false);
         Time.timeScale = 1f;
 
@@ -186,6 +188,8 @@ public class RoundManager : MonoBehaviour
     // If getting a turret, no buff this round. Otherwise they always give buffs.
     public void RequestNextRound()
     {
+        UIManager.Instance.SetActiveTileset(UIManager.Instance.groundTileMap);
+
         roundCardPanel.SetActive(true);
 
         if (wavesPlayed % roundsPerPlacement == 0)

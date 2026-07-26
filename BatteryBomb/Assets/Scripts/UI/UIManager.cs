@@ -18,6 +18,11 @@ public class UIManager : MonoBehaviour
     public CanvasGroup gameplayCanvasGroup;
     public float gameplayFadeInDuration = 0.4f;
 
+    public GameObject titleScreenTileMap;
+    public GameObject tutorialTileMap;
+    public GameObject groundTileMap;
+
+
     // Singleton
     void Awake()
     {
@@ -41,6 +46,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowTitle()
     {
+        SetActiveTileset(titleScreenTileMap);
         AudioManager.Instance.PlayMusic(AudioManager.Instance.titleMusic);
 
         Time.timeScale = 1f;
@@ -70,6 +76,7 @@ public class UIManager : MonoBehaviour
             }
             titleCanvasGroup.alpha = 0f;
         }
+        SetActiveTileset(tutorialTileMap);
 
         titlePanel.SetActive(false);
         gameplayPanel.SetActive(true);
@@ -129,5 +136,12 @@ public class UIManager : MonoBehaviour
         winPanel.SetActive(true);
 
         GameManager.Instance.inputEnabled = false;
+    }
+
+    public void SetActiveTileset(GameObject active)
+    {
+        if (titleScreenTileMap != null) titleScreenTileMap.SetActive(active == titleScreenTileMap);
+        if (tutorialTileMap != null) tutorialTileMap.SetActive(active == tutorialTileMap);
+        if (groundTileMap != null) groundTileMap.SetActive(active == groundTileMap);
     }
 }

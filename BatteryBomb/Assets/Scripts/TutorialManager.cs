@@ -63,13 +63,13 @@ public class TutorialManager : MonoBehaviour
 
         yield return dialogue.Show("I've put my life's work into these Battery Bombs.");
         yield return dialogue.Show("It will give me the power to fight...at the cost of my life!");
-        yield return dialogue.Show("Click and drag that Battery Bomb onto me!");
+        yield return dialogue.Show("Help attach that Battery Bomb onto me!");
 
         GameManager.Instance.inputEnabled = true;
         yield return new WaitUntil(() => bomb != null && bomb.AttachedTurret == professor);
         GameManager.Instance.inputEnabled = false;
 
-        yield return dialogue.ShowAuto("BE GONE WRETCHED INSECTS!", 1.5f);
+        yield return dialogue.ShowAuto("BE GONE WRETCHED INSECTS!", 3f);
 
         yield return new WaitUntil(() => bomb == null);
         yield return new WaitForSeconds(2f);
