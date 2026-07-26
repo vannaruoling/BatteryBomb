@@ -4,7 +4,8 @@ using System.Collections;
 
 public class BatteryBomb : MonoBehaviour
 {
-
+    public RuntimeAnimatorController unpoweredController;
+    public RuntimeAnimatorController poweredController;
     public float countdownTime = 10f;
     public TextMeshProUGUI countdownText;
     public float attachRadius = 1f;
@@ -39,6 +40,8 @@ public class BatteryBomb : MonoBehaviour
     private Vector3 baseScale;
 
     private int lastDisplayedSecond = -1;
+    private Animator animator;
+
 
 
     private const float zOffset = -0.5f;
@@ -55,6 +58,7 @@ public class BatteryBomb : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         baseScale = transform.localScale;
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -152,10 +156,17 @@ public class BatteryBomb : MonoBehaviour
         if (isInert)
         {
             GetComponent<SpriteRenderer>().color = Color.gray;
+            if (animator != null && unpoweredController != null) animator.runtimeAnimatorController = unpoweredController;
             return;
         }
         bool isPowered = attachedTurret != null;
         GetComponent<SpriteRenderer>().color = isPowered ? Color.Lerp(Color.white, Color.red, 0.3f) : Color.yellow;
+
+        if (animator != null)
+        {
+            RuntimeAnimatorController target = isPowered ? poweredController : unpoweredController;
+            if (target != null) animator.runtimeAnimatorController = target;
+        }
     }
 
     void Drop()

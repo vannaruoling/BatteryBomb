@@ -61,4 +61,9 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(clip, sfxVolume * volumeScale);
         sfxSource.pitch = originalPitch;
     }
+
+    public void StopSFX()
+    {
+        if (sfxSource != null) sfxSource.Stop();
+    }
 }

@@ -191,6 +191,8 @@ public class RoundManager : MonoBehaviour
     // Clears all bombs
     void ClearBombs()
     {
+        AudioManager.Instance.StopSFX();
+
         BatteryBomb[] bombs = FindObjectsByType<BatteryBomb>(FindObjectsSortMode.None);
         foreach (BatteryBomb b in bombs)
         {
