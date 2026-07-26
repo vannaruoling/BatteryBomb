@@ -5215,7 +5215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6504b080a75f4a6bb317327fe8c8bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  skipTutorial: 0
+  skipTutorial: 1
   dialogue: {fileID: 579785884}
   roundCounter: {fileID: 2048830719}
   professorPrefab: {fileID: 7874510347638130693, guid: 9ec202813326f4e619d254e40cdeff1b, type: 3}
@@ -9721,7 +9721,6 @@ MonoBehaviour:
   bombSpawner: {fileID: 1875415598}
   roundCardPanel: {fileID: 1092427115}
   roundCounter: {fileID: 2048830719}
-  damageFlashDisplayObj: {fileID: 219299418}
   turretPlacer: {fileID: 533236297}
   roundsPerPlacement: 5
   currentRound: 100
@@ -9729,7 +9728,7 @@ MonoBehaviour:
   enemiesPerRoundGrowth: 4
   baseSpawnInterval: 1.5
   minSpawnInterval: 0.4
-  spawnIntervalDecay: 0.03
+  spawnIntervalDecay: 0.93
   bossRoundInterval: 5
   roundEndDelay: 1
   waveClearedBanner: {fileID: 1257892573}
@@ -11667,7 +11666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   inputEnabled: 0
-  playerHealth: 5
+  playerHealth: 10
   killCount: 0
   damageShakeMagnitude: 0.15
   damageShakeDuration: 0.12

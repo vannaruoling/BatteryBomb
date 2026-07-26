@@ -21,7 +21,8 @@ public class RoundManager : MonoBehaviour
     public float baseSpawnInterval = 1.5f;
     public float minSpawnInterval = 0.4f;
 
-    public float spawnIntervalDecay = 0.03f;
+    public float spawnIntervalDecay = 0.93f;
+
     public int bossRoundInterval = 3;
     public float roundEndDelay = 0.4f;
 
@@ -76,7 +77,7 @@ public class RoundManager : MonoBehaviour
 
         // Calculate difficulty
         int scaledEnemies = baseEnemiesPerRound + Mathf.FloorToInt(wavesPlayed * enemiesPerRoundGrowth);
-        float scaledInterval = Mathf.Max(minSpawnInterval, baseSpawnInterval - (wavesPlayed * spawnIntervalDecay));
+        float scaledInterval = Mathf.Max(minSpawnInterval, baseSpawnInterval * Mathf.Pow(spawnIntervalDecay, wavesPlayed));
 
         enemiesAlive = scaledEnemies;
         roundActive = true;
@@ -92,9 +93,11 @@ public class RoundManager : MonoBehaviour
         enemySpawner.SpawnWave(scaledEnemies, scaledInterval, wavesPlayed, bossRound);
     }
 
+
     public void NotifyTurretDied()
     {
         if (!roundActive) return;
+        if (enemiesAlive <= 0) return;
 
         TurretBase[] turrets = FindObjectsByType<TurretBase>(FindObjectsSortMode.None);
         if (turrets.Length == 0) return;
@@ -108,13 +111,19 @@ public class RoundManager : MonoBehaviour
         StartCoroutine(TurretsWipedRoutine());
     }
 
+
     IEnumerator TurretsWipedRoutine()
     {
         enemySpawner.StopSpawning();
         GameManager.Instance.inputEnabled = false;
 
-        // let the final explosion read before the screen changes
         yield return new WaitForSeconds(wipeResolveDelay);
+
+        if (enemiesAlive <= 0)
+        {
+            EndRound();
+            yield break;
+        }
 
         int leaked = enemiesAlive;
 
@@ -123,11 +132,11 @@ public class RoundManager : MonoBehaviour
 
         GameManager.Instance.DamagePlayer(leaked);
 
-        if (GameManager.Instance.playerHealth <= 0) yield break; // ShowGameOver already fired
+        if (GameManager.Instance.playerHealth <= 0) yield break;
 
+        lastRoundWasWipe = true;
         EndRound();
     }
-
 
     void ResetGameBoard()
     {
