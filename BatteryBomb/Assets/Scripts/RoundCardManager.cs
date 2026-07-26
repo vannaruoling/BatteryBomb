@@ -48,13 +48,15 @@ public class RoundCardManager : MonoBehaviour
             new CardOption("Bomb Ammo +1", OnCardMaxBombCount),
         };
     }
+
     public void PresentRandomCards()
     {
         List<CardOption> pool = new List<CardOption>(allCards);
 
-        // remove a random card to get what to show
         for (int i = 0; i < cards.Length; i++)
         {
+            cards[i].SetActive(true);
+
             int index = Random.Range(0, pool.Count);
             CardOption chosen = pool[index];
             pool.RemoveAt(index);
@@ -116,6 +118,8 @@ public class RoundCardManager : MonoBehaviour
 
         for (int i = 0; i < cards.Length; i++)
         {
+            cards[i].SetActive(true);
+
             int index = Random.Range(0, pool.Count);
             TurretOption chosen = pool[index];
             pool.RemoveAt(index);
@@ -140,4 +144,5 @@ public class RoundCardManager : MonoBehaviour
         RoundManager.Instance.turretPlacer.turretPrefab = turretPrefab;
         RoundManager.Instance.turretPlacer.BeginPlacement(RoundManager.Instance.StartRound);
     }
+
 }

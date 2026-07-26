@@ -19,6 +19,11 @@ public class RoundManager : MonoBehaviour
     public int enemiesPerRound = 5;
     public float spawnInterval = 1.5f;
     public float roundEndDelay = 0.4f;
+
+    public CanvasGroup waveClearedBanner;
+    public float bannerFadeInDuration = 0.15f;
+    public float bannerHoldDuration = 0.6f;
+    public float bannerFadeOutDuration = 0.2f;
     // Rounds per turret placement
 
     private int enemiesAlive = 0;
@@ -118,11 +123,37 @@ public class RoundManager : MonoBehaviour
     IEnumerator EndRoundDelayed()
     {
         yield return new WaitForSecondsRealtime(roundEndDelay);
-
         Time.timeScale = 0f;
+
+        if (waveClearedBanner != null)
+            yield return StartCoroutine(ShowWaveClearedBanner());
+
         RequestNextRound();
-        // roundCardPanel.SetActive(true);
-        //     RoundCardManager.Instance.PresentRandomCards();
+    }
+
+    IEnumerator ShowWaveClearedBanner()
+    {
+        waveClearedBanner.gameObject.SetActive(true);
+        waveClearedBanner.alpha = 0f;
+
+        float t = 0f;
+        while (t < bannerFadeInDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            waveClearedBanner.alpha = Mathf.Clamp01(t / bannerFadeInDuration);
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(bannerHoldDuration);
+
+        t = 0f;
+        while (t < bannerFadeOutDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            waveClearedBanner.alpha = 1f - Mathf.Clamp01(t / bannerFadeOutDuration);
+            yield return null;
+        }
+        waveClearedBanner.gameObject.SetActive(false);
     }
 
     // If getting a turret, no buff this round. Otherwise they always give buffs.
