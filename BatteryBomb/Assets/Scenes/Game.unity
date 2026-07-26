@@ -399,7 +399,7 @@ MonoBehaviour:
   bossMusic: {fileID: 8300000, guid: 05f81d7eff5e746c5b022592f9489db3, type: 3}
   bombPickup: {fileID: 8300000, guid: d3184963b99dc4c9082cf0b99342bff1, type: 3}
   bombAttach: {fileID: 8300000, guid: 2b739cc22588d485a89cd7851c2881b2, type: 3}
-  bombTick: {fileID: 8300000, guid: 5cc3f3b7e3dac41c094031393660bbb0, type: 3}
+  bombTick: {fileID: 8300000, guid: 81e4c523a7a25453db577746cc0c5982, type: 3}
   bombExplode: {fileID: 8300000, guid: bf57a5416865d4e32a4806ac453c18b7, type: 3}
   chainExplode: {fileID: 8300000, guid: 396ae6b555509480cb5581541c893dc7, type: 3}
   enemyDeath: {fileID: 8300000, guid: 83f34cdf26c864e7d95a3d16ec9daa80, type: 3}
@@ -1300,10 +1300,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.042857144
+    y: 0.042301185
+    width: 0.9142857
+    height: 0.9137056
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
