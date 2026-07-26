@@ -26,6 +26,10 @@ public class BatteryBomb : MonoBehaviour
     // Booting animation for when a bomb is swapped out
     public float puntDuration = 0.25f;
     public float puntHeight = 0.3f;
+
+    // TUTORIAL PURPOSSESS
+    public bool isInert = false;
+    public TurretBase AttachedTurret => attachedTurret;
     private bool isPunting = false;
 
     public float attachPunchScale = 1.3f;
@@ -73,34 +77,35 @@ public class BatteryBomb : MonoBehaviour
     {
         UpdateCountdownDisplay();
 
-        if (!GameManager.Instance.inputEnabled) return;
-
-        if (isDragging)
+        if (GameManager.Instance.inputEnabled)
         {
-            // Track mouse position
-            Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0f;
-            transform.position = mouseWorldPos;
-
-            // Get highlighted turret range
-            TurretBase target = FindAttachableTurret();
-            if (target != highlightedTurret)
+            if (isDragging)
             {
-                if (highlightedTurret != null)
+                // Track mouse position
+                Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0f;
+                transform.position = mouseWorldPos;
+
+                // Get highlighted turret range
+                TurretBase target = FindAttachableTurret();
+                if (target != highlightedTurret)
                 {
-                    highlightedTurret.SetRangeIndicatorVisible(false);
-                    highlightedTurret.SetOutlineVisible(false);
+                    if (highlightedTurret != null)
+                    {
+                        highlightedTurret.SetRangeIndicatorVisible(false);
+                        highlightedTurret.SetOutlineVisible(false);
+                    }
+                    if (target != null)
+                    {
+                        target.SetRangeIndicatorVisible(true);
+                        target.SetOutlineVisible(true);
+                    }
+                    highlightedTurret = target;
                 }
-                if (target != null)
-                {
-                    target.SetRangeIndicatorVisible(true);
-                    target.SetOutlineVisible(true);
-                }
-                highlightedTurret = target;
             }
         }
 
-        if (attachedTurret != null)
+        if (attachedTurret != null && !isInert)
         {
             countdownTime -= Time.deltaTime;
             int currentSecond = Mathf.CeilToInt(countdownTime);
@@ -137,12 +142,17 @@ public class BatteryBomb : MonoBehaviour
         if (countdownText != null)
         {
             // round up so that 0 is gonezo
-            countdownText.text = Mathf.CeilToInt(countdownTime).ToString();
+            countdownText.text = isInert ? "" : Mathf.CeilToInt(countdownTime).ToString();
         }
     }
 
     public void SetPowering()
     {
+        if (isInert)
+        {
+            GetComponent<SpriteRenderer>().color = Color.gray;
+            return;
+        }
         bool isPowered = attachedTurret != null;
         GetComponent<SpriteRenderer>().color = isPowered ? Color.Lerp(Color.white, Color.red, 0.3f) : Color.yellow;
     }
@@ -366,5 +376,23 @@ public class BatteryBomb : MonoBehaviour
             outlineRenderer.gameObject.SetActive(show);
             if (show) outlineRenderer.sprite = spriteRenderer.sprite;
         }
+    }
+
+
+    // TUTORIAL PURPOSES
+    public void TutorialAttachTo(TurretBase turret, bool powerTurret)
+    {
+        attachedTurret = turret;
+        turret.attachedBomb = this;
+        transform.position = turret.transform.position + new Vector3(0f, 0.5f, 0f);
+        if (powerTurret) turret.SetPowered(true);
+        SetPowering();
+    }
+
+    // TUTORIAL PURPOSES
+    public void SetLive()
+    {
+        isInert = false;
+        SetPowering();
     }
 }
